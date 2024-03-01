@@ -1,0 +1,252 @@
+##grflangid 0x01
+# This is the English language file
+
+# GRF name and description definitions
+STR_TWTS_NAME        :TW Trains Set 24.0221.11
+STR_TWTS_DESCRIPTION :Taiwan Trains Set{}{COPYRIGHT}2024 TeamTWTS{}License: GPL v3
+
+# vehicle names
+STR_NAME_E200                 :E200 / E300 / E400
+STR_NAME_E1000                :E1000 Push-Pull locomotive
+STR_NAME_TP32200              :TP32200/850 Passenger Coach
+STR_NAME_SP32850              :SP32850/950/600 Passenger Coach
+STR_NAME_SP32800              :SP32700/750/800 Passenger Coach
+STR_NAME_TP32800              :TP32700/770/800 Passenger Coach
+STR_NAME_SP32400              :SP32400 Passenger Coach
+STR_NAME_SP32550              :SP32550/600/700 Passenger Coach
+STR_NAME_SP2300               :SP2300 Passenger Coach
+STR_NAME_PBK32800             :PBK32800 Power Baggage with Brake Van
+STR_NAME_PBK32850             :PBK32850/600 Power Baggage with Brake Van
+STR_NAME_PBK10400             :PBK10400 Power Baggage with Brake Van
+STR_NAME_PBK10500             :PBK10500 Power Baggage with Brake Van
+STR_NAME_R20                  :R20
+STR_NAME_R50                  :R50
+STR_NAME_R100                 :R100
+STR_NAME_R150                 :R150
+STR_NAME_DR1000               :DR1000
+STR_NAME_DR2000               :DR2000
+STR_NAME_DR2300               :DR2300
+STR_NAME_DR2400               :DR2400
+STR_NAME_DR2500               :DR2500/2600
+STR_NAME_DR2700               :DR2700
+STR_NAME_DR2800               :DR2800
+STR_NAME_DR2900               :DR2900/3000
+STR_NAME_DR3100               :DR3100
+STR_NAME_EMU100               :EMU100
+STR_NAME_EMU200               :EMU200
+STR_NAME_EMU1200              :EMU1200
+STR_NAME_EMU300               :EMU300
+STR_NAME_EMU400               :EMU400
+STR_NAME_EMU500               :EMU500
+STR_NAME_EMU600               :EMU600
+STR_NAME_EMU700               :EMU700
+STR_NAME_EMU800               :EMU800
+STR_NAME_EMU900               :EMU900
+STR_NAME_TEMU1000             :TEMU1000
+STR_NAME_TEMU2000             :TEMU2000
+STR_NAME_EMU3000              :EMU3000
+STR_NAME_TRMUCAR              :TR MU-car
+STR_NAME_PPCAR                :TR Push-Pull car
+
+
+STR_DOOR_MANUAL             : Manual folding foor
+STR_DOOR_AUTOMATIC          : Automatic sliding-plug door
+
+STR_LENGTH_ERROR            : Add more Cars! Add more TR MU cars (Wagons menu) to have at least a certain length.
+STR_UNIT_ERROR              : Invalid train length! Add or remove TR MU cars (Wagons menu) to have a set of certain length.
+STR_MUCAR_ERROR             : This train can only attach TR MU cars.
+STR_PPCAR_ERROR             : This train can only attach TR Push-Pull cars.
+
+STR_EMU500_DESC : EMU500 Commuter Electric Muitiple Unit Train
+TRMUCAR_DESC : {BLUE}Used to represent  {GREEN}motor and trailer cars{BLUE} within an EMU formation. {}{RED}Cannot be the rear of an EMU consist.
+
+STR_TRLENGTH_1T :{BLACK}Valid formation: {STRING} - car formations{}
+STR_TRLENGTH_2T	:{BLACK}Valid formation: {STRING} / {STRING} - car formations{}
+STR_TRLENGTH_3T	:{BLACK}Valid formation: {STRING} / {STRING} / {STRING} - car formations{}
+STR_TRLENGTH_4T	:{BLACK}Valid formation: {STRING} / {STRING} / {STRING} / {STRING} - car formations{}
+STR_TRLENGTH_5T	:{BLACK}Valid formation: {STRING} / {STRING} / {STRING} / {STRING} / {STRING} - car formations{}
+STR_TRLENGTH_6T	:{BLACK}Valid formation: {STRING} / {STRING} / {STRING} / {STRING} / {STRING} / {STRING} - car formations{}
+
+STR_TRLENGTH_1C:{GOLD}1{BLACK}
+STR_TRLENGTH_2C:{GOLD}2{BLACK}
+STR_TRLENGTH_3C:{GOLD}3{BLACK}
+STR_TRLENGTH_4C:{GOLD}4{BLACK}
+STR_TRLENGTH_5C:{GOLD}5{BLACK}
+STR_TRLENGTH_6C:{GOLD}6{BLACK}
+STR_TRLENGTH_7C:{GOLD}7{BLACK}
+STR_TRLENGTH_8C:{GOLD}8{BLACK}
+STR_TRLENGTH_9C:{GOLD}9{BLACK}
+STR_TRLENGTH_10C:{GOLD}10{BLACK}
+STR_TRLENGTH_11C:{GOLD}11{BLACK}
+STR_TRLENGTH_12C:{GOLD}12{BLACK}
+STR_TRLENGTH_13C:{GOLD}13{BLACK}
+STR_TRLENGTH_14C:{GOLD}14{BLACK}
+STR_TRLENGTH_15C:{GOLD}15{BLACK}
+STR_TRLENGTH_16C:{GOLD}16{BLACK}
+
+# ################
+# CONCAT SUBSTRINGS#
+# standard, no space, operators
+# ################
+
+STR_CONCAT_2	: {STRING} {STRING}
+STR_CONCAT_3	: {STRING} {STRING} {STRING}
+STR_CONCAT_4	: {STRING} {STRING} {STRING} {STRING}
+
+STR_CONCAT_3S	:{STRING}{STRING}{STRING}
+STR_CONCAT_4S	:{STRING}{STRING}{STRING}{STRING}
+STR_CONCAT_5S	:{STRING}{STRING}{STRING}{STRING}{STRING}
+
+STR_CONCAT_1C	:{BLACK}Operators: {STRING}{}
+STR_CONCAT_2C	:{BLACK}Operators: {STRING} / {STRING}{}
+STR_CONCAT_3C	:{BLACK}Operators: {STRING} / {STRING} / {STRING}{}
+STR_CONCAT_4C	:{BLACK}Operators: {STRING} / {STRING} / {STRING} / {STRING}{}
+STR_CONCAT_5C	:{BLACK}Operators: {STRING} / {STRING} / {STRING} / {STRING} / {STRING}{}
+STR_CONCAT_6C	:{BLACK}Operators: {STRING} / {STRING} / {STRING} / {STRING} / {STRING} / {STRING}{}
+
+STR_CONCAT_1F	:{BLACK} - {STRING}
+STR_CONCAT_2F	:{BLACK} - {STRING}{BLACK} / {STRING}
+STR_CONCAT_3F	:{BLACK} - {STRING}{BLACK} / {STRING}{BLACK} / {STRING}
+STR_CONCAT_4F	:{BLACK} - {STRING}{BLACK} / {STRING}{BLACK} / {STRING}{BLACK} / {STRING}
+
+
+#################
+#MODULAR COLOUR SUFFIXES#
+#################
+STR_COLOUR_WHITE			:{WHITE}White
+STR_COLOUR_BLACK			:{BLACK}Black
+STR_COLOUR_GOLD 			:{GOLD}Gold
+STR_COLOUR_SILVER			:{SILVER}Silver
+STR_COLOUR_GREY			    :{SILVER}Grey
+STR_COLOUR_LTGREEN			:{DKGREEN}Light Green
+STR_COLOUR_GREEN			:{GREEN}Green
+STR_COLOUR_BROWN			:{BROWN}Brown
+STR_COLOUR_DKRED			:{BROWN}Dark Red
+STR_COLOUR_BLUE				:{BLUE}Blue
+STR_COLOUR_LTBLUE			:{LTBLUE}Light Blue
+STR_COLOUR_RED				:{RED}Red
+STR_COLOUR_ORANGE			:{ORANGE}Orange
+STR_COLOUR_PINK 			:{CREAM}Pink
+STR_COLOUR_CREAM			:{LTBROWN}Cream
+STR_COLOUR_YELLOW			:{YELLOW}Yellow
+STR_COLOUR_PURPLE			:{PURPLE}Purple
+STR_COLOUR_NVBLUE			:{BLUE}Navy
+
+STR_SUFFIX_TRA              :{WHITE}TRA
+
+# Named Trains
+
+STR_SUFFIX_ORDINARY         :{GOLD}"Ordinary"{BLACK}
+STR_SUFFIX_BREEZYBLUE       :{GOLD}"Breezy Blue Tour Train"{BLACK}
+STR_SUFFIX_EXPRESS          :{GOLD}"Express"{BLACK}
+STR_SUFFIX_ENGINEER_SLEEPER :{GOLD}"Engineer-Sleeper"{BLACK}
+STR_SUFFIX_KUANKUANG        :{GOLD}"Kuan-Kuang"{BLACK}
+STR_SUFFIX_CHUKUANG         :{GOLD}"Chu-Kuang"{BLACK}
+STR_SUFFIX_FUHSING          :{GOLD}"Fu-Hsing"{BLACK}
+STR_SUFFIX_KUANGHWA         :{GOLD}"Kuang-Hwa"{BLACK}
+STR_SUFFIX_TZECHIANG        :{GOLD}"Tze-Chiang"{BLACK}
+STR_SUFFIX_MINGRI           :{GOLD}"Future-Mingrihao"{BLACK}
+STR_SUFFIX_TOUR             :{GOLD}"Tour Train"{BLACK}
+
+#####################
+#NEW MODULAR STRINGS#
+#####################
+
+STR_SUFFIX_YEARDEP	:{GREEN}Year-Dependent{BLACK}
+STR_SUFFIX_RANDOM	:{GREEN}Random{BLACK}
+STR_SUFFIX_CC		:{GREEN}Company Colour{BLACK}
+STR_SUFFIX_AUTOFORM	:{GREEN}Auto-Formation{BLACK}
+
+STR_REFIT_YEARDEP	:{BLACK} - {GREEN}Year-Dependent{BLACK}
+STR_REFIT_CC		:{BLACK} - {GREEN}Company Colour{BLACK}
+STR_REFIT_RANDOM	:{BLACK} - {GREEN}Random{BLACK}
+STR_REFIT_AUTOFORM	:{BLACK} - {GREEN}Auto-Formation{BLACK}
+
+
+STR_REFIT_AUTOYEAR	: {GREEN}Random {BLACK} -  Auto-Update
+STR_REFIT_RANDYEAR	: {GREEN}Random {BLACK} -  Year-Dependent
+
+
+STR_REFIT_YEARFORM	: {GREEN}Auto-Formation {BLACK} -  Year-Dependent
+
+# ####################
+# DESCRIPTION TEXT   #
+# ####################
+
+STR_DESC_POWER_STEAM 	:{BLACK}Engine Type: {GOLD}Steam{}
+STR_DESC_POWER_DE 	    :{BLACK}Engine Type: {GOLD}Diesel Electric{}
+STR_DESC_POWER_DH    	:{BLACK}Engine Type: {GOLD}Diesel Hydraulic{}
+STR_DESC_POWER_HYBRID 	:{BLACK}Engine Type: {GOLD}Diesel Electric Hybrid{}
+STR_DESC_POWER_BATT		:{BLACK}Engine Type: {GOLD}Battery Electric{}
+STR_DESC_POWER_AC20		:{BLACK}Engine Type: {GOLD}Electric - {RED} AC (20kV){}
+STR_DESC_POWER_DC15		:{BLACK}Engine Type: {GOLD}Electric - {BLUE} DC (1500V){}
+STR_DESC_POWER_MS20		:{BLACK}Engine Type: {GOLD}Electric Multisystem - {RED} AC (20kV) {WHITE}/ {BLUE}DC (1500V){}
+STR_DESC_POWER_MS25 	:{BLACK}Engine Type: {GOLD}Electric - {RED} AC (20kV) {WHITE}/ {PURPLE} AC (25kV){}
+
+STR_DESC_NARROWGAUGE	:{BLACK}Gauge:{GOLD} Narrow {SILVER}(1,067mm){}
+STR_DESC_STDGAUGE	    :{BLACK}Gauge:{GOLD} Standard (1,435mm){}
+
+STR_DESC_WHEELS_1B1     :{BLACK}Wheel Arrangement:{GOLD} 1-B-1 / 2-4-2{}
+STR_DESC_WHEELS_1C      :{BLACK}Wheel Arrangement:{GOLD} 1-C / 2-6-0{}
+
+STR_DESC_USAGE_GP		:{BLACK}Usage: {SILVER}General Purpose{}
+STR_DESC_USAGE_LF		:{BLACK}Usage: {SILVER}Light Freight{}
+STR_DESC_USAGE_SHG		:{BLACK}Usage: {SILVER}Shunter / General Purpose{}
+STR_DESC_USAGE_SH		:{BLACK}Usage: {SILVER}Shunter{}
+STR_DESC_USAGE_HF		:{BLACK}Usage: {SILVER}Heavy Freight{}
+STR_DESC_USAGE_P		:{BLACK}Usage: {SILVER}Passenger{}
+STR_DESC_USAGE_XP		:{BLACK}Usage: {SILVER}Excursion Passenger{}
+STR_DESC_USAGE_EP		:{BLACK}Usage: {SILVER}Express Passenger{}
+STR_DESC_USAGE_EF		:{BLACK}Usage: {SILVER}Express Passenger / Heavy Freight{}
+STR_DESC_USAGE_FF		:{BLACK}Usage: {SILVER}Express Passenger / Fast Freight{}
+STR_DESC_USAGE_BANK		:{BLACK}Usage: {SILVER}Banker / Pusher{}
+STR_DESC_USAGE_PROTO	:{BLACK}Usage: {SILVER}Prototype{}
+STR_DESC_USAGE_CONCEPT	:{BLACK}Usage: {SILVER}Concept - Never Built{}
+
+STR_DESC_USAGE_PAX_LOC	:{BLACK}Usage: {SILVER}Local Trains{}
+STR_DESC_USAGE_PAX_EXP	:{BLACK}Usage: {SILVER}Local / Express Trains{}
+STR_DESC_USAGE_PAX_SLP	:{BLACK}Usage: {SILVER}Express / Night Trains{}
+STR_DESC_USAGE_PAX_LEX	:{BLACK}Usage: {SILVER}Luxury Express{}
+STR_DESC_USAGE_PAX_LUX	:{BLACK}Usage: {SILVER}Luxury Sleeper{}
+STR_DESC_USAGE_PAX_JOY	:{BLACK}Usage: {SILVER}Luxury Charters / Excursions{}
+
+STR_DESC_USAGE_PAX_TOKAIDO	:{BLACK}Usage: {SILVER}Express Trains - {GREEN}Use with EF58 New Type, Tokaido Livery{}
+
+STR_DESC_USAGE_MAIL_LUG	:{BLACK}Usage: {SILVER}Luggage / Mail{}
+STR_DESC_USAGE_MAIL_RPO	:{BLACK}Usage: {SILVER}Travelling Post Office{}
+STR_DESC_USAGE_MAIL_EXP	:{BLACK}Usage: {SILVER}Luggage / Mail /  Express Cargo{}
+STR_DESC_USAGE_MAIL_EXF	:{BLACK}Usage: {SILVER}Mail / Express Cargo{}
+STR_DESC_USAGE_MAIL_VAL	:{BLACK}Usage: {SILVER}Valuables / Express Cargo{}
+
+STR_DESC_USAGE_FRT_STEL	:{BLACK}Usage: {SILVER}Metal Products - Coils / Bars / Slabs{}
+STR_DESC_USAGE_FRT_HVY	:{BLACK}Usage: {SILVER}Oversized Heavy Cargo - Transformers{}
+STR_DESC_USAGE_FRT_CAR	:{BLACK}Usage: {SILVER}Vehicles - Car Transport{}
+STR_DESC_USAGE_FRT_CARR	:{BLACK}Usage: {SILVER}Vehicles / General Cargo - Containers{}
+STR_DESC_USAGE_FRT_DMT	:{BLACK}Usage: {SILVER}Express Cargo - Truck Trailers{}
+
+STR_DESC_USAGE_FRT_CONT	:{BLACK}Usage: {SILVER}General / Express Cargo - Containers{}
+STR_DESC_USAGE_FRT_BOX	:{BLACK}Usage: {SILVER}General / Express Cargo{}
+STR_DESC_USAGE_FRT_FLAT	:{BLACK}Usage: {SILVER}General / Long Cargo{}
+STR_DESC_USAGE_FRT_EXP	:{BLACK}Usage: {SILVER}Express Cargo{}
+STR_DESC_USAGE_FRT_LVST	:{BLACK}Usage: {SILVER}Livestock - {GREEN}Reduced cargo aging{}
+STR_DESC_USAGE_FRT_REEF	:{BLACK}Usage: {SILVER}Refrigerated Cargo - {GREEN}Reduced cargo aging{}
+STR_DESC_USAGE_FRT_OPEN	:{BLACK}Usage: {SILVER}General / Bulk Cargo{}
+STR_DESC_USAGE_FRT_BULK	:{BLACK}Usage: {SILVER}Bulk Cargo{}
+STR_DESC_USAGE_FRT_COV	:{BLACK}Usage: {SILVER}Powdered Bulk Cargo{}
+
+STR_DESC_USAGE_FRT_COAL	:{BLACK}Usage: {SILVER}Bulk Cargo - Coal{}
+STR_DESC_USAGE_FRT_STON	:{BLACK}Usage: {SILVER}Bulk Cargo - Ballast{}
+STR_DESC_USAGE_FRT_LMST	:{BLACK}Usage: {SILVER}Bulk Cargo - Limestone{}
+STR_DESC_USAGE_FRT_CMNT	:{BLACK}Usage: {SILVER}Powdered Bulk Cargo - Cement{}
+STR_DESC_USAGE_FRT_QLME	:{BLACK}Usage: {SILVER}Powdered Bulk Cargo - Quicklime{}
+STR_DESC_USAGE_FRT_GRAI	:{BLACK}Usage: {SILVER}Powdered Bulk Cargo - Grain{}
+STR_DESC_USAGE_FRT_CHIP	:{BLACK}Usage: {SILVER}Lightweight Bulk Cargo - Fibres / Woodchips{}
+
+STR_DESC_USAGE_FRT_TANK	:{BLACK}Usage: {SILVER}General Liquid Cargo{}
+STR_DESC_USAGE_FRT_OIL	:{BLACK}Usage: {SILVER}General Liquid Cargo - Fuel / Oil{}
+STR_DESC_USAGE_FRT_CHEM	:{BLACK}Usage: {SILVER}Hazardous Liquid Cargo - Acid / Chlorine{}
+STR_DESC_USAGE_FRT_GAS	:{BLACK}Usage: {SILVER}Gaseous Cargo - Ammonia / LPG{}
+
+STR_DESC_BRAKE		:{BLACK}Usage: {SILVER}Brake Van - {GREEN}Attach behind slower freight wagons to increase speed limit{}
+
+STR_DESC_BRAKE_NA	:{BLACK}Brake Van Speed Boost: {RED}Not Available{}
