@@ -27,6 +27,12 @@
 #include "src/pax/sp2300.pnml"
 #include "src/pax/sp32800.pnml"
 #include "src/pax/sp32850.pnml"
+#include "src/pax/fpk10000.pnml"
+#include "src/pax/fpk10100.pnml"
+#include "src/pax/fpk10200.pnml"
 #include "src/pax/ppcar.pnml"
 
 #include "src/pax/pbk32800.pnml"
+#include "src/pax/pbk32850.pnml"
+#include "src/pax/pbk10400.pnml"
+#include "src/pax/pbk10500.pnml"

@@ -19,6 +19,12 @@ STR_NAME_PBK32800             :PBK32800 Power Baggage with Brake Van
 STR_NAME_PBK32850             :PBK32850/600 Power Baggage with Brake Van
 STR_NAME_PBK10400             :PBK10400 Power Baggage with Brake Van
 STR_NAME_PBK10500             :PBK10500 Power Baggage with Brake Van
+STR_NAME_FPK10000             :FPK10000 Passenger Coach
+STR_NAME_FPK10100             :FPK10100/1000 Passenger Coach
+STR_NAME_FPK10200             :FPK10200 Passenger Coach
+STR_NAME_FPK10400             :FPK10400 Passenger Coach
+STR_NAME_FPK10500             :FPK10500 Passenger Coach
+STR_NAME_FPK10600             :FPK10600 Passenger Coach
 STR_NAME_R20                  :R20
 STR_NAME_R50                  :R50
 STR_NAME_R100                 :R100
