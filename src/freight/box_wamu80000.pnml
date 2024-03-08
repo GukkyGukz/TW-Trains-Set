@@ -1,0 +1,391 @@
+spriteset(spriteset_wamu_80000_brown1, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 1)
+}
+
+spriteset(spriteset_wamu_80000_blue1, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 32)
+}
+
+spriteset(spriteset_wamu_80000_blue2, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 64)
+}
+
+spriteset(spriteset_wamu_80000_white1, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 96)
+}
+
+spriteset(spriteset_wamu_80000_white2, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 128)
+}
+
+spriteset(spriteset_wamu_80000_green1, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 160)
+}
+
+spriteset(spriteset_wamu_80000_green2, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 192)
+}
+
+spriteset(spriteset_wamu_80000_black, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 224)
+}
+
+spriteset(spriteset_wamu_80000_brown2, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 256)
+}
+
+spriteset(spriteset_wamu_80000_brown3, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 288)
+}
+
+spriteset(spriteset_wamu_80000_brown4, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(1, 320)
+}
+
+
+spriteset(spriteset_wamu_80000_roof1, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(180, 1)
+}
+
+spriteset(spriteset_wamu_80000_roof2, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(180, 32)
+}
+
+spriteset(spriteset_wamu_80000_stripe1, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(180, 64)
+}
+
+spriteset(spriteset_wamu_80000_stripe2, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(180, 96)
+}
+
+spriteset(spriteset_wamu_80000_blank, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(180, 128)
+}
+
+spriteset(spriteset_wamu_80000_empty, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(180, 160)
+}
+
+spriteset(spriteset_wamu_80000_half, "gfx/freight/wamu_80000.png") {
+	template_2cc_std(180, 192)
+}
+
+//purchase
+
+spriteset(spriteset_wamu_80000_jnr_purchase, "gfx/freight/wamu_80000.png") {
+	template_purchase(1, 384)
+}
+
+spriteset(spriteset_wamu_80000_jrf_purchase, "gfx/freight/wamu_80000.png") {
+	template_purchase(89, 384)
+}
+
+spriteset(spriteset_wamu_580000_jnr_purchase, "gfx/freight/wamu_80000.png") {
+	template_purchase(180, 384)
+}
+
+
+
+//door overlay
+spritegroup spritegroup_wamu_80000_load {
+    loading: [spriteset_wamu_80000_empty, spriteset_wamu_80000_half, spriteset_wamu_80000_blank];
+    loaded:  [spriteset_wamu_80000_blank];
+}
+
+//randoms
+
+random_switch (FEAT_TRAINS, SELF, random_wamu_80000_all) {
+	8: spriteset_wamu_80000_brown1;
+	1: spriteset_wamu_80000_blue1;
+	2: spriteset_wamu_80000_blue2;
+	1: spriteset_wamu_80000_green1;
+	1: spriteset_wamu_80000_green2;
+	6: spriteset_wamu_80000_brown2;
+	5: spriteset_wamu_80000_black;	
+	6: spriteset_wamu_80000_brown3;	
+	2: spriteset_wamu_80000_brown4;	
+}
+
+random_switch (FEAT_TRAINS, SELF, random_wamu_80000_brown) {
+	5: spriteset_wamu_80000_brown1;
+	4: spriteset_wamu_80000_brown2;
+	4: spriteset_wamu_80000_brown3;
+	2: spriteset_wamu_80000_brown4;
+}
+
+random_switch (FEAT_TRAINS, SELF, random_wamu_80000_old) {
+	8: spriteset_wamu_80000_brown1;
+	4: spriteset_wamu_80000_brown2;
+	4: spriteset_wamu_80000_brown3;
+	5: spriteset_wamu_80000_black;
+	1: spriteset_wamu_80000_white1;
+	1: spriteset_wamu_80000_white2;
+}
+
+random_switch (FEAT_TRAINS, SELF, random_wamu_80000_blue) {
+	3: spriteset_wamu_80000_blue2;
+	2: spriteset_wamu_80000_blue1;
+}
+
+random_switch (FEAT_TRAINS, SELF, random_wamu_80000_white) {
+	2: spriteset_wamu_80000_white1;
+	3: spriteset_wamu_80000_white2;
+}
+
+random_switch (FEAT_TRAINS, SELF, random_wamu_80000_green) {
+	2: spriteset_wamu_80000_green1;
+	3: spriteset_wamu_80000_green2;
+}
+
+
+
+random_switch (FEAT_TRAINS, SELF, random_wamu_80000_roof) {
+//	independent: random_wamu_80000_all;
+	13: spriteset_wamu_80000_blank;
+	1: spriteset_wamu_80000_roof1;
+	2: spriteset_wamu_80000_roof2;
+
+}
+
+random_switch (FEAT_TRAINS, SELF, random_wamu_80000_stripe) {
+	independent: random_wamu_80000_roof;
+//	independent: random_wamu_80000_all;
+	1: spriteset_wamu_80000_stripe1;
+	1: spriteset_wamu_80000_stripe2;
+	14: spriteset_wamu_80000_blank;
+}
+
+
+
+
+switch(FEAT_TRAINS, SELF, switch_wamu_80000_yeardep, build_year) {
+	0..1990: random_wamu_80000_old;
+	random_wamu_80000_all;
+}
+
+switch(FEAT_TRAINS, SELF, switch_wamu_80000_livery_stripe, cargo_subtype) {
+	1: random_wamu_80000_stripe;
+	2: random_wamu_80000_stripe;
+	3: spriteset_wamu_80000_blank;
+	4: random_wamu_80000_stripe;
+	5: spriteset_wamu_80000_blank;
+	random_wamu_80000_stripe;
+}
+
+
+switch(FEAT_TRAINS, SELF, switch_wamu_80000_livery, cargo_subtype) {
+	1: random_wamu_80000_brown;
+	2: random_wamu_80000_blue;
+	3: random_wamu_80000_green;
+	4: spriteset_wamu_80000_black;
+	5: random_wamu_80000_white;
+	switch_wamu_80000_yeardep;
+}
+
+switch(FEAT_TRAINS, SELF, switch_wamu_80000_subtype_text, cargo_subtype) {
+	0: return string(STR_REFIT_RANDYEAR);
+	1: return string(STR_CONCAT_1F, string(STR_COLOUR_BROWN));
+	2: return string(STR_CONCAT_1F, string(STR_COLOUR_BLUE));
+	3: return string(STR_CONCAT_1F, string(STR_COLOUR_GREEN));
+	4: return string(STR_CONCAT_1F, string(STR_COLOUR_BLACK));
+	5: return string(STR_CONCAT_1F, string(STR_COLOUR_WHITE));
+	   return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_wamu_80000_purchase, current_year) {
+	0..1987: spriteset_wamu_80000_jnr_purchase;
+	spriteset_wamu_80000_jrf_purchase;
+	}
+	
+//stacked sprites
+
+switch(FEAT_TRAINS, SELF, switch_wamu_80000_loadstack, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 3 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0:  switch_wamu_80000_livery;
+	1:  random_wamu_80000_roof;
+	2:  switch_wamu_80000_livery_stripe;
+    3:  spritegroup_wamu_80000_load;
+}
+
+
+item (FEAT_TRAINS, wamu_80000, 51) {
+
+property {
+	name: string(STR_NAME_WAMU_80000);
+	introduction_date: date(1958,1,1);
+	default_cargo_type: GOOD;
+	cargo_capacity: 50;
+	refittable_cargo_classes: bitmask(CC_COVERED, CC_PIECE_GOODS, CC_EXPRESS, CC_REFRIGERATED); 
+	non_refittable_cargo_classes: 0;
+	cargo_disallow_refit: [PASS, COAL, WOOD, IORE, CORE, AORE, CLAY, GRVL, LIME, OLSD, POTA, SAND, SGBT, SGCN, TOUR, VEHI, KAOL];
+	misc_flags: bitmask(TRAIN_FLAG_AUTOREFIT, TRAIN_FLAG_SPRITE_STACK);
+	cost_factor: 22;
+	running_cost_factor: 4;
+	running_cost_base: RUNNING_COST_STEAM;
+	}
+graphics {
+	additional_text:	string(STR_CONCAT_3S, 
+							string(STR_DESC_NARROWGAUGE),
+							string(STR_DESC_USAGE_FRT_BOX),
+							string(STR_CONCAT_3C, 									
+								string(STR_SUFFIX_JNR),
+								string(STR_SUFFIX_JRF),
+								string(STR_SUFFIX_PRIVATE)
+							)
+						);
+
+	speed: switch_speedboost_1;
+	purchase_speed: return 75;
+	cargo_capacity: return 50;
+	default: switch_wamu_80000_loadstack;
+	purchase: switch_wamu_80000_purchase;
+	cargo_subtype_text: switch_wamu_80000_subtype_text;
+	}
+}
+
+
+//wamu 48000
+
+spriteset(spriteset_wamu_480000_jrf_purchase, "gfx/freight/wamu_80000.png") {
+	template_purchase(268, 384)
+}
+
+spriteset(spriteset_wamu_480000_empty, "gfx/freight/wamu_80000.png") {
+	template_2cc_anim(180, 224)
+}
+
+spriteset(spriteset_wamu_480000_half, "gfx/freight/wamu_80000.png") {
+	template_2cc_anim(180, 256)
+}
+
+spriteset(spriteset_wamu_480000_full, "gfx/freight/wamu_80000.png") {
+	template_2cc_anim(180, 288)
+}
+
+spriteset(spriteset_wamu_480000_tarp, "gfx/freight/wamu_80000.png") {
+	template_2cc_anim(180, 320)
+}
+
+
+spritegroup spritegroup_wamu_480000_load {
+    loading: [spriteset_wamu_480000_empty, spriteset_wamu_480000_half, spriteset_wamu_480000_full];
+    loaded:  [spriteset_wamu_480000_empty, spriteset_wamu_480000_half, spriteset_wamu_480000_full, spriteset_wamu_480000_tarp];
+}
+
+
+//stacked sprites
+
+switch(FEAT_TRAINS, SELF, switch_wamu_480000_loadstack, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0:  spriteset_wamu_80000_brown4;
+    1:  spritegroup_wamu_480000_load;
+}
+
+
+item (FEAT_TRAINS, wamu_480000, 1462) {
+
+property {
+	sprite_id: SPRITE_ID_NEW_TRAIN;
+	track_type: NAAN;
+	introduction_date: date(1998,1,1);
+	climates_available: ALL_CLIMATES;
+	name: string(STR_NAME_WAMU_480000);
+	speed: 75 km/h;
+	air_drag_coefficient: 0;
+	power: 0;
+	dual_headed: 0;
+	cargo_capacity: 50; 
+	refit_cost: 0;
+//	default_cargo_type: COAL;
+//	refittable_cargo_classes: bitmask(CC_BULK, CC_COVERED); 
+	loading_speed: 20;
+	cargo_allow_refit: [GRAI, FICR, WOOD, WOOL, BEAN, SGCN, SGBT, OLSD, MAIZ, PEAT, SEED, FRUT, FRVG, TATO, WDCH, TBCO];
+	cargo_disallow_refit: [COAL, IORE, CORE, PORE, CMNT];
+	non_refittable_cargo_classes: 0;
+	weight: 15;
+	cost_factor: 22;
+	running_cost_factor: 4;
+	running_cost_base: RUNNING_COST_STEAM;
+	length: 6;
+	misc_flags: bitmask(TRAIN_FLAG_AUTOREFIT, TRAIN_FLAG_SPRITE_STACK);
+	variant_group: 51;
+	}
+graphics {
+	additional_text:	string(STR_CONCAT_3S, 
+							string(STR_DESC_NARROWGAUGE),
+							string(STR_DESC_USAGE_FRT_CHIP),
+							string(STR_CONCAT_1C, 									
+								string(STR_SUFFIX_JRF)
+							)
+						);
+
+	speed: switch_speedboost_1;
+	purchase_speed: return 75;
+	cargo_capacity: return 50;
+	default: switch_wamu_480000_loadstack;
+	purchase: spriteset_wamu_480000_jrf_purchase;
+	colour_mapping: switch_generic_recolour;
+	}
+}
+
+switch(FEAT_TRAINS, SELF, switch_wamu_580000_loadstack, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 2 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0:  random_wamu_80000_white;
+	1:  random_wamu_80000_roof;
+    2:  spritegroup_wamu_80000_load;
+}
+
+
+item (FEAT_TRAINS, wamu_580000, 1463) {
+
+property {
+	sprite_id: SPRITE_ID_NEW_TRAIN;
+	track_type: NAAN;
+	introduction_date: date(1967,1,1);
+	climates_available: ALL_CLIMATES;
+	name: string(STR_NAME_WAMU_580000);
+	speed: 75 km/h;
+	air_drag_coefficient: 0;
+	power: 0;
+	dual_headed: 0;
+	cargo_capacity: 50; 
+	refit_cost: 0;
+	default_cargo_type: FOOD;
+	refittable_cargo_classes: bitmask(CC_REFRIGERATED); 
+	loading_speed: 20;
+	cargo_age_period: 0;
+//	cargo_allow_refit: [GRAI, FICR, WOOD, WOOL, BEAN, SGCN, SGBT, OLSD, MAIZ, PEAT, SEED, FRUT, FRVG, TATO, WDCH, TBCO];
+//	cargo_disallow_refit: [COAL, IORE, CORE, PORE, CMNT];
+	non_refittable_cargo_classes: 0;
+	weight: 15;
+	cost_factor: 22;
+	running_cost_factor: 4;
+	running_cost_base: RUNNING_COST_STEAM;
+	length: 6;
+	misc_flags: bitmask(TRAIN_FLAG_AUTOREFIT, TRAIN_FLAG_SPRITE_STACK);
+	variant_group: 51;
+	}
+graphics {
+	additional_text:	string(STR_CONCAT_3S, 
+							string(STR_DESC_NARROWGAUGE),
+							string(STR_DESC_USAGE_FRT_REEF),
+							string(STR_CONCAT_1C, 									
+								string(STR_SUFFIX_JNR)
+							)
+						);
+
+	speed: switch_speedboost_1;
+	purchase_speed: return 75;
+	cargo_capacity: return 50;
+	default: switch_wamu_580000_loadstack;
+	purchase: spriteset_wamu_580000_jnr_purchase;
+//	colour_mapping: switch_generic_recolour;
+	}
+}

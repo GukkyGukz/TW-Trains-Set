@@ -1,0 +1,8 @@
+
+/* Define a rail type table,
+ * this allows referring to railtypes
+ * irrespective of the grfs loaded.
+ */
+railtypetable {
+    RAIL, ELRL, MONO, MGLV, NABE, NABA, NAAN, NABN
+}

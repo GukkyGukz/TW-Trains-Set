@@ -1,0 +1,36 @@
+//sort in depot //could change to item names instead of ID numbers
+
+//variants should be sorted in order too so they show up correctly in replace window
+
+sort(FEAT_TRAINS, [
+
+//EL
+item_e200, e1000,
+
+//DH
+
+//DE
+r20,
+
+//SL
+
+//DMU
+dr2700,
+
+//EMU
+trmu_car, emu200, emu300, emu400, emu500, emu600,
+
+//TEMU
+
+//PAXold
+item_sp32400, item_sp32550, item_tp32200, item_tp32800,
+
+//PAXnew
+item_sp2300, item_sp32800, item_sp32850, item_ppcar,
+
+//MAIL
+item_pbk32800
+
+//FREIGHT
+
+]);

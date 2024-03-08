@@ -1,0 +1,52 @@
+
+//Dual headed
+template template_purchase_dualheaded(x, y) {
+    //[left_x, upper_y, width, height, offset_x, offset_y]
+    [1  ,  1,  1,  1,   0,   0, "gfx/empty.png"]
+    [1  ,  1,  1,  1,   0,   0, "gfx/empty.png"]
+    [1     ,  1,  1,  1,   0,   0, "gfx/empty.png"]
+    [1     ,  1,  1,  1,   0,   0, "gfx/empty.png"]
+    [1     ,  1,  1,  1,   0,   0, "gfx/empty.png"]
+    [1     ,  1,  1,  1,   0,   0, "gfx/empty.png"]
+    [x    ,  y,  87, 18, -11, -8]
+    [1    ,  1,  1,  1,   0,   0, "gfx/empty.png"]
+}
+
+template tmpl_empty() {
+    [0,      0,  1, 1,  0, 0]
+}
+
+/* Basic template for 4 vehicle views */
+template tmpl_vehicle_basic(x, y) {
+    // arguments x, y: coordinates of top-left corner of first sprite
+    [x,      y,  8, 24,  -3, -12] //xpos ypos xsize ysize xrel yrel
+    [x +  9, y, 22, 20, -14, -12]
+    [x + 32, y, 32, 16, -16, -12]
+    [x + 65, y, 22, 20,  -6, -12]
+}
+
+/* Template for a vehicle with only 4 views (symmetric) */
+template tmpl_vehicle_4_views(num) {
+    // argument num: Index in the graphics file, assuming vertical ordering of vehicles
+    tmpl_vehicle_basic(1, 1 + 32 * num)
+}
+
+/* Template for a vehicle with 8 views (non-symmetric) */
+template tmpl_vehicle_8_views(num, reversed) {
+    // argument num: Index in the graphics file, assuming vertical ordering of vehicles
+    // argument reversed: Reverse visible orientation of vehicle, if set to 1
+    tmpl_vehicle_basic(reversed ? 89 : 1, 1 + 32 * num)
+    tmpl_vehicle_basic(reversed ? 1 : 89, 1 + 32 * num)
+}
+/* Template for a vehicle with 8 views, row 2 (non-symmetric) */
+template tmpl_vehicle_8_views_2(num, reversed) {
+    // argument num: Index in the graphics file, assuming vertical ordering of vehicles
+    // argument reversed: Reverse visible orientation of vehicle, if set to 1
+    tmpl_vehicle_basic(reversed ? 269 : 181, 1 + 32 * num)
+    tmpl_vehicle_basic(reversed ? 181 : 269, 1 + 32 * num)
+}
+
+/* Template for a single vehicle sprite */
+template tmpl_vehicle_single(num, xsize, ysize, xoff, yoff) {
+    [1, 1 + 32 * num, xsize, ysize, xoff, yoff]
+}

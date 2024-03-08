@@ -1,0 +1,32 @@
+#include "src/header.pnml"
+#include "src/cargotable.pnml"
+#include "src/railtypetable.pnml"
+#include "src/sort.pnml"
+#include "src/template.pnml"
+
+#include "src/ac/e200.pnml"
+#include "src/ac/e1000.pnml"
+
+#include "src/de/r20.pnml"
+
+#include "src/dmu/dr2700.pnml"
+
+#include "src/emu/emu200.pnml"
+#include "src/emu/emu300.pnml"
+#include "src/emu/emu400.pnml"
+#include "src/emu/emu500.pnml"
+#include "src/emu/emu600.pnml"
+
+#include "src/emu/trmucar.pnml"
+
+#include "src/pax/sp32400.pnml"
+#include "src/pax/sp32550.pnml"
+#include "src/pax/tp32200.pnml"
+#include "src/pax/tp32800.pnml"
+
+#include "src/pax/sp2300.pnml"
+#include "src/pax/sp32800.pnml"
+#include "src/pax/sp32850.pnml"
+#include "src/pax/ppcar.pnml"
+
+#include "src/pax/pbk32800.pnml"

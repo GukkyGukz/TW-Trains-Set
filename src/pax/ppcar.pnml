@@ -1,0 +1,106 @@
+
+spriteset(spriteset_ppt1000, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_pph1000, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_ppc1000, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_ppt2000, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_ppd2000, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_ppcar_purchase, "gfx/pp1000.png") {
+    tmpl_vehicle_single(3, 87, 16, -25, -8)
+}
+
+random_switch(FEAT_TRAINS, SELF, switch_ppcar_1000_2000) {
+    50: spriteset_ppt1000;
+    3: spriteset_ppt2000;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppcar_pos_12, position_in_vehid_chain_from_end) {
+    12: switch_ppcar_1000_2000;
+    11: spriteset_ppc1000;
+    10: switch_ppcar_1000_2000;
+    9: spriteset_pph1000;
+    6..8: switch_ppcar_1000_2000;
+    5: spriteset_ppc1000;
+    4: spriteset_pph1000;
+    1..3: switch_ppcar_1000_2000;
+    0: spriteset_ppd2000;
+    switch_ppcar_1000_2000;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppcar_pos_10, position_in_vehid_chain_from_end) {
+    10: spriteset_ppc1000;
+    9: switch_ppcar_1000_2000;
+    8: spriteset_pph1000;
+    3..7: switch_ppcar_1000_2000;
+    2: spriteset_pph1000;
+    1: switch_ppcar_1000_2000;
+    0: spriteset_ppc1000;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppcar_auto, num_vehs_in_vehid_chain) {
+    1..10: switch_ppcar_pos_10;
+    switch_ppcar_pos_12;
+}
+/* Define the actual train */
+item(FEAT_TRAINS, item_ppcar) {
+    /* Define properties first, make sure to set all of them */
+    property {
+        name:                         string(STR_NAME_PPCAR);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(1996, 11, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 40;
+        reliability_decay:            20;
+        cost_factor:                  20;
+        running_cost_factor:          50; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       8;
+        speed:                        131 km/h;
+        loading_speed:                10;
+        misc_flags:                   bitmask(TRAIN_FLAG_AUTOREFIT);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NAAN; // from rail type table
+        running_cost_base:            RUNNING_COST_NONE;
+        cargo_capacity:               52;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       35 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        extra_power_per_wagon:        0 kW;
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+    /* Define graphics and callbacks
+     * Setting all callbacks is not needed, only define what is used */
+    graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_3S, 
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 48;
+  default: switch_ppcar_auto;
+  purchase: spriteset_ppcar_purchase;
+  }
+}

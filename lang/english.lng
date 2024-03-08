@@ -2,7 +2,7 @@
 # This is the English language file
 
 # GRF name and description definitions
-STR_TWTS_NAME        :TW Trains Set 24.0221.11
+STR_TWTS_NAME        :TW Trains Set 24.0308.12
 STR_TWTS_DESCRIPTION :Taiwan Trains Set{}{COPYRIGHT}2024 TeamTWTS{}License: GPL v3
 
 # vehicle names
@@ -49,7 +49,7 @@ STR_NAME_TRMUCAR              :TR MU-car
 STR_NAME_PPCAR                :TR Push-Pull car
 
 
-STR_DOOR_MANUAL             : Manual folding foor
+STR_DOOR_MANUAL             : Manual folding door
 STR_DOOR_AUTOMATIC          : Automatic sliding-plug door
 
 STR_LENGTH_ERROR            : Add more Cars! Add more TR MU cars (Wagons menu) to have at least a certain length.

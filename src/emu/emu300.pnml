@@ -1,0 +1,212 @@
+
+spriteset(spriteset_emu300_emc, "gfx/300h.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_emu300_ep, "gfx/300h.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_emu300_em, "gfx/300h.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_emu300_em_flip, "gfx/300h.png") {
+    tmpl_vehicle_8_views(2, 1)
+}
+
+spriteset(spriteset_emu300_purchase, "gfx/300h.png") {
+    template_purchase_dualheaded(3, 127)
+}
+
+spriteset(spriteset_emu300_emc_a, "gfx/300a.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_emu300_ep_a, "gfx/300a.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_emu300_em_a, "gfx/300a.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_emu300_em_a_flip, "gfx/300a.png") {
+    tmpl_vehicle_8_views(2, 1)
+}
+
+spriteset(spriteset_emu300_a_purchase, "gfx/300a.png") {
+    template_purchase_dualheaded(3, 127)
+}
+/* --- Graphics callback  --- */
+
+switch(FEAT_TRAINS, SELF, switch_emu300_mucar_pos, position_in_vehid_chain % 3) {
+    0: spriteset_emu300_ep;
+    1: spriteset_emu300_em;
+    2: spriteset_emu300_emc;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_mucar_a_pos, position_in_vehid_chain % 3) {
+    0: spriteset_emu300_ep_a;
+    1: spriteset_emu300_em_a;
+    2: spriteset_emu300_emc_a;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_gfx_pos, position_in_consist) {
+    0: spriteset_emu300_emc;
+    spriteset_emu300_em_flip;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_a_gfx_pos, position_in_consist) {
+    0: spriteset_emu300_emc_a;
+    spriteset_emu300_em_a_flip;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_mucar, num_vehs_in_vehid_chain % 3) {
+    1: switch_emu300_mucar_pos;
+    spriteset_trmu_car_add;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_mucar_a, num_vehs_in_vehid_chain % 3) {
+    1: switch_emu300_mucar_a_pos;
+    spriteset_trmu_car_add;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_gfx_yeardep_livery, build_year) {
+    0..2007: switch_emu300_gfx_pos;
+    switch_emu300_a_gfx_pos;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_mucar_yeardep_livery, build_year) {
+    0..2007: switch_emu300_mucar;
+    switch_emu300_mucar_a;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_livery, cargo_subtype) {
+    1: switch_emu300_gfx_pos;
+    2: switch_emu300_a_gfx_pos;   
+    switch_emu300_gfx_yeardep_livery;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu300_mucar_livery, cargo_subtype) {
+    1: switch_emu300_mucar;
+    2: switch_emu300_mucar_a;   
+    switch_emu300_mucar_yeardep_livery;
+}
+
+
+
+switch(FEAT_TRAINS, SELF, switch_emu300_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_1F, string(STR_SUFFIX_YEARDEP)
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_DOOR_MANUAL)
+                                    )
+                                 );
+    2: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                    string(STR_CONCAT_1F, 
+                                     string(STR_DOOR_AUTOMATIC)
+                                     )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
+
+switch (FEAT_TRAINS, SELF, switch_emu300_purchase, current_year) {
+    0..2007: spriteset_emu300_purchase;
+    spriteset_emu300_a_purchase;
+    }
+
+
+
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu300_start_stop, num_vehs_in_consist) {
+    3: return CB_RESULT_NO_TEXT;
+    6: return CB_RESULT_NO_TEXT;
+    9: return CB_RESULT_NO_TEXT;
+    12: return CB_RESULT_NO_TEXT;
+    15: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu300_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, emu300) {
+    property {
+        name:                         string(STR_NAME_EMU300);
+        introduction_date:            date(1989, 6, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 33;
+        reliability_decay:            18;
+
+        cargo_capacity:               52;
+        loading_speed:                7;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        131 km/h;
+        track_type:                   NABE;
+        power:                        928 kW;
+        weight:                       49 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  1;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.6;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_TRLENGTH_5T,
+                           string(STR_TRLENGTH_3C),
+                           string(STR_TRLENGTH_6C),
+                           string(STR_TRLENGTH_9C),
+                           string(STR_TRLENGTH_12C),
+                           string(STR_TRLENGTH_15C)
+                         ),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 52;
+        default:                switch_emu300_livery;
+            purchase:               switch_emu300_purchase;
+        can_attach_wagon:             switch_emu300_attach_vehid;
+        start_stop:           switch_emu300_start_stop;
+        cargo_subtype_text: switch_emu300_subtype_text;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      switch_emu300_mucar_livery;
+        cargo_capacity:               52;
+        loading_speed:                7;
+        power: 928;
+        weight: 49;
+      }
+}

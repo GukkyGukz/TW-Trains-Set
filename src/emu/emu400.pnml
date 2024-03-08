@@ -1,0 +1,131 @@
+
+spriteset(spriteset_emu400_emc, "gfx/emu400.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_emu400_ep, "gfx/emu400.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_emu400_et, "gfx/emu400.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_emu400_em, "gfx/emu400.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu400_em_flip, "gfx/emu400.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu400_purchase, "gfx/emu400.png") {
+    template_purchase_dualheaded(0, 127)
+}
+
+
+/* --- Graphics callback  --- */
+
+
+switch(FEAT_TRAINS, SELF, switch_emu400_mucar_pos, position_in_vehid_chain % 4) {
+    0: spriteset_emu400_ep;
+    1: spriteset_emu400_et;
+    2: spriteset_emu400_em;
+    3: spriteset_emu400_emc;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu400_gfx_pos, position_in_consist) {
+    0: spriteset_emu400_emc;
+    spriteset_emu400_em_flip;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu400_mucar, num_vehs_in_vehid_chain % 4) {
+    2: switch_emu400_mucar_pos;
+    spriteset_trmu_car_add;
+}
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu400_start_stop, num_vehs_in_consist) {
+    4: return CB_RESULT_NO_TEXT;
+    8: return CB_RESULT_NO_TEXT;
+    12: return CB_RESULT_NO_TEXT;
+    16: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu400_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, emu400) {
+    property {
+        name:                         string(STR_NAME_EMU400);
+        introduction_date:            date(1990, 11, 9);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 42;
+        reliability_decay:            18;
+
+        cargo_capacity:               180;
+        loading_speed:                10;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        111 km/h;
+        track_type:                   NABE;
+        power:                        1920 kW;
+        weight:                       42 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  1;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.6;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_LOC),
+                        string(STR_TRLENGTH_4T,
+                           string(STR_TRLENGTH_4C),
+                           string(STR_TRLENGTH_8C),
+                           string(STR_TRLENGTH_12C),
+                           string(STR_TRLENGTH_16C)
+                         ),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 180;
+        default:                switch_emu400_gfx_pos;
+            purchase:               spriteset_emu400_purchase;
+        can_attach_wagon:             switch_emu400_attach_vehid;
+        start_stop:           switch_emu400_start_stop;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      switch_emu400_mucar;
+        cargo_capacity:               180;
+        loading_speed:                20;
+        power: 1920;
+        weight: 40;
+      }
+}

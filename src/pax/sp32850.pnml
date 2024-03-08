@@ -1,0 +1,110 @@
+
+spriteset(spriteset_sp32850_light_blue, "gfx/sp32850.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_sp32850_orange, "gfx/sp32850.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_sp32850_cc, "gfx/sp32850.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_sp32850_purchase_light_blue, "gfx/sp32850.png") {
+    tmpl_vehicle_single(5, 87, 16, -25, -8)
+}
+
+spriteset(spriteset_sp32850_purchase_orange, "gfx/sp32850.png") {
+    tmpl_vehicle_single(6, 87, 16, -25, -8)
+}
+
+switch(FEAT_TRAINS, SELF, switch_sp32850_year, current_year) {
+    0..1979: spriteset_sp32850_light_blue;
+    spriteset_sp32850_orange;
+}
+
+switch(FEAT_TRAINS, SELF, switch_sp32850_livery, cargo_subtype) {
+    0: switch_sp32850_year;
+    1: spriteset_sp32850_light_blue;
+    2: spriteset_sp32850_orange;
+    3: spriteset_sp32850_cc;
+}
+
+switch(FEAT_TRAINS, SELF, switch_sp32850_purchase, current_year) {
+    0..1979: spriteset_sp32850_purchase_light_blue;
+    spriteset_sp32850_purchase_orange;
+}
+
+switch(FEAT_TRAINS, SELF, switch_sp32850_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_1F, string(STR_SUFFIX_YEARDEP)
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_SUFFIX_CHUKUANG),
+                                    ),
+                                    string(STR_CONCAT_2F, 
+                                     string(STR_COLOUR_WHITE), 
+                                     string(STR_COLOUR_LTBLUE)
+                                     )
+                                 );
+    2: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_SUFFIX_CHUKUANG),
+                                    ),
+                                    string(STR_CONCAT_2F, 
+                                     string(STR_COLOUR_CREAM), 
+                                     string(STR_COLOUR_ORANGE)
+                                     )
+                                 );
+    3: return string(STR_REFIT_CC);
+       return CB_RESULT_NO_TEXT;
+    }
+/* Define the actual train */
+item(FEAT_TRAINS, item_sp32850) {
+    /* Define properties first, make sure to set all of them */
+    property {
+        name:                         string(STR_NAME_SP32850);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(1970, 2, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 45;
+        reliability_decay:            20;
+        cost_factor:                  20;
+        running_cost_factor:          50; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       8;
+        speed:                        101 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NAAN; // from rail type table
+        running_cost_base:            RUNNING_COST_NONE;
+        cargo_capacity:               48;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       35 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        extra_power_per_wagon:        0 kW;
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+    /* Define graphics and callbacks
+     * Setting all callbacks is not needed, only define what is used */
+    graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_3S, 
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 48;
+  cargo_subtype_text: switch_sp32850_subtype_text;
+  default: switch_sp32850_livery;
+  purchase: switch_sp32850_purchase;
+  }
+}

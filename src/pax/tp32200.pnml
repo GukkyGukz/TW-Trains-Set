@@ -1,0 +1,134 @@
+
+spriteset(spriteset_tp32200_blue, "gfx/tp32200.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_tp32200_light_blue, "gfx/tp32200.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_tp32200_dark_blue, "gfx/tp32200.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_tp32200_cc, "gfx/tp32200.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_tp32200_cc_light, "gfx/tp32200.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_tp32200_purchase_blue, "gfx/tp32200.png") {
+    tmpl_vehicle_single(5, 87, 16, -25, -8)
+}
+
+spriteset(spriteset_tp32200_purchase_light_blue, "gfx/tp32200.png") {
+    tmpl_vehicle_single(6, 87, 16, -25, -8)
+}
+
+switch(FEAT_TRAINS, SELF, switch_tp32200_year, current_year) {
+    0..2019: spriteset_tp32200_blue;
+    spriteset_tp32200_light_blue;
+}
+
+switch(FEAT_TRAINS, SELF, switch_tp32200_livery, cargo_subtype) {
+    0: switch_tp32200_year;
+    1: spriteset_tp32200_blue;
+    2: spriteset_tp32200_light_blue;
+    3: spriteset_tp32200_dark_blue;
+    4: spriteset_tp32200_cc;
+    5: spriteset_tp32200_cc_light;
+}
+
+switch(FEAT_TRAINS, SELF, switch_tp32200_purchase, current_year) {
+    0..2019: spriteset_tp32200_purchase_blue;
+    spriteset_tp32200_purchase_light_blue;
+}
+
+switch(FEAT_TRAINS, SELF, switch_tp32200_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_1F, string(STR_SUFFIX_YEARDEP)
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                   string(STR_CONCAT_1F, 
+                                    string(STR_SUFFIX_ORDINARY),
+                                    ),
+                                    string(STR_CONCAT_1F, 
+                                     string(STR_COLOUR_BLUE)
+                                     )
+                                  
+                                 );
+    2: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                   string(STR_CONCAT_1F, 
+                                    string(STR_SUFFIX_BREEZYBLUE),
+                                    ),
+                                    string(STR_CONCAT_1F, 
+                                     string(STR_COLOUR_BLUE)
+                                     )
+                                  
+                                 );
+    3: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                   string(STR_CONCAT_1F, 
+                                    string(STR_SUFFIX_ORDINARY),
+                                    ),
+                                    string(STR_CONCAT_1F, 
+                                     string(STR_COLOUR_NVBLUE)
+                                     )
+                                  
+                                 );
+    4: return string(STR_REFIT_CC);
+    5: return string(STR_CONCAT_2, string(STR_REFIT_CC), 
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_COLOUR_LTBLUE)
+                                    )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+/* Define the actual train */
+item(FEAT_TRAINS, item_tp32200) {
+    /* Define properties first, make sure to set all of them */
+    property {
+        name:                         string(STR_NAME_TP32200);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(1971, 10, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 45;
+        reliability_decay:            10;
+        cost_factor:                  10;
+        running_cost_factor:          50; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       8;
+        speed:                        101 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NAAN; // from rail type table
+        running_cost_base:            RUNNING_COST_NONE;
+        cargo_capacity:               96;
+        cargo_allow_refit:            [PASS, MAIL, GOOD];
+        dual_headed:                  0;
+        weight:                       35 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        extra_power_per_wagon:        0 kW;
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+    /* Define graphics and callbacks
+     * Setting all callbacks is not needed, only define what is used */
+    graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_3S, 
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_LOC),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 96;
+  cargo_subtype_text: switch_tp32200_subtype_text;
+  default: switch_tp32200_livery;
+  purchase: switch_tp32200_purchase;
+  }
+}

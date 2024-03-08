@@ -1,0 +1,227 @@
+spriteset(spriteset_shiki_800_black_front, "gfx/freight/superheavy.png") {
+	template_2cc_std(1, 1)
+}
+
+spriteset(spriteset_shiki_800_black_rear, "gfx/freight/superheavy.png") {
+	template_2cc_std(1, 32)
+}
+
+spriteset(spriteset_shiki_800_blue_front, "gfx/freight/superheavy.png") {
+	template_2cc_std(1, 64)
+}
+
+spriteset(spriteset_shiki_800_blue_rear, "gfx/freight/superheavy.png") {
+	template_2cc_std(1, 96)
+}
+
+spriteset(spriteset_shiki_800_black_filler, "gfx/freight/superheavy.png") {
+	template_2cc_std(1, 128)
+}
+
+spriteset(spriteset_shiki_800_blue_filler, "gfx/freight/superheavy.png") {
+	template_2cc_std(1, 160)
+}
+
+spriteset(spriteset_shiki_800_load, "gfx/freight/superheavy.png") {
+	template_2cc_std(1, 192)
+}
+
+spriteset(spriteset_shiki_800_blank, "gfx/freight/superheavy.png") {
+	template_2cc_std(1, 224)
+}
+
+
+spriteset(spriteset_shiki_800_jnr_purchase, "gfx/freight/superheavy.png") {
+	template_purchase(1, 256)
+}
+
+spriteset(spriteset_shiki_800_jrf_purchase, "gfx/freight/superheavy.png") {
+	template_purchase(89, 256)
+}
+
+spriteset(spriteset_shiki_800_nippon_purchase, "gfx/freight/superheavy.png") {
+	template_purchase(1, 288)
+}
+
+
+spritegroup spritegroup_shiki_800_load {
+    loading: [spriteset_shiki_800_blank];
+    loaded:  [spriteset_shiki_800_load];
+}
+
+
+
+/* --- Articulated part callback  --- */
+switch(FEAT_TRAINS, SELF, switch_shiki_800_articulated_part, extra_callback_info1) {
+	1: return shiki_800_rear;
+    2: return shiki_800_rear;
+	3: return shiki_800_rear;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+//livery and yeardep switches
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_front_yeardep, build_year) {
+	1987..2008: spriteset_shiki_800_blue_front;
+	spriteset_shiki_800_black_front;
+}
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_front_livery, cargo_subtype) {
+	1: spriteset_shiki_800_black_front;
+	2: spriteset_shiki_800_blue_front;
+	switch_shiki_800_front_yeardep;
+}
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_rear_yeardep, build_year) {
+	1987..2008: spriteset_shiki_800_blue_rear;
+	spriteset_shiki_800_black_rear;
+}
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_rear_livery, cargo_subtype) {
+	1: spriteset_shiki_800_black_rear;
+	2: spriteset_shiki_800_blue_rear;
+	switch_shiki_800_rear_yeardep;
+}
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_filler_yeardep, build_year) {
+	1987..2008: spriteset_shiki_800_blue_filler;
+	spriteset_shiki_800_black_filler;
+}
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_filler_livery, cargo_subtype) {
+	1: spriteset_shiki_800_black_filler;
+	2: spriteset_shiki_800_blue_filler;
+	switch_shiki_800_filler_yeardep;
+}
+
+switch(FEAT_TRAINS, SELF, switch_shiki_8000_subtype_text, cargo_subtype) {
+	0: return string(STR_REFIT_YEARDEP);
+	1: return string(STR_CONCAT_2, string(STR_SUFFIX_NIPPON), 
+                                    string(STR_CONCAT_1F, 
+                                     string(STR_COLOUR_BLACK)
+                                    )
+                                 );
+	2: return string(STR_CONCAT_2, string(STR_SUFFIX_TOSHIBA), 
+                                    string(STR_CONCAT_1F, 
+                                     string(STR_COLOUR_BLUE)
+                                    )
+                                 );
+	   return CB_RESULT_NO_TEXT;
+}
+
+//make brake van invisible if it's the last wagon
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_blank_end, position_in_consist_from_end) {
+	0: spriteset_shiki_800_blank;
+	switch_shiki_800_filler_livery;
+}
+
+
+//switch to read cargo count of lead vehicle
+
+switch (FEAT_TRAINS, SELF, switch_read_shiki_800_cargo_count, 
+                                            [STORE_TEMP(-1 * position_in_articulated_veh, 0x10F), var[0x61, 0, 0x0000FFFF, 0xBC]]) {
+    return;
+}
+
+//shift graphics depending on cargo count
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_part_1, switch_read_shiki_800_cargo_count() ) {
+	0: switch_shiki_800_rear_livery;
+	1..50: spritegroup_shiki_800_load;
+	spriteset_shiki_800_load; 
+}
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_part_2, switch_read_shiki_800_cargo_count() ) {
+	0: spriteset_shiki_800_blank;
+	switch_shiki_800_rear_livery;
+}
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_part_3, switch_read_shiki_800_cargo_count() ) {
+	0: switch_shiki_800_blank_end;
+	spriteset_shiki_800_blank; 
+}
+
+//articulated vehicle parts
+
+switch(FEAT_TRAINS, SELF, switch_shiki_800_position, position_in_articulated_veh) {
+	1: switch_shiki_800_part_1;
+	2: switch_shiki_800_part_2;
+	3: switch_shiki_800_part_3;
+	switch_shiki_800_front_livery;
+}
+
+//purchase
+switch(FEAT_TRAINS, SELF, switch_shiki_800_purchase, current_year) {
+	0..1987: spriteset_shiki_800_jnr_purchase;
+	1987..2008: spriteset_shiki_800_jrf_purchase;
+	spriteset_shiki_800_nippon_purchase;
+	}
+
+//articulated part
+
+item (FEAT_TRAINS, shiki_800_rear, 1651) {
+	property {
+		sprite_id: SPRITE_ID_NEW_TRAIN;
+		track_type: NAAN;
+		name: string(STR_NAME_SHIKI_800);
+		climates_available: NO_CLIMATE;
+		introduction_date: date(1920,1,1);
+		cargo_capacity: 1; 
+		default_cargo_type: GOOD;
+		cargo_allow_refit: [GOOD, POWR, ENSP, VPTS, MPTS, SESP, URAN, NUKF, NUKW, NWST];
+		length: 4;
+		visual_effect_and_powered: (VISUAL_EFFECT_DISABLE);
+	}
+	graphics {
+		cargo_capacity: return 0;
+		default: switch_shiki_800_position;
+	}
+}
+
+//main item
+
+item (FEAT_TRAINS, shiki_800, 50) {
+	property {
+		sprite_id: SPRITE_ID_NEW_TRAIN;
+		track_type: NAAN;
+		name: string(STR_NAME_SHIKI_800);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1973,1,1);
+		speed: 75 km/h;
+		air_drag_coefficient: 0;
+		power: 0;
+		dual_headed: 0;
+		cargo_capacity: 155; 
+		refit_cost: 0;
+		default_cargo_type: GOOD;
+		loading_speed: 10;
+//		refittable_cargo_classes: bitmask(CC_COVERED, CC_BULK); 
+//		non_refittable_cargo_classes: 0; 
+		cargo_allow_refit: [GOOD, POWR, ENSP, VPTS, MPTS, SESP, URAN, NUKF, NUKW, NWST]; 
+//		cargo_disallow_refit: [WDPR, WOOL];
+		weight: 100;
+		cost_factor: 100;
+	running_cost_factor: 15;
+	running_cost_base: RUNNING_COST_STEAM;
+		length: 8;
+		misc_flags: bitmask(TRAIN_FLAG_AUTOREFIT);
+	}
+	graphics {
+		additional_text:	string(STR_CONCAT_4S, 
+								string(STR_DESC_NARROWGAUGE),
+								string(STR_DESC_USAGE_FRT_HVY),
+								string(STR_CONCAT_2C, 
+									string(STR_SUFFIX_NIPPON),
+									string(STR_SUFFIX_TOSHIBA)
+								),
+								string(STR_DESC_BRAKE_NA)
+							);
+
+		cargo_capacity: return 155;
+		default: switch_shiki_800_front_livery;
+		purchase: switch_shiki_800_purchase;
+		articulated_part: switch_shiki_800_articulated_part;
+		cargo_subtype_text: switch_shiki_8000_subtype_text;
+	}
+}

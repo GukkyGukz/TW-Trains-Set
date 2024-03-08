@@ -1,0 +1,13 @@
+grf {
+	grfid: "UK\01\01";
+	name: string(STR_TWTS_NAME);
+	desc: string(STR_TWTS_DESCRIPTION);
+	version: 12;
+	min_compatible_version: 0;
+}
+
+//disable_item(FEAT_TRAINS);
+
+//train look nice thing
+traininfo_y_offset = 2;
+train_width_32_px = 1;
