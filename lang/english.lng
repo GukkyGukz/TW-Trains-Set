@@ -2,7 +2,7 @@
 # This is the English language file
 
 # GRF name and description definitions
-STR_TWTS_NAME        :TW Trains Set 24.0308.12
+STR_TWTS_NAME        :{TITLE} {VERSION}
 STR_TWTS_DESCRIPTION :Taiwan Trains Set{}{COPYRIGHT}2024 TeamTWTS{}License: GPL v3
 
 # vehicle names
