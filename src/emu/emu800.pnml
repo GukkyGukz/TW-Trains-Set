@@ -1,0 +1,184 @@
+
+
+spriteset(ss_emu800_cabs1f_firstbatch,            "gfx/800.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu800_cabs1b_firstbatch,            "gfx/800.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu800_cabs2f_firstbatch,            "gfx/800.png") {template_10_cab_rev_standard_emu(1,41)}
+
+spriteset(ss_emu800_cabs2b_firstbatch,            "gfx/800.png") {template_10_cab_rev_reversed_emu(1,1)}
+
+spriteset(ss_emu800_cabs1f_secbatch,            "gfx/800.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu800_cabs1b_secbatch,            "gfx/800.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu800_cabs2f_secbatch,            "gfx/800.png") {template_10_cab_rev_standard_emu(1,41)}
+
+spriteset(ss_emu800_cabs2b_secbatch,            "gfx/800.png") {template_10_cab_rev_reversed_emu(1,1)}
+
+spriteset(spriteset_emu800_purchase, "gfx/800.png") {
+    template_purchase_dualheaded(0, 201)
+}
+
+spriteset(spriteset_emu800_em, "gfx/800.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu800_ep, "gfx/800.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_emu800_em_flip, "gfx/800.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu800_ep_flip, "gfx/800.png") {
+    tmpl_vehicle_8_views(4, 1)
+}
+
+/* --- Graphics callback  --- */
+
+// Subtype Selection
+switch(FEAT_TRAINS, PARENT, sw_emu800_cabs1f, cargo_subtype) {
+        0: ss_emu800_cabs1f_firstbatch;
+        1: ss_emu800_cabs1f_secbatch;
+    }
+
+
+switch(FEAT_TRAINS, PARENT, sw_emu800_cabs1b, cargo_subtype) {
+        0: ss_emu800_cabs1b_firstbatch;
+        1: ss_emu800_cabs1b_secbatch;
+    }
+
+
+switch(FEAT_TRAINS, PARENT, sw_emu800_cabs2f, cargo_subtype) {
+        0: ss_emu800_cabs2f_firstbatch;
+        1: ss_emu800_cabs2f_secbatch;
+    }
+
+switch(FEAT_TRAINS, PARENT, sw_emu800_cabs2b, cargo_subtype) {
+        0: ss_emu800_cabs2b_firstbatch;
+        1: ss_emu800_cabs2b_secbatch;
+    }
+
+switch(FEAT_TRAINS, SELF, switch_emu800_mucar_pos, position_in_consist) {
+    2: spriteset_emu800_em;
+    3: spriteset_emu800_ep;
+    4: spriteset_emu800_em;
+    5: spriteset_emu800_em_flip;
+    6: spriteset_emu800_ep;
+    7: spriteset_emu800_em;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu800_mucar, num_vehs_in_consist) {
+    8: switch_emu800_mucar_pos;
+    spriteset_trmu_car_add;
+}
+
+
+
+/* Cab selection */
+    // Rear cab
+    switch (FEAT_TRAINS, PARENT, sw_emu800_rear, vehicle_is_reversed) {				
+            1:  sw_emu800_cabs1b;                   // cab01	
+            sw_emu800_cabs2f;                       // cab02
+        }
+
+    // Lead cab
+    switch (FEAT_TRAINS, PARENT, sw_emu800_lead, vehicle_is_reversed) {				
+            1:  sw_emu800_cabs2b;                   // cab02
+            sw_emu800_cabs1f;                       // cab01	
+        }
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu800_start_stop, num_vehs_in_consist) {
+    10: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+switch (FEAT_TRAINS, SELF, sw_emu800_graphics, position_in_consist) {				
+		0:  dummy_sprites;
+        9:  dummy_sprites;
+        1:  sw_emu800_lead;
+        8: sw_emu800_rear;
+        switch_emu800_mucar_pos;
+	}
+
+switch(FEAT_TRAINS, SELF, sw_emu800_length, position_in_consist) {
+    0:  return 1;
+    9: return 1;
+    return 8;
+}
+    
+
+switch (FEAT_TRAINS, SELF, sw_emu800_articulated_part, extra_callback_info1) {
+		1 .. 9: return emu800;									
+		return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+	}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu800_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, emu800) {
+    property {
+        name:                         string(STR_NAME_EMU800);
+        introduction_date:            date(2013, 9, 3);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 40;
+        reliability_decay:            15;
+
+        cargo_capacity:               116;
+        loading_speed:                20;
+        cost_factor:                  70;
+        running_cost_factor:          54;
+
+        speed:                        131 km/h;
+        track_type:                   NABE;
+        power:                        3200 kW;
+        weight:                       40 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  0;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.6;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_LOC),
+                        string(STR_TRLENGTH_1T,
+                           string(STR_TRLENGTH_8C)
+                         ),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 180;
+        default:                sw_emu800_graphics;
+            purchase:               spriteset_emu800_purchase;
+        can_attach_wagon:             switch_emu800_attach_vehid;
+        articulated_part:               sw_emu800_articulated_part;
+        start_stop:           switch_emu800_start_stop;
+        length:                       sw_emu800_length;
+    }
+}

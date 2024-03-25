@@ -2,12 +2,30 @@ grf {
 	grfid: "UK\01\01";
 	name: string(STR_TWTS_NAME);
 	desc: string(STR_TWTS_DESCRIPTION);
-	version: 12;
+	version: 13;
 	min_compatible_version: 0;
-}
 
+
+		//sprite length
+		param 0 {
+				param_spritelength {
+						type: int;
+						name: string(STR_PARAM_NAME_SPRITELENGTH);
+						desc: string(STR_PARAM_DESC_SPRITELENGTH);
+						min_value: 0;
+						max_value: 1;
+						def_value: 0;
+						names: {
+												0: string(STR_PARAM_LENGTH_12);
+												1: string(STR_PARAM_LENGTH_10);
+						};
+				}
+		}
+		
+}
 //disable_item(FEAT_TRAINS);
 
 //train look nice thing
 traininfo_y_offset = 2;
 train_width_32_px = 1;
+

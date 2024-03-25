@@ -63,6 +63,12 @@ STR_UNIT_ERROR              : Invalid train length! Add or remove TR MU cars (Wa
 STR_MUCAR_ERROR             : This train can only attach TR MU cars.
 STR_PPCAR_ERROR             : This train can only attach TR Push-Pull cars.
 
+STR_PARAM_NAME_SPRITELENGTH : Sprite length
+STR_PARAM_DESC_SPRITELENGTH : 12/8 or 10/8 coach for shinkansen
+
+STR_PARAM_LENGTH_12         : 12/8
+STR_PARAM_LENGTH_10         : 10/8
+
 STR_EMU500_DESC : EMU500 Commuter Electric Muitiple Unit Train
 TRMUCAR_DESC : {BLUE}Used to represent  {GREEN}motor and trailer cars{BLUE} within an EMU formation. {}{RED}Cannot be the rear of an EMU consist.
 

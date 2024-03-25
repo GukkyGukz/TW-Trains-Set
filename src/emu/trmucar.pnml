@@ -10,6 +10,11 @@ spriteset(spriteset_trmu_car_purchase, "gfx/trmu_car.png") {
     tmpl_vehicle_4_views(0)
 }
 
+switch (FEAT_TRAINS, SELF, sw_trmucar_end_articulated_part, extra_callback_info1) {
+		1 .. 2: return trmu_car;									
+		return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+	}
+
 item(FEAT_TRAINS, trmu_car) {
     /* Define properties first, make sure to set all of them */
     property {

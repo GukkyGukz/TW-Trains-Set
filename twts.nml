@@ -2,15 +2,33 @@ grf {
 	grfid: "UK\01\01";
 	name: string(STR_TWTS_NAME);
 	desc: string(STR_TWTS_DESCRIPTION);
-	version: 12;
+	version: 13;
 	min_compatible_version: 0;
-}
 
+
+		//sprite length
+		param 0 {
+				param_spritelength {
+						type: int;
+						name: string(STR_PARAM_NAME_SPRITELENGTH);
+						desc: string(STR_PARAM_DESC_SPRITELENGTH);
+						min_value: 0;
+						max_value: 1;
+						def_value: 0;
+						names: {
+												0: string(STR_PARAM_LENGTH_12);
+												1: string(STR_PARAM_LENGTH_10);
+						};
+				}
+		}
+		
+}
 //disable_item(FEAT_TRAINS);
 
 //train look nice thing
 traininfo_y_offset = 2;
 train_width_32_px = 1;
+
 cargotable {
     //DEFAULT
     PASS, COAL, MAIL, OIL_, LVST, GOOD, GRAI, WOOD, IORE, STEL, VALU, PAPR, WHEA, FOOD, GOLD, RUBR, FRUT, MAIZ, CORE, WATR, DIAM, 
@@ -64,7 +82,7 @@ r20,
 dr2700,
 
 //EMU
-trmu_car, emu200, emu300, emu400, emu500, emu600,
+trmu_car, emu200, emu300, emu400, emu500, emu600, emu800,
 
 //TEMU
 
@@ -128,10 +146,476 @@ template tmpl_vehicle_8_views_2(num, reversed) {
     tmpl_vehicle_basic(reversed ? 181 : 269, 1 + 32 * num)
 }
 
+
+
 /* Template for a single vehicle sprite */
 template tmpl_vehicle_single(num, xsize, ysize, xoff, yoff) {
     [1, 1 + 32 * num, xsize, ysize, xoff, yoff]
 }
+
+/* Dummy Template */
+
+template template_dummy (x, y) {
+  [0, 0, 2, 2, 0, 0, CROP]
+  [0, 0, 2, 2, 0, 0, CROP]
+  [0, 0, 2, 2, 0, 0, CROP]
+  [0, 0, 2, 2, 0, 0, CROP]
+  [0, 0, 2, 2, 0, 0, CROP]
+  [0, 0, 2, 2, 0, 0, CROP]
+  [0, 0, 2, 2, 0, 0, CROP]
+  [0, 0, 2, 2, 0, 0, CROP]
+}
+
+
+/* EMU Templates */
+
+/* 1212121212121212121212121212121212121212121212121212 */
+
+template template_12_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-18]
+    [ x+16,		y,		30,		29,		-18,		-19]
+    [ x+54,		y,		48,		16,		-24,		-12]
+    [ x+110,	y,		30,		29,		-10,		-19]
+    [ x+148,	y,		8,		36,		-3,			-18]
+    [ x+164,	y,		30,		29,		-18,		-19]
+    [ x+202,	y,		48,		16,		-24,		-12]
+    [ x+258,	y,		30,		29,		-10,		-19]
+}
+
+template template_12_cab_rev_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-18]
+    [ x+164,	y,		30,		29,		-18,		-19]
+    [ x+202,	y,		48,		16,		-24,		-12]
+    [ x+258,	y,		30,		29,		-10,		-19]
+    [ x,		y,		8,		36,		-3,			-18]
+    [ x+16,		y,		30,		29,		-18,		-19]
+    [ x+54,		y,		48,		16,		-24,		-12]
+    [ x+110,	y,		30,		29,		-10,		-19]
+}
+
+template template_12_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-18]
+    [ x+164,	y,		30,		29,		-18,		-19]
+    [ x+202,	y,		48,		16,		-24,		-12]
+    [ x+258,	y,		30,		29,		-10,		-19]
+    [ x,		y,		8,		36,		-3,			-18]
+    [ x+16,		y,		30,		29,		-18,		-19]
+    [ x+54,		y,		48,		16,		-24,		-12]
+    [ x+110,	y,		30,		29,		-10,		-19]
+}
+
+template template_12_cab_rev_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-18]
+    [ x+16,		y,		30,		29,		-18,		-19]
+    [ x+54,		y,		48,		16,		-24,		-12]
+    [ x+110,	y,		30,		29,		-10,		-19]
+    [ x+148,	y,		8,		36,		-3,			-18]
+    [ x+164,	y,		30,		29,		-18,		-19]
+    [ x+202,	y,		48,		16,		-24,		-12]
+    [ x+258,	y,		30,		29,		-10,		-19]
+}
+
+/* 10101010101010101010101010101010101010101010101010 */
+
+template template_10_standard_emu(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-21]
+    [ x+16,		y,		26,		29,		-14,		-21]
+    [ x+54,		y,		40,		16,		-20,		-12]
+    [ x+110,	y,		26,		29,		-3,		    -18]
+    [ x+148,	y,		8,		36,		-3,			-23]
+    [ x+164,	y,		26,		29,		-17,		-20]
+    [ x+202,	y,		40,		16,		-20,		-12]
+    [ x+258,	y,		26,		29,		-8,		    -20]
+}
+
+template template_10_cab_rev_standard_emu(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-23]
+    [ x+164,	y,		26,		29,		-13,		-21]
+    [ x+202,	y,		40,		16,		-20,		-12]
+    [ x+258,	y,		26,		29,		-4,		    -18]
+    [ x,    	y,		8,		36,		-3,			-21]
+    [ x+16, 	y,		26,		29,		-16,		-20]
+    [ x+54, 	y,		40,		16,		-20,		-12]
+    [ x+110,	y,		26,		29,		-7,		    -20]
+}
+
+template template_10_reversed_emu(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-23]
+    [ x+164,	y,		26,		29,		-17,		-20]
+    [ x+202,	y,		40,		16,		-20,		-12]
+    [ x+258,	y,		26,		29,		-8,		    -20]
+    [ x,    	y,		8,		36,		-3,			-21]
+    [ x+16, 	y,		26,		29,		-18,		-19]
+    [ x+54, 	y,		40,		16,		-20,		-12]
+    [ x+110,	y,		26,		29,		-11,	    -22]
+}
+
+template template_10_cab_rev_reversed_emu(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-21]
+    [ x+16,		y,		26,		29,		-16,		-20]
+    [ x+54,		y,		40,		16,		-20,		-12]
+    [ x+110,	y,		26,		29,		-7,		    -20]
+    [ x+148,	y,		8,		36,		-3,			-23]
+    [ x+164,	y,		26,		29,		-21,		-16]
+    [ x+202,	y,		40,		16,		-18,		-15]
+    [ x+258,	y,		26,		29,		-12,	    -21]
+}
+
+
+/* 888888888888888888888888888888888888888888888888888888 */
+
+
+// Not Reversed
+template template_8_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-20]
+    [ x+20,		y,		22,		27,		-14,		-19]
+    [ x+62,		y,		32,		16,		-16,		-12]
+    [ x+114,	y,		22,		27,		-8, 		-20]
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+168,	y,		22,		27,		-14,		-19]
+    [ x+210,	y,		32,		16,		-16,		-12]
+    [ x+262,	y,		22,		27,		-8,		    -20]
+}
+
+template template_8_cab_rev_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+168,	y,		22,		27,		-14,		-19]
+    [ x+210,	y,		32,		16,		-16,		-12]
+    [ x+262,	y,		22,		27,		-8, 		-20]
+    [ x,	    y,		8,		36,		-3,			-20]
+    [ x+20,	    y,		22,		27,		-14,		-19]
+    [ x+62,	    y,		32,		16,		-16,		-12]
+    [ x+114,	y,		22,		27,		-8,		    -20]
+}
+
+template template_8_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+168,	y,		22,		27,		-14,		-19]
+    [ x+210,	y,		32,		16,		-16,		-12]
+    [ x+262,	y,		22,		27,		-8, 		-20]
+    [ x,		y,		8,		36,		-3,			-20]
+    [ x+20,		y,		22,		27,		-14,		-19]
+    [ x+62,		y,		32,		16,		-16,		-12]
+    [ x+114,	y,		22,		27,		-8,	    	-20]
+}
+
+template template_8_cab_rev_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,	    y,		8,		36,		-3,			-20]
+    [ x+20,	    y,		22,		27,		-14,		-19]
+    [ x+62,	    y,		32,		16,		-16,		-12]
+    [ x+114,	y,		22,		27,		-8, 		-20]
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+168,	y,		22,		27,		-14,		-19]
+    [ x+210,	y,		32,		16,		-16,		-12]
+    [ x+262,	y,		22,		27,		-8,	    	-20]
+}
+
+template template_2_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		16,		-3,			-14]		// |
+    [ x+16,		y,		10,		16,		-6,		-12]		// /
+    [ x+54,		y,		8,		16,		6,		-12]	// >
+    [ x+110,	y,		10,		16,		8,			-7]		// \
+    [ x+148,	y,		8,		16,		-3,			-4]		// |
+    [ x+164,	y,		10,		16,		-16,		-7]		// /
+    [ x+202,	y,		8,		16,		-14,		-12]	// <
+    [ x+258,	y,		10,		16,		-2,		-12]		// \
+}
+
+template template_2_cab_rev_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		16,		-3,			-14]		// V
+    [ x+164,	y,		10,		16,		-6,		-12]		// /
+    [ x+202,	y,		8,		16,		6,		-12]	// <
+    [ x+258,	y,		10,		16,		8,			-7]		// \
+	[ x,		y,		8,		16,		-3,			-4]		// /\
+    [ x+16,		y,		10,		16,		-16,		-7]		// /
+    [ x+54,		y,		8,		16,		-14,		-12]	// >
+    [ x+110,	y,		10,		16,		-2,		-12]		// \
+    
+}
+
+template template_2_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		16,		-3,			-12]
+    [ x+164,	y,		10,		16,		-6,			-12]
+    [ x+202,	y,		8,		16,		6,			-12]
+    [ x+258,	y,		10,		16,		8,			-7]
+	[ x,		y,		8,		16,		-3,			-6]
+    [ x+16,		y,		10,		16,		-16,		-7]
+    [ x+54,		y,		8,		16,		-14,		-12]	
+    [ x+110,	y,		10,		16,		-2,			-12]
+   
+}
+
+template template_2_cab_rev_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+	[ x,		y,		8,		16,		-3,			-12]
+    [ x+16,		y,		10,		16,		-6,			-12]
+    [ x+54,		y,		8,		16,		6,			-12]
+    [ x+110,	y,		10,		16,		8,			-7]
+	[ x+148,	y,		8,		16,		-3,			-6]
+    [ x+164,	y,		10,		16,		-16,		-7]
+    [ x+202,	y,		8,		16,		-14,		-12]
+    [ x+258,	y,		10,		16,		-2,			-12]
+}
+
+template template_12_on_2_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-22]
+    [ x+16,		y,		30,		29,		-18,		-19]
+    [ x+54,		y,		48,		16,		-18,		-12]
+    [ x+110,	y,		30,		29,		-4,			-16]
+    [ x+148,	y,		8,		36,		-3,			-16]
+    [ x+164,	y,		30,		29,		-24,		-16]
+    [ x+202,	y,		48,		16,		-30,		-12]
+    [ x+258,	y,		30,		29,		-10,		-19]
+}
+
+template template_12_on_2_cab_rev_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-22]
+    [ x+164,	y,		30,		29,		-18,		-19]
+    [ x+202,	y,		48,		16,		-18,		-12]
+    [ x+258,	y,		30,		29,		-4,			-16]
+    [ x,		y,		8,		36,		-3,			-16]
+    [ x+16,		y,		30,		29,		-24,		-16]
+    [ x+54,		y,		48,		16,		-30,		-12]
+    [ x+110,	y,		30,		29,		-10,		-19]
+}
+
+
+template template_12_on_2_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+164,	y,		30,		29,		-18,		-19]
+    [ x+202,	y,		48,		16,		-18,		-12]
+    [ x+258,	y,		30,		29,		-4,			-16]
+    [ x,		y,		8,		36,		-3,			-18]
+    [ x+16,		y,		30,		29,		-24,		-16]
+    [ x+54,		y,		48,		16,		-30,		-12]
+    [ x+110,	y,		30,		29,		-10,		-19]
+}
+
+template template_12_on_2_cab_rev_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-20]
+    [ x+16,		y,		30,		29,		-18,		-19]
+    [ x+54,		y,		48,		16,		-18,		-12]
+    [ x+110,	y,		30,		29,		-4,			-16]
+    [ x+148,	y,		8,		36,		-3,			-18]
+    [ x+164,	y,		30,		29,		-24,		-16]
+    [ x+202,	y,		48,		16,		-30,		-12]
+    [ x+258,	y,		30,		29,		-10,		-19]
+}
+
+template template_10_on_2_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-22]
+    [ x+16,		y,		26,		29,		-18,		-19]
+    [ x+54,		y,		40,		16,		-18,		-12]
+    [ x+110,	y,		26,		29,		-4,			-18]
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+164,	y,		26,		29,		-20,		-18]
+    [ x+202,	y,		40,		16,		-22,		-12]
+    [ x+258,	y,		26,		29,		-6,			-19]
+}
+
+template template_10_on_2_cab_rev_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-22]
+    [ x+164,	y,		26,		29,		-18,		-19]
+    [ x+202,	y,		40,		16,		-18,		-12]
+    [ x+258,	y,		26,		29,		-4,			-18]
+    [ x,		y,		8,		36,		-3,			-20]
+    [ x+16,		y,		26,		29,		-20,		-18]
+    [ x+54,		y,		40,		16,		-22,		-12]
+    [ x+110,	y,		26,		29,		-6,			-19]
+}
+
+
+template template_10_on_2_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+164,	y,		26,		29,		-18,		-19]
+    [ x+202,	y,		40,		16,		-18,		-12]
+    [ x+258,	y,		26,		29,		-4,			-18]
+    [ x,		y,		8,		36,		-3,			-20]
+    [ x+16,		y,		26,		29,		-20,		-18]
+    [ x+54,		y,		40,		16,		-22,		-12]
+    [ x+110,	y,		26,		29,		-6,			-19]
+}
+
+template template_10_on_2_cab_rev_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-20]
+    [ x+16,		y,		26,		29,		-18,		-19]
+    [ x+54,		y,		40,		16,		-18,		-12]
+    [ x+110,	y,		26,		29,		-4,			-18]
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+164,	y,		26,		29,		-20,		-18]
+    [ x+202,	y,		40,		16,		-22,		-12]
+    [ x+258,	y,		26,		29,		-6,			-19]
+}
+
+template template_8_on_2_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-22]
+    [ x+20,		y,		22,		27,		-18,		-17]
+    [ x+62,		y,		32,		16,		-18,		-12]
+    [ x+114,	y,		22,		27,		-4,			-18]
+    [ x+148,	y,		8,		36,		-3,			-24]
+    [ x+168,	y,		22,		27,		-16,		-18]
+    [ x+210,	y,		32,		16,		-14,		-12]
+    [ x+262,	y,		22,		27,		-2,			-17]
+}
+
+template template_8_on_2_cab_rev_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-22]
+    [ x+168,	y,		22,		27,		-18,		-17]
+    [ x+210,	y,		32,		16,		-18,		-12]
+    [ x+262,	y,		22,		27,		-4,			-18]
+    [ x,		y,		8,		36,		-3,			-24]
+    [ x+20,		y,		22,		27,		-16,		-18]
+    [ x+62,		y,		32,		16,		-14,		-12]
+    [ x+114,	y,		22,		27,		-2,			-17]
+}
+
+template template_8_on_2_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+148,	y,		8,		36,		-3,			-20]
+    [ x+168,	y,		22,		27,		-18,		-17]
+    [ x+210,	y,		32,		16,		-16,		-12]
+    [ x+262,	y,		22,		27,		-4,			-18]
+    [ x,		y,		8,		36,		-3,			-24]
+    [ x+20,		y,		22,		27,		-16,		-18]
+    [ x+62,		y,		32,		16,		-14,		-12]
+    [ x+114,	y,		22,		27,		-2,			-17]
+}
+
+template template_8_on_2_cab_rev_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x,		y,		8,		36,		-3,			-20]
+    [ x+20,		y,		22,		27,		-18,		-17]
+    [ x+62,		y,		32,		16,		-16,		-12]
+    [ x+114,	y,		22,		27,		-4,			-18]
+    [ x+148,	y,		8,		36,		-3,			-24]
+    [ x+168,	y,		22,		27,		-16,		-18]
+    [ x+210,	y,		32,		16,		-14,		-12]
+    [ x+262,	y,		22,		27,		-2,			-17]
+}
+// End template
+/* Begin Functions */
+
+switch (FEAT_TRAINS, PARENT, func_is_reversed, vehicle_is_reversed) {return;}
+
+switch (FEAT_TRAINS, PARENT, NumberCarsInConsist, num_vehs_in_consist / 3) {return;}
+
+/* LENGTHS */
+
+// Standard 2-8-2 Length
+    switch (FEAT_TRAINS, SELF, sw_length_2_8_2, position_in_articulated_veh % 3) {
+        1: return 8;
+        return 2;
+    }
+
+// Standard 1-8-1 Length
+    switch (FEAT_TRAINS, SELF, sw_length_1_8_1, position_in_articulated_veh % 3) {
+        1: return 8;
+        return 1;
+    }
+
+// Standard 1-6-1 Length
+    switch (FEAT_TRAINS, SELF, sw_length_1_6_1, position_in_articulated_veh % 3) {
+        1: return 6;
+        return 1;
+    }
+
+switch (FEAT_TRAINS, SELF, sw_param_length, param_spritelength) {
+        1: sw_length_1_8_1;		    // Length 10
+        sw_length_2_8_2;			// Length 12
+    }
+
+/* End Functions */ 
+ // begin dummy
+
+ // https://www.tt-forums.net/viewtopic.php?f=68&t=53511
+
+spriteset (dummy_sprites, "gfx/empty.png")
+{
+  [0, 0, 2, 2, 0, 0, CROP]
+}
+
+ // end dummy
 
 
 spriteset(spriteset_e200_cc, "gfx/e200.png") {
@@ -478,6 +962,65 @@ property {
   default: switch_r20_livery;
   purchase: switch_r20_purchase;
   }
+}
+
+
+/*---GFX: Spritesets---*/
+spriteset(spriteset_trmu_car, "gfx/trmu_car.png") {
+    tmpl_vehicle_4_views(0)
+}
+spriteset(spriteset_trmu_car_add, "gfx/trmu_car.png") {
+    tmpl_vehicle_4_views(1)
+}
+spriteset(spriteset_trmu_car_purchase, "gfx/trmu_car.png") {
+    tmpl_vehicle_4_views(0)
+}
+
+switch (FEAT_TRAINS, SELF, sw_trmucar_end_articulated_part, extra_callback_info1) {
+		1 .. 2: return trmu_car;									
+		return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+	}
+
+item(FEAT_TRAINS, trmu_car) {
+    /* Define properties first, make sure to set all of them */
+    property {
+        name:                         string(STR_NAME_TRMUCAR);
+        introduction_date: date(1800,1,1);
+        climates_available: ALL_CLIMATES;
+                model_life: VEHICLE_NEVER_EXPIRES;
+                vehicle_life: 60;
+                loading_speed: 0;
+                cost_factor: 64;
+                running_cost_factor: 6;
+                speed: 0 km/h;
+                power: 0 hp;
+                cargo_capacity: 1;
+                weight: 0 ton;
+                tractive_effort_coefficient: 0.3;
+                air_drag_coefficient: 0;
+                reliability_decay: 20;
+                refittable_cargo_classes: bitmask(CC_PASSENGERS);
+                cargo_age_period: 185;
+                refit_cost: 0;
+                track_type: NAAN;
+                ai_special_flag: AI_FLAG_PASSENGER;
+                running_cost_base: RUNNING_COST_DIESEL;
+                engine_class: ENGINE_CLASS_STEAM;
+                visual_effect_and_powered: visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+                sprite_id: SPRITE_ID_NEW_TRAIN;
+                dual_headed: 0;
+                length: 8;
+                extra_power_per_wagon: 0;
+                bitmask_vehicle_info: 0;
+    }
+    /* Define graphics and callbacks
+     * Setting all callbacks is not needed, only define what is used */
+    graphics {
+        purchase:                     spriteset_trmu_car_purchase;
+    additional_text:                    return string(TRMUCAR_DESC);
+    //can_attach_wagon:           set_mu_car_noattach_vehid;
+    spriteset_trmu_car;
+    }
 }
 
 
@@ -1403,56 +1946,186 @@ item(FEAT_TRAINS, emu600) {
 }
 
 
-/*---GFX: Spritesets---*/
-spriteset(spriteset_trmu_car, "gfx/trmu_car.png") {
-    tmpl_vehicle_4_views(0)
-}
-spriteset(spriteset_trmu_car_add, "gfx/trmu_car.png") {
-    tmpl_vehicle_4_views(1)
-}
-spriteset(spriteset_trmu_car_purchase, "gfx/trmu_car.png") {
-    tmpl_vehicle_4_views(0)
+spriteset(ss_emu800_cabs1f_firstbatch,            "gfx/800.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu800_cabs1b_firstbatch,            "gfx/800.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu800_cabs2f_firstbatch,            "gfx/800.png") {template_10_cab_rev_standard_emu(1,41)}
+
+spriteset(ss_emu800_cabs2b_firstbatch,            "gfx/800.png") {template_10_cab_rev_reversed_emu(1,1)}
+
+spriteset(ss_emu800_cabs1f_secbatch,            "gfx/800.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu800_cabs1b_secbatch,            "gfx/800.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu800_cabs2f_secbatch,            "gfx/800.png") {template_10_cab_rev_standard_emu(1,41)}
+
+spriteset(ss_emu800_cabs2b_secbatch,            "gfx/800.png") {template_10_cab_rev_reversed_emu(1,1)}
+
+spriteset(spriteset_emu800_purchase, "gfx/800.png") {
+    template_purchase_dualheaded(0, 201)
 }
 
-item(FEAT_TRAINS, trmu_car) {
-    /* Define properties first, make sure to set all of them */
-    property {
-        name:                         string(STR_NAME_TRMUCAR);
-        introduction_date: date(1800,1,1);
-        climates_available: ALL_CLIMATES;
-                model_life: VEHICLE_NEVER_EXPIRES;
-                vehicle_life: 60;
-                loading_speed: 0;
-                cost_factor: 64;
-                running_cost_factor: 6;
-                speed: 0 km/h;
-                power: 0 hp;
-                cargo_capacity: 1;
-                weight: 0 ton;
-                tractive_effort_coefficient: 0.3;
-                air_drag_coefficient: 0;
-                reliability_decay: 20;
-                refittable_cargo_classes: bitmask(CC_PASSENGERS);
-                cargo_age_period: 185;
-                refit_cost: 0;
-                track_type: NAAN;
-                ai_special_flag: AI_FLAG_PASSENGER;
-                running_cost_base: RUNNING_COST_DIESEL;
-                engine_class: ENGINE_CLASS_STEAM;
-                visual_effect_and_powered: visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
-                sprite_id: SPRITE_ID_NEW_TRAIN;
-                dual_headed: 0;
-                length: 8;
-                extra_power_per_wagon: 0;
-                bitmask_vehicle_info: 0;
+spriteset(spriteset_emu800_em, "gfx/800.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu800_ep, "gfx/800.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_emu800_em_flip, "gfx/800.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu800_ep_flip, "gfx/800.png") {
+    tmpl_vehicle_8_views(4, 1)
+}
+
+/* --- Graphics callback  --- */
+
+// Subtype Selection
+switch(FEAT_TRAINS, PARENT, sw_emu800_cabs1f, cargo_subtype) {
+        0: ss_emu800_cabs1f_firstbatch;
+        1: ss_emu800_cabs1f_secbatch;
     }
-    /* Define graphics and callbacks
-     * Setting all callbacks is not needed, only define what is used */
-    graphics {
-        purchase:                     spriteset_trmu_car_purchase;
-    additional_text:                    return string(TRMUCAR_DESC);
-    //can_attach_wagon:           set_mu_car_noattach_vehid;
-    spriteset_trmu_car;
+
+
+switch(FEAT_TRAINS, PARENT, sw_emu800_cabs1b, cargo_subtype) {
+        0: ss_emu800_cabs1b_firstbatch;
+        1: ss_emu800_cabs1b_secbatch;
+    }
+
+
+switch(FEAT_TRAINS, PARENT, sw_emu800_cabs2f, cargo_subtype) {
+        0: ss_emu800_cabs2f_firstbatch;
+        1: ss_emu800_cabs2f_secbatch;
+    }
+
+switch(FEAT_TRAINS, PARENT, sw_emu800_cabs2b, cargo_subtype) {
+        0: ss_emu800_cabs2b_firstbatch;
+        1: ss_emu800_cabs2b_secbatch;
+    }
+
+switch(FEAT_TRAINS, SELF, switch_emu800_mucar_pos, position_in_consist) {
+    2: spriteset_emu800_em;
+    3: spriteset_emu800_ep;
+    4: spriteset_emu800_em;
+    5: spriteset_emu800_em_flip;
+    6: spriteset_emu800_ep;
+    7: spriteset_emu800_em;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu800_mucar, num_vehs_in_consist) {
+    8: switch_emu800_mucar_pos;
+    spriteset_trmu_car_add;
+}
+
+
+
+/* Cab selection */
+    // Rear cab
+    switch (FEAT_TRAINS, PARENT, sw_emu800_rear, vehicle_is_reversed) {				
+            1:  sw_emu800_cabs1b;                   // cab01	
+            sw_emu800_cabs2f;                       // cab02
+        }
+
+    // Lead cab
+    switch (FEAT_TRAINS, PARENT, sw_emu800_lead, vehicle_is_reversed) {				
+            1:  sw_emu800_cabs2b;                   // cab02
+            sw_emu800_cabs1f;                       // cab01	
+        }
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu800_start_stop, num_vehs_in_consist) {
+    10: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+switch (FEAT_TRAINS, SELF, sw_emu800_graphics, position_in_consist) {				
+		0:  dummy_sprites;
+        9:  dummy_sprites;
+        1:  sw_emu800_lead;
+        8: sw_emu800_rear;
+        switch_emu800_mucar_pos;
+	}
+
+switch(FEAT_TRAINS, SELF, sw_emu800_length, position_in_consist) {
+    0:  return 1;
+    9: return 1;
+    return 8;
+}
+    
+
+switch (FEAT_TRAINS, SELF, sw_emu800_articulated_part, extra_callback_info1) {
+		1 .. 9: return emu800;									
+		return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+	}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu800_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, emu800) {
+    property {
+        name:                         string(STR_NAME_EMU800);
+        introduction_date:            date(2013, 9, 3);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 40;
+        reliability_decay:            15;
+
+        cargo_capacity:               116;
+        loading_speed:                20;
+        cost_factor:                  70;
+        running_cost_factor:          54;
+
+        speed:                        131 km/h;
+        track_type:                   NABE;
+        power:                        3200 kW;
+        weight:                       40 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  0;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.6;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_LOC),
+                        string(STR_TRLENGTH_1T,
+                           string(STR_TRLENGTH_8C)
+                         ),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 180;
+        default:                sw_emu800_graphics;
+            purchase:               spriteset_emu800_purchase;
+        can_attach_wagon:             switch_emu800_attach_vehid;
+        articulated_part:               sw_emu800_articulated_part;
+        start_stop:           switch_emu800_start_stop;
+        length:                       sw_emu800_length;
     }
 }
 
