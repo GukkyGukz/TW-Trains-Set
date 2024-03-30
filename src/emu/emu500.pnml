@@ -76,7 +76,7 @@ item(FEAT_TRAINS, emu500) {
 
         speed:                        111 km/h;
         track_type:                   NABE;
-        power:                        2000 kW;
+        power:                        500 kW;
         weight:                       42 ton;
 
         climates_available:           ALL_CLIMATES;
@@ -93,7 +93,7 @@ item(FEAT_TRAINS, emu500) {
         engine_class:                 ENGINE_CLASS_ELECTRIC;
         visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
 
-        tractive_effort_coefficient:  0.6;
+        tractive_effort_coefficient:  0.3;
         air_drag_coefficient:         0.07;
         bitmask_vehicle_info:         0;
         length: 8;
@@ -125,7 +125,7 @@ item(FEAT_TRAINS, emu500) {
         default:                      switch_emu500_mucar;
         cargo_capacity:               180;
         loading_speed:                20;
-        power: 2000;
+        power: 500;
         weight: 40;
       }
 }
