@@ -213,9 +213,7 @@ item(FEAT_TRAINS, emu800) {
                         string(STR_DESC_POWER_AC20),
                         string(STR_DESC_NARROWGAUGE),
                         string(STR_DESC_USAGE_PAX_LOC),
-                        string(STR_TRLENGTH_1T,
-                           string(STR_TRLENGTH_8C)
-                         ),
+                        string(STR_TRLENGTH_1T, 8),
                         string(STR_CONCAT_1C, 
                            string(STR_SUFFIX_TRA),
                         )
