@@ -1,8 +1,10 @@
 ##grflangid 0x01
+##plural 0
+# 0 indicates the plural system used
 # This is the English language file
 
 # GRF name and description definitions
-STR_TWTS_NAME        :{TITLE} {VERSION}
+STR_TWTS_NAME        :{TITLE} {PUSH_COLOUR}{WHITE}{VERSION}{POP_COLOUR}
 STR_TWTS_DESCRIPTION :Taiwan Trains Set{}{COPYRIGHT}2024 TeamTWTS{}License: GPL v3
 
 # vehicle names
@@ -72,29 +74,17 @@ STR_PARAM_LENGTH_10         : 10/8
 STR_EMU500_DESC : EMU500 Commuter Electric Muitiple Unit Train
 TRMUCAR_DESC : {BLUE}Used to represent  {GREEN}motor and trailer cars{BLUE} within an EMU formation. {}{RED}Cannot be the rear of an EMU consist.
 
-STR_TRLENGTH_1T :{BLACK}Valid formation: {STRING} - car formations{}
-STR_TRLENGTH_2T	:{BLACK}Valid formation: {STRING} / {STRING} - car formations{}
-STR_TRLENGTH_3T	:{BLACK}Valid formation: {STRING} / {STRING} / {STRING} - car formations{}
-STR_TRLENGTH_4T	:{BLACK}Valid formation: {STRING} / {STRING} / {STRING} / {STRING} - car formations{}
-STR_TRLENGTH_5T	:{BLACK}Valid formation: {STRING} / {STRING} / {STRING} / {STRING} / {STRING} - car formations{}
-STR_TRLENGTH_6T	:{BLACK}Valid formation: {STRING} / {STRING} / {STRING} / {STRING} / {STRING} / {STRING} - car formations{}
+# The {P "" s} here is only for the English language file; P stands for plural
+# It varys in other languages. Say, there is no need for them in the Chinese / Japanese langauge files.
+# Basically, when the value of {COMMA} not 0, it will be replaced by "s", otherwise, it will be replaced by "".
 
-STR_TRLENGTH_1C:{GOLD}1{BLACK}
-STR_TRLENGTH_2C:{GOLD}2{BLACK}
-STR_TRLENGTH_3C:{GOLD}3{BLACK}
-STR_TRLENGTH_4C:{GOLD}4{BLACK}
-STR_TRLENGTH_5C:{GOLD}5{BLACK}
-STR_TRLENGTH_6C:{GOLD}6{BLACK}
-STR_TRLENGTH_7C:{GOLD}7{BLACK}
-STR_TRLENGTH_8C:{GOLD}8{BLACK}
-STR_TRLENGTH_9C:{GOLD}9{BLACK}
-STR_TRLENGTH_10C:{GOLD}10{BLACK}
-STR_TRLENGTH_11C:{GOLD}11{BLACK}
-STR_TRLENGTH_12C:{GOLD}12{BLACK}
-STR_TRLENGTH_13C:{GOLD}13{BLACK}
-STR_TRLENGTH_14C:{GOLD}14{BLACK}
-STR_TRLENGTH_15C:{GOLD}15{BLACK}
-STR_TRLENGTH_16C:{GOLD}16{BLACK}
+STR_TRLENGTH_1T    :{BLACK}Valid formation: {PUSH_COLOUR}{GOLD}{COMMA} car{P "" s}{}{POP_COLOUR}
+STR_TRLENGTH_2T    :{BLACK}Valid formations: {PUSH_COLOUR}{GOLD}{COMMA}/{COMMA} car{P "" s}{}{POP_COLOUR}
+STR_TRLENGTH_3T    :{BLACK}Valid formations: {PUSH_COLOUR}{GOLD}{COMMA}/{COMMA}/{COMMA} car{P "" s}{}{POP_COLOUR}
+STR_TRLENGTH_4T    :{BLACK}Valid formations: {PUSH_COLOUR}{GOLD}{COMMA}/{COMMA}/{COMMA}/{COMMA} car{P "" s}{}{POP_COLOUR}
+STR_TRLENGTH_5T    :{BLACK}Valid formations: {PUSH_COLOUR}{GOLD}{COMMA}/{COMMA}/{COMMA}/{COMMA}/{COMMA} car{P "" s}{}{POP_COLOUR}
+STR_TRLENGTH_6T    :{BLACK}Valid formations: {PUSH_COLOUR}{GOLD}{COMMA}/{COMMA}/{COMMA}/{COMMA}/{COMMA}/{COMMA} car{P "" s}{}{POP_COLOUR}
+STR_TRLENGTH_RANGE :{BLACK}Valid formation: {PUSH_COLOUR}{GOLD}{COMMA}-{COMMA} car{P "" s}{}{POP_COLOUR}
 
 # ################
 # CONCAT SUBSTRINGS#
@@ -109,7 +99,7 @@ STR_CONCAT_3S	:{STRING}{STRING}{STRING}
 STR_CONCAT_4S	:{STRING}{STRING}{STRING}{STRING}
 STR_CONCAT_5S	:{STRING}{STRING}{STRING}{STRING}{STRING}
 
-STR_CONCAT_1C	:{BLACK}Operators: {STRING}{}
+STR_CONCAT_1C	:{BLACK}Operator: {STRING}{}
 STR_CONCAT_2C	:{BLACK}Operators: {STRING} / {STRING}{}
 STR_CONCAT_3C	:{BLACK}Operators: {STRING} / {STRING} / {STRING}{}
 STR_CONCAT_4C	:{BLACK}Operators: {STRING} / {STRING} / {STRING} / {STRING}{}
