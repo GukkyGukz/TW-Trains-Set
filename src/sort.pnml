@@ -5,7 +5,7 @@
 sort(FEAT_TRAINS, [
 
 //EL
-item_e200, e1000,
+item_e200, e1000, item_e500,
 
 //DH
 

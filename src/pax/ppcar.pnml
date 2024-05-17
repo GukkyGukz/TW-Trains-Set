@@ -19,36 +19,81 @@ spriteset(spriteset_ppd2000, "gfx/pp2000.png") {
     tmpl_vehicle_8_views(1, 0)
 }
 
+spriteset(spriteset_ppt1000_green, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_pph1000_green, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_ppc1000_green, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(5, 0)
+}
+
+spriteset(spriteset_ppt2000_green, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_ppd2000_green, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(5, 0)
+}
+
 spriteset(spriteset_ppcar_purchase, "gfx/pp1000.png") {
-    tmpl_vehicle_single(3, 87, 16, -25, -8)
+    tmpl_vehicle_single(6, 87, 16, -25, -8)
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppt1000, cargo_subtype) {
+    0: spriteset_ppt1000;
+    spriteset_ppt1000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppt2000, cargo_subtype) {
+    0: spriteset_ppt2000;
+    spriteset_ppt2000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppc1000, cargo_subtype) {
+    0: spriteset_ppc1000;
+    spriteset_ppc1000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_pph1000, cargo_subtype) {
+    0: spriteset_pph1000;
+    spriteset_pph1000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppd2000, cargo_subtype) {
+    0: spriteset_ppd2000;
+    spriteset_ppd2000_green;
 }
 
 random_switch(FEAT_TRAINS, SELF, switch_ppcar_1000_2000) {
-    50: spriteset_ppt1000;
-    3: spriteset_ppt2000;
+    50: switch_ppt1000;
+    3: switch_ppt2000;
 }
 
 switch(FEAT_TRAINS, SELF, switch_ppcar_pos_12, position_in_vehid_chain_from_end) {
     12: switch_ppcar_1000_2000;
-    11: spriteset_ppc1000;
+    11: switch_ppc1000;
     10: switch_ppcar_1000_2000;
-    9: spriteset_pph1000;
+    9: switch_pph1000;
     6..8: switch_ppcar_1000_2000;
-    5: spriteset_ppc1000;
-    4: spriteset_pph1000;
+    5: switch_ppc1000;
+    4: switch_pph1000;
     1..3: switch_ppcar_1000_2000;
-    0: spriteset_ppd2000;
+    0: switch_ppd2000;
     switch_ppcar_1000_2000;
 }
 
 switch(FEAT_TRAINS, SELF, switch_ppcar_pos_10, position_in_vehid_chain_from_end) {
-    10: spriteset_ppc1000;
+    10: switch_ppc1000;
     9: switch_ppcar_1000_2000;
-    8: spriteset_pph1000;
+    8: switch_pph1000;
     3..7: switch_ppcar_1000_2000;
-    2: spriteset_pph1000;
+    2: switch_pph1000;
     1: switch_ppcar_1000_2000;
-    0: spriteset_ppc1000;
+    0: switch_ppc1000;
     return CB_RESULT_NO_TEXT;
 }
 
@@ -56,6 +101,22 @@ switch(FEAT_TRAINS, SELF, switch_ppcar_auto, num_vehs_in_vehid_chain) {
     1..10: switch_ppcar_pos_10;
     switch_ppcar_pos_12;
 }
+
+switch(FEAT_TRAINS, SELF, switch_ppcar_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_COLOUR_ORANGE)
+                                    )
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                    string(STR_CONCAT_2F, 
+                                     string(STR_COLOUR_GREEN), 
+                                     string(STR_COLOUR_BLUE)
+                                     )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
 /* Define the actual train */
 item(FEAT_TRAINS, item_ppcar) {
     /* Define properties first, make sure to set all of them */
@@ -100,6 +161,7 @@ item(FEAT_TRAINS, item_ppcar) {
                     )
                   );
   cargo_capacity: return 48;
+  cargo_subtype_text: switch_ppcar_subtype_text;
   default: switch_ppcar_auto;
   purchase: spriteset_ppcar_purchase;
   }

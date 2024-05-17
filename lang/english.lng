@@ -9,6 +9,7 @@ STR_TWTS_DESCRIPTION :Taiwan Trains Set{}{COPYRIGHT}2024 TeamTWTS{}License: GPL 
 
 # vehicle names
 STR_NAME_E200                 :E200 / E300 / E400
+STR_NAME_E500                 :E500 Electric locomotive
 STR_NAME_E1000                :E1000 Push-Pull locomotive
 STR_NAME_TP32200              :TP32200/850 Passenger Coach
 STR_NAME_SP32850              :SP32850/950/600 Passenger Coach

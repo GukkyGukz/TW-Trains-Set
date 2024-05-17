@@ -7,22 +7,56 @@ spriteset(spriteset_e1000_flip, "gfx/pp2000.png") {
     tmpl_vehicle_8_views(3, 1)
 }
 
+spriteset(spriteset_e1000_green, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(6, 0)
+}
+
+spriteset(spriteset_e1000_flip_green, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(7, 1)
+}
+
 spriteset(spriteset_e1000_purchase, "gfx/pp2000.png") {
-    template_purchase_dualheaded(4, 127)
+    template_purchase_dualheaded(4, 255)
 }
 /* --- Graphics callback  --- */
 
+switch(FEAT_TRAINS, SELF, switch_e1000_gfx, cargo_subtype) {
+    0: spriteset_e1000;
+    1: spriteset_e1000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_e1000_flip_gfx, cargo_subtype) {
+    0: spriteset_e1000_flip;
+    1: spriteset_e1000_flip_green;
+}
 
 switch(FEAT_TRAINS, SELF, switch_e1000_gfx_pos, position_in_consist) {
-    0: spriteset_e1000;
-    spriteset_e1000_flip;
+    0: switch_e1000_gfx;
+    switch_e1000_flip_gfx;
 }
+
+switch(FEAT_TRAINS, SELF, switch_e1000_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_COLOUR_ORANGE)
+                                    )
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                    string(STR_CONCAT_2F, 
+                                     string(STR_COLOUR_GREEN), 
+                                     string(STR_COLOUR_BLUE)
+                                     )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
 
 /* --- Wagon attach callback  --- */
 switch(FEAT_TRAINS, SELF, switch_e1000_attach_vehid, vehicle_type_id) {
     item_ppcar: return CB_RESULT_ATTACH_ALLOW;
     return string(STR_PPCAR_ERROR);
 }
+
 
 /* Define the actual train */
 item(FEAT_TRAINS, e1000) {
@@ -33,7 +67,7 @@ item(FEAT_TRAINS, e1000) {
         vehicle_life:                 30;
         reliability_decay:            18;
 
-        cargo_capacity:               0;
+        cargo_capacity:               1;
         cost_factor:                  60;
         running_cost_factor:          54;
 
@@ -72,6 +106,7 @@ item(FEAT_TRAINS, e1000) {
                         )
                   );
         cargo_capacity: return 0;
+        cargo_subtype_text: switch_e1000_subtype_text;
         default:                switch_e1000_gfx_pos;
             purchase:               spriteset_e1000_purchase;
             can_attach_wagon:       switch_e1000_attach_vehid;

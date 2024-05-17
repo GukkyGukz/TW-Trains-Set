@@ -8,6 +8,7 @@
 
 #include "src/ac/e200.pnml"
 #include "src/ac/e1000.pnml"
+#include "src/ac/e500.pnml"
 
 #include "src/de/r20.pnml"
 

@@ -69,7 +69,7 @@ railtypetable {
 sort(FEAT_TRAINS, [
 
 //EL
-item_e200, e1000,
+item_e200, e1000, item_e500,
 
 //DH
 
@@ -748,22 +748,56 @@ spriteset(spriteset_e1000_flip, "gfx/pp2000.png") {
     tmpl_vehicle_8_views(3, 1)
 }
 
+spriteset(spriteset_e1000_green, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(6, 0)
+}
+
+spriteset(spriteset_e1000_flip_green, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(7, 1)
+}
+
 spriteset(spriteset_e1000_purchase, "gfx/pp2000.png") {
-    template_purchase_dualheaded(4, 127)
+    template_purchase_dualheaded(4, 255)
 }
 /* --- Graphics callback  --- */
 
+switch(FEAT_TRAINS, SELF, switch_e1000_gfx, cargo_subtype) {
+    0: spriteset_e1000;
+    1: spriteset_e1000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_e1000_flip_gfx, cargo_subtype) {
+    0: spriteset_e1000_flip;
+    1: spriteset_e1000_flip_green;
+}
 
 switch(FEAT_TRAINS, SELF, switch_e1000_gfx_pos, position_in_consist) {
-    0: spriteset_e1000;
-    spriteset_e1000_flip;
+    0: switch_e1000_gfx;
+    switch_e1000_flip_gfx;
 }
+
+switch(FEAT_TRAINS, SELF, switch_e1000_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_COLOUR_ORANGE)
+                                    )
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                    string(STR_CONCAT_2F, 
+                                     string(STR_COLOUR_GREEN), 
+                                     string(STR_COLOUR_BLUE)
+                                     )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
 
 /* --- Wagon attach callback  --- */
 switch(FEAT_TRAINS, SELF, switch_e1000_attach_vehid, vehicle_type_id) {
     item_ppcar: return CB_RESULT_ATTACH_ALLOW;
     return string(STR_PPCAR_ERROR);
 }
+
 
 /* Define the actual train */
 item(FEAT_TRAINS, e1000) {
@@ -774,7 +808,7 @@ item(FEAT_TRAINS, e1000) {
         vehicle_life:                 30;
         reliability_decay:            18;
 
-        cargo_capacity:               0;
+        cargo_capacity:               1;
         cost_factor:                  60;
         running_cost_factor:          54;
 
@@ -813,10 +847,91 @@ item(FEAT_TRAINS, e1000) {
                         )
                   );
         cargo_capacity: return 0;
+        cargo_subtype_text: switch_e1000_subtype_text;
         default:                switch_e1000_gfx_pos;
             purchase:               spriteset_e1000_purchase;
             can_attach_wagon:       switch_e1000_attach_vehid;
     }
+}
+
+spriteset(spriteset_e500_orange, "gfx/e500.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_e500_cc, "gfx/e500.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_e500_purchase, "gfx/e500.png") {
+    tmpl_vehicle_single(3, 87, 16, -25, -8)
+}
+
+switch(FEAT_TRAINS, SELF, switch_e500_livery, cargo_subtype) {
+    0: spriteset_e500_orange;
+    1: spriteset_e500_cc;
+}
+
+switch(FEAT_TRAINS, SELF, switch_e500_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_ORANGE), 
+                                    string(STR_COLOUR_BLACK)
+                                    )
+                                 );
+    1: return string(STR_REFIT_CC);
+       return CB_RESULT_NO_TEXT;
+    }
+/* Define the actual train */
+item(FEAT_TRAINS, item_e500) {
+    /* Define properties first, make sure to set all of them */
+    property {
+        name:                         string(STR_NAME_E500);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(2024, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 45;
+        reliability_decay:            20;
+        cost_factor:                  45;
+        running_cost_factor:          100; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       8;
+        speed:                        131 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NABE; // from rail type table
+        power:                        3888 kW; // Changed by CB
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        cargo_capacity:               1;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       96 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        extra_power_per_wagon:        0 kW;
+        // 6/6 of weight on driving wheels, with a default friction coefficient of 0.3:
+        tractive_effort_coefficient:  0.3 / 1; // changed by callback
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 2, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+    /* Define graphics and callbacks
+     * Setting all callbacks is not needed, only define what is used */
+    graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_4S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_GP),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 0;
+  cargo_subtype_text: switch_e500_subtype_text;
+  default: switch_e500_livery;
+  purchase: spriteset_e500_purchase;
+  }
 }
 
 
@@ -3373,36 +3488,81 @@ spriteset(spriteset_ppd2000, "gfx/pp2000.png") {
     tmpl_vehicle_8_views(1, 0)
 }
 
+spriteset(spriteset_ppt1000_green, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_pph1000_green, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_ppc1000_green, "gfx/pp1000.png") {
+    tmpl_vehicle_8_views(5, 0)
+}
+
+spriteset(spriteset_ppt2000_green, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_ppd2000_green, "gfx/pp2000.png") {
+    tmpl_vehicle_8_views(5, 0)
+}
+
 spriteset(spriteset_ppcar_purchase, "gfx/pp1000.png") {
-    tmpl_vehicle_single(3, 87, 16, -25, -8)
+    tmpl_vehicle_single(6, 87, 16, -25, -8)
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppt1000, cargo_subtype) {
+    0: spriteset_ppt1000;
+    spriteset_ppt1000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppt2000, cargo_subtype) {
+    0: spriteset_ppt2000;
+    spriteset_ppt2000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppc1000, cargo_subtype) {
+    0: spriteset_ppc1000;
+    spriteset_ppc1000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_pph1000, cargo_subtype) {
+    0: spriteset_pph1000;
+    spriteset_pph1000_green;
+}
+
+switch(FEAT_TRAINS, SELF, switch_ppd2000, cargo_subtype) {
+    0: spriteset_ppd2000;
+    spriteset_ppd2000_green;
 }
 
 random_switch(FEAT_TRAINS, SELF, switch_ppcar_1000_2000) {
-    50: spriteset_ppt1000;
-    3: spriteset_ppt2000;
+    50: switch_ppt1000;
+    3: switch_ppt2000;
 }
 
 switch(FEAT_TRAINS, SELF, switch_ppcar_pos_12, position_in_vehid_chain_from_end) {
     12: switch_ppcar_1000_2000;
-    11: spriteset_ppc1000;
+    11: switch_ppc1000;
     10: switch_ppcar_1000_2000;
-    9: spriteset_pph1000;
+    9: switch_pph1000;
     6..8: switch_ppcar_1000_2000;
-    5: spriteset_ppc1000;
-    4: spriteset_pph1000;
+    5: switch_ppc1000;
+    4: switch_pph1000;
     1..3: switch_ppcar_1000_2000;
-    0: spriteset_ppd2000;
+    0: switch_ppd2000;
     switch_ppcar_1000_2000;
 }
 
 switch(FEAT_TRAINS, SELF, switch_ppcar_pos_10, position_in_vehid_chain_from_end) {
-    10: spriteset_ppc1000;
+    10: switch_ppc1000;
     9: switch_ppcar_1000_2000;
-    8: spriteset_pph1000;
+    8: switch_pph1000;
     3..7: switch_ppcar_1000_2000;
-    2: spriteset_pph1000;
+    2: switch_pph1000;
     1: switch_ppcar_1000_2000;
-    0: spriteset_ppc1000;
+    0: switch_ppc1000;
     return CB_RESULT_NO_TEXT;
 }
 
@@ -3410,6 +3570,22 @@ switch(FEAT_TRAINS, SELF, switch_ppcar_auto, num_vehs_in_vehid_chain) {
     1..10: switch_ppcar_pos_10;
     switch_ppcar_pos_12;
 }
+
+switch(FEAT_TRAINS, SELF, switch_ppcar_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_COLOUR_ORANGE)
+                                    )
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                    string(STR_CONCAT_2F, 
+                                     string(STR_COLOUR_GREEN), 
+                                     string(STR_COLOUR_BLUE)
+                                     )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
 /* Define the actual train */
 item(FEAT_TRAINS, item_ppcar) {
     /* Define properties first, make sure to set all of them */
@@ -3454,6 +3630,7 @@ item(FEAT_TRAINS, item_ppcar) {
                     )
                   );
   cargo_capacity: return 48;
+  cargo_subtype_text: switch_ppcar_subtype_text;
   default: switch_ppcar_auto;
   purchase: spriteset_ppcar_purchase;
   }
