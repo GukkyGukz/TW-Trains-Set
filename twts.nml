@@ -1424,26 +1424,20 @@ item(FEAT_TRAINS, emu200) {
     }
     /*Graphics and Callbacks*/
       graphics { // graphics for engine
-         additional_text:  string(STR_CONCAT_5S, 
+         additional_text:  string(STR_CONCAT_5S,
                         string(STR_DESC_POWER_AC20),
                         string(STR_DESC_NARROWGAUGE),
                         string(STR_DESC_USAGE_PAX_EXP),
-                        string(STR_TRLENGTH_5T,
-                           string(STR_TRLENGTH_3C),
-                           string(STR_TRLENGTH_6C),
-                           string(STR_TRLENGTH_9C),
-                           string(STR_TRLENGTH_12C),
-                           string(STR_TRLENGTH_15C)
-                         ),
-                        string(STR_CONCAT_1C, 
+                        string(STR_TRLENGTH_5T, 3, 6, 9, 12, 15),
+                        string(STR_CONCAT_1C,
                            string(STR_SUFFIX_TRA),
                         )
                   );
         cargo_capacity: return 48;
-        default:                switch_emu200_gfx_pos;
-            purchase:               spriteset_emu200_purchase;
-        can_attach_wagon:             switch_emu200_attach_vehid;
-        start_stop:           switch_emu200_start_stop;
+        default:                 switch_emu200_gfx_pos;
+        purchase:                spriteset_emu200_purchase;
+        can_attach_wagon:        switch_emu200_attach_vehid;
+        start_stop:              switch_emu200_start_stop;
     }
     /*Multiple Unit Car*/
       livery_override(trmu_car){
@@ -1635,18 +1629,12 @@ item(FEAT_TRAINS, emu300) {
     }
     /*Graphics and Callbacks*/
       graphics { // graphics for engine
-         additional_text:  string(STR_CONCAT_5S, 
+         additional_text:  string(STR_CONCAT_5S,
                         string(STR_DESC_POWER_AC20),
                         string(STR_DESC_NARROWGAUGE),
                         string(STR_DESC_USAGE_PAX_EXP),
-                        string(STR_TRLENGTH_5T,
-                           string(STR_TRLENGTH_3C),
-                           string(STR_TRLENGTH_6C),
-                           string(STR_TRLENGTH_9C),
-                           string(STR_TRLENGTH_12C),
-                           string(STR_TRLENGTH_15C)
-                         ),
-                        string(STR_CONCAT_1C, 
+                        string(STR_TRLENGTH_5T, 3, 6, 9, 12, 15),
+                        string(STR_CONCAT_1C,
                            string(STR_SUFFIX_TRA),
                         )
                   );
@@ -1772,12 +1760,7 @@ item(FEAT_TRAINS, emu400) {
                         string(STR_DESC_POWER_AC20),
                         string(STR_DESC_NARROWGAUGE),
                         string(STR_DESC_USAGE_PAX_LOC),
-                        string(STR_TRLENGTH_4T,
-                           string(STR_TRLENGTH_4C),
-                           string(STR_TRLENGTH_8C),
-                           string(STR_TRLENGTH_12C),
-                           string(STR_TRLENGTH_16C)
-                         ),
+                        string(STR_TRLENGTH_4T, 4, 8, 12, 16),
                         string(STR_CONCAT_1C, 
                            string(STR_SUFFIX_TRA),
                         )
@@ -1903,12 +1886,7 @@ item(FEAT_TRAINS, emu500) {
                         string(STR_DESC_POWER_AC20),
                         string(STR_DESC_NARROWGAUGE),
                         string(STR_DESC_USAGE_PAX_LOC),
-                        string(STR_TRLENGTH_4T,
-                           string(STR_TRLENGTH_4C),
-                           string(STR_TRLENGTH_8C),
-                           string(STR_TRLENGTH_12C),
-                           string(STR_TRLENGTH_16C)
-                         ),
+                        string(STR_TRLENGTH_4T, 4, 8, 12, 16),
                         string(STR_CONCAT_1C, 
                            string(STR_SUFFIX_TRA),
                         )
@@ -2034,12 +2012,7 @@ item(FEAT_TRAINS, emu600) {
                         string(STR_DESC_POWER_AC20),
                         string(STR_DESC_NARROWGAUGE),
                         string(STR_DESC_USAGE_PAX_LOC),
-                        string(STR_TRLENGTH_4T,
-                           string(STR_TRLENGTH_4C),
-                           string(STR_TRLENGTH_8C),
-                           string(STR_TRLENGTH_12C),
-                           string(STR_TRLENGTH_16C)
-                         ),
+                        string(STR_TRLENGTH_4T, 4, 8, 12, 16),
                         string(STR_CONCAT_1C, 
                            string(STR_SUFFIX_TRA),
                         )
@@ -2274,9 +2247,7 @@ item(FEAT_TRAINS, emu800) {
                         string(STR_DESC_POWER_AC20),
                         string(STR_DESC_NARROWGAUGE),
                         string(STR_DESC_USAGE_PAX_LOC),
-                        string(STR_TRLENGTH_1T,
-                           string(STR_TRLENGTH_8C)
-                         ),
+                        string(STR_TRLENGTH_1T, 8),
                         string(STR_CONCAT_1C, 
                            string(STR_SUFFIX_TRA),
                         )
