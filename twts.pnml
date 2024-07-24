@@ -6,21 +6,35 @@
 #include "src/functions.pnml"
 #include "src/dummy.pnml"
 
+#include "src/ac/e100.pnml"
 #include "src/ac/e200.pnml"
 #include "src/ac/e1000.pnml"
 #include "src/ac/e500.pnml"
 
+#include "src/dh/dhl100.pnml"
+
 #include "src/de/r20.pnml"
+#include "src/de/r100.pnml"
+#include "src/de/r180.pnml"
+#include "src/de/r200.pnml"
 
 #include "src/emu/trmucar.pnml"
 
+#include "src/dmu/dr2100.pnml"
 #include "src/dmu/dr2700.pnml"
+#include "src/dmu/dr2800.pnml"
+#include "src/dmu/dr2900.pnml"
+#include "src/dmu/dr3100.pnml"
+#include "src/dmu/45dr1000.pnml"
 
+#include "src/emu/emu100.pnml"
 #include "src/emu/emu200.pnml"
+#include "src/emu/emu1200.pnml"
 #include "src/emu/emu300.pnml"
 #include "src/emu/emu400.pnml"
 #include "src/emu/emu500.pnml"
 #include "src/emu/emu600.pnml"
+#include "src/emu/emu700.pnml"
 #include "src/emu/emu800.pnml"
 
 #include "src/pax/sp32400.pnml"

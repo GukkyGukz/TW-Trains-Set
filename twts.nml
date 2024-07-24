@@ -2,7 +2,7 @@ grf {
 	grfid: "UK\01\01";
 	name: string(STR_TWTS_NAME);
 	desc: string(STR_TWTS_DESCRIPTION);
-	version: 13;
+	version: 15;
 	min_compatible_version: 0;
 
 
@@ -69,20 +69,21 @@ railtypetable {
 sort(FEAT_TRAINS, [
 
 //EL
-item_e200, e1000, item_e500,
+item_e100, item_e200, e1000, item_e500,
 
 //DH
+dhl100,
 
 //DE
-r20,
+r20, r100, r180, r200,
 
 //SL
 
 //DMU
-dr2700,
+dr2100, dr2700, dr2800, dr2900, dr3100, item_45dr1000,
 
 //EMU
-trmu_car, emu200, emu300, emu400, emu500, emu600, emu800,
+trmu_car, emu100, emu200, emu1200, emu300, emu400, emu500, emu600, emu700, emu800,
 
 //TEMU
 
@@ -236,7 +237,7 @@ template template_10_standard_emu(x, y) {
     [ x,		y,		8,		36,		-3,			-21]
     [ x+16,		y,		26,		29,		-14,		-21]
     [ x+54,		y,		40,		16,		-20,		-12]
-    [ x+110,	y,		26,		29,		-3,		    -18]
+    [ x+110,	y,		26,		29,		-7,		    -20]
     [ x+148,	y,		8,		36,		-3,			-23]
     [ x+164,	y,		26,		29,		-17,		-20]
     [ x+202,	y,		40,		16,		-20,		-12]
@@ -252,7 +253,7 @@ template template_10_cab_rev_standard_emu(x, y) {
     [ x+202,	y,		40,		16,		-20,		-12]
     [ x+258,	y,		26,		29,		-4,		    -18]
     [ x,    	y,		8,		36,		-3,			-21]
-    [ x+16, 	y,		26,		29,		-16,		-20]
+    [ x+16, 	y,		26,		29,		-18,		-19]
     [ x+54, 	y,		40,		16,		-20,		-12]
     [ x+110,	y,		26,		29,		-7,		    -20]
 }
@@ -618,6 +619,91 @@ spriteset (dummy_sprites, "gfx/empty.png")
  // end dummy
 
 
+spriteset(spriteset_e100_orange, "gfx/e100.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_e100_white, "gfx/e100.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_e100_purchase, "gfx/e100.png") {
+    tmpl_vehicle_single(6, 87, 16, -25, -8)
+}
+
+switch(FEAT_TRAINS, SELF, switch_e100_livery, cargo_subtype) {
+    0: spriteset_e100_orange;
+    1: spriteset_e100_white;
+}
+
+switch(FEAT_TRAINS, SELF, switch_e100_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_ORANGE), 
+                                    string(STR_COLOUR_CREAM)
+                                    )
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_WHITE), 
+                                    string(STR_COLOUR_CREAM)
+                                    )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+/* Define the actual train */
+item(FEAT_TRAINS, item_e100) {
+    /* Define properties first, make sure to set all of them */
+    property {
+        name:                         string(STR_NAME_E100);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(1976, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 45;
+        reliability_decay:            20;
+        cost_factor:                  45;
+        running_cost_factor:          100; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       6;
+        speed:                        111 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NABE; // from rail type table
+        power:                        2052 kW; // Changed by CB
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        cargo_capacity:               1;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       72 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        extra_power_per_wagon:        0 kW;
+        // 6/6 of weight on driving wheels, with a default friction coefficient of 0.3:
+        tractive_effort_coefficient:  0.3 / 1; // changed by callback
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 2, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+    /* Define graphics and callbacks
+     * Setting all callbacks is not needed, only define what is used */
+    graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_4S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_GP),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 0;
+  cargo_subtype_text: switch_e100_subtype_text;
+  default: switch_e100_livery;
+  purchase: spriteset_e100_purchase;
+  }
+}
+
 spriteset(spriteset_e200_cc, "gfx/e200.png") {
     tmpl_vehicle_8_views(4, 0)
 }
@@ -693,7 +779,7 @@ item(FEAT_TRAINS, item_e200) {
     property {
         name:                         string(STR_NAME_E200);
         climates_available:           ALL_CLIMATES;
-        introduction_date:            date(1975, 1, 1);
+        introduction_date:            date(1978, 1, 1);
         model_life:                   VEHICLE_NEVER_EXPIRES;
         vehicle_life:                 45;
         reliability_decay:            20;
@@ -935,6 +1021,83 @@ item(FEAT_TRAINS, item_e500) {
 }
 
 
+spriteset(spriteset_dhl100_orange, "gfx/dhl100.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+//Spriteset flipped
+spriteset(spriteset_dhl100_flip_orange, "gfx/dhl100.png") {
+    tmpl_vehicle_8_views_2(0, 1)
+}
+
+
+//purchase
+
+spriteset(spriteset_dhl100_orange_purchase, "gfx/dhl100.png") {
+    tmpl_vehicle_single(3, 87, 16, -25, -8)
+}
+
+
+
+//flip switches
+switch(FEAT_TRAINS, SELF, switch_dhl100_flip_orange, vehicle_is_flipped) {
+    0: spriteset_dhl100_orange;
+    1: spriteset_dhl100_flip_orange;
+}
+
+
+item (FEAT_TRAINS, dhl100) {
+
+property {
+        name:                         string(STR_NAME_DHL100);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(2002, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 60;
+        reliability_decay:            20;
+        cost_factor:                  45;
+        running_cost_factor:          100; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       6;
+        speed:                        75 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NABN; // from rail type table
+        power:                        1200 hp; // Changed by CB
+        running_cost_base:            RUNNING_COST_DIESEL;
+        cargo_capacity:               1;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       60 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        extra_power_per_wagon:        0 kW;
+        // 6/6 of weight on driving wheels, with a default friction coefficient of 0.3:
+        tractive_effort_coefficient:  0.3 / 1.5; // changed by callback
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+
+
+  graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_4S, 
+                        string(STR_DESC_POWER_DH),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_SHG),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 0;
+  default: switch_dhl100_flip_orange;
+  purchase: spriteset_dhl100_orange_purchase;
+  }
+}
+
+
 spriteset(spriteset_r20_blue, "gfx/r20.png") {
     tmpl_vehicle_8_views(0, 0)
 }
@@ -1079,6 +1242,275 @@ property {
   }
 }
 
+spriteset(spriteset_r100_blue, "gfx/r100.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_r100_orange, "gfx/r100.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+//Spriteset flipped
+spriteset(spriteset_r100_flip_blue, "gfx/r100.png") {
+    tmpl_vehicle_8_views_2(0, 1)
+}
+
+spriteset(spriteset_r100_flip_orange, "gfx/r100.png") {
+    tmpl_vehicle_8_views_2(1, 1)
+}
+
+
+//purchase
+
+spriteset(spriteset_r100_blue_purchase, "gfx/r100.png") {
+    tmpl_vehicle_single(3, 87, 16, -25, -8)
+}
+
+spriteset(spriteset_r100_orange_purchase, "gfx/r100.png") {
+    tmpl_vehicle_single(4, 87, 16, -25, -8)
+}
+
+
+
+//flip switches
+switch(FEAT_TRAINS, SELF, switch_r100_flip_blue, vehicle_is_flipped) {
+    0: spriteset_r100_blue;
+    1: spriteset_r100_flip_blue;
+}
+
+switch(FEAT_TRAINS, SELF, switch_r100_flip_orange, vehicle_is_flipped) {
+    0: spriteset_r100_orange;
+    1: spriteset_r100_flip_orange;
+}
+
+
+switch(FEAT_TRAINS, SELF, switch_r100_yeardep_livery, build_year) {
+    0..1979: switch_r100_flip_blue;
+    1980..9999: switch_r100_flip_orange;
+    switch_r100_flip_orange;
+}
+
+switch(FEAT_TRAINS, SELF, switch_r100_livery, cargo_subtype) {
+    1: switch_r100_flip_blue;
+    2: switch_r100_flip_orange;
+    switch_r100_yeardep_livery;
+}
+
+
+
+switch(FEAT_TRAINS, SELF, switch_r100_subtype_text, cargo_subtype) {
+    0: return string(STR_SUFFIX_YEARDEP);
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_COLOUR_NVBLUE)
+                                    )
+                                 );
+    2: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                    string(STR_CONCAT_1F, 
+                                     string(STR_COLOUR_ORANGE)
+                                     )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
+
+switch (FEAT_TRAINS, SELF, switch_r100_purchase, current_year) {
+    0..1979: spriteset_r100_blue_purchase;
+    spriteset_r100_orange_purchase;
+    }
+
+
+item (FEAT_TRAINS, r100) {
+
+property {
+        name:                         string(STR_NAME_R100);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(1969, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 60;
+        reliability_decay:            20;
+        cost_factor:                  45;
+        running_cost_factor:          100; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       6;
+        speed:                        101 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NABN; // from rail type table
+        power:                        1650 hp; // Changed by CB
+        running_cost_base:            RUNNING_COST_DIESEL;
+        cargo_capacity:               1;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       78 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        extra_power_per_wagon:        0 kW;
+        // 6/6 of weight on driving wheels, with a default friction coefficient of 0.3:
+        tractive_effort_coefficient:  0.3 / 1.5; // changed by callback
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+
+
+  graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_4S, 
+                        string(STR_DESC_POWER_DE),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_GP),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 0;
+  cargo_subtype_text: switch_r100_subtype_text;
+  default: switch_r100_livery;
+  purchase: switch_r100_purchase;
+  }
+}
+
+spriteset(spriteset_r180_orange, "gfx/r180.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+//Spriteset flipped
+spriteset(spriteset_r180_flip_orange, "gfx/r180.png") {
+    tmpl_vehicle_8_views_2(0, 1)
+}
+
+
+//purchase
+
+spriteset(spriteset_r180_orange_purchase, "gfx/r180.png") {
+    tmpl_vehicle_single(3, 87, 16, -25, -8)
+}
+
+
+
+//flip switches
+switch(FEAT_TRAINS, SELF, switch_r180_flip_orange, vehicle_is_flipped) {
+    0: spriteset_r180_orange;
+    1: spriteset_r180_flip_orange;
+}
+
+
+item (FEAT_TRAINS, r180) {
+
+property {
+        name:                         string(STR_NAME_R180);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(1992, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 60;
+        reliability_decay:            20;
+        cost_factor:                  45;
+        running_cost_factor:          100; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       6;
+        speed:                        101 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NABN; // from rail type table
+        power:                        1650 hp; // Changed by CB
+        running_cost_base:            RUNNING_COST_DIESEL;
+        cargo_capacity:               1;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       88 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        extra_power_per_wagon:        0 kW;
+        // 6/6 of weight on driving wheels, with a default friction coefficient of 0.3:
+        tractive_effort_coefficient:  0.3 / 1.5; // changed by callback
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+
+
+  graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_4S, 
+                        string(STR_DESC_POWER_DE),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_GP),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 0;
+  default: switch_r180_flip_orange;
+  purchase: spriteset_r180_orange_purchase;
+  }
+}
+
+spriteset(spriteset_r200, "gfx/r200.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+
+//purchase
+
+spriteset(spriteset_r200_purchase, "gfx/r200.png") {
+    tmpl_vehicle_single(3, 87, 16, -25, -8)
+}
+
+
+item (FEAT_TRAINS, r200) {
+
+property {
+        name:                         string(STR_NAME_R200);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(2023, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 60;
+        reliability_decay:            20;
+        cost_factor:                  45;
+        running_cost_factor:          100; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       8;
+        speed:                        121 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NABN; // from rail type table
+        power:                        2700 hp; // Changed by CB
+        running_cost_base:            RUNNING_COST_DIESEL;
+        cargo_capacity:               1;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       96 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        extra_power_per_wagon:        0 kW;
+        // 6/6 of weight on driving wheels, with a default friction coefficient of 0.3:
+        tractive_effort_coefficient:  0.3 / 1.5; // changed by callback
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+
+
+  graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_4S, 
+                        string(STR_DESC_POWER_DE),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_GP),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 0;
+  default: spriteset_r200;
+  purchase: spriteset_r200_purchase;
+  }
+}
+
 
 /*---GFX: Spritesets---*/
 spriteset(spriteset_trmu_car, "gfx/trmu_car.png") {
@@ -1138,6 +1570,98 @@ item(FEAT_TRAINS, trmu_car) {
     }
 }
 
+
+spriteset(spriteset_dr2100_blue, "gfx/dr2300.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_dr2100_blue_rear, "gfx/dr2300.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_dr2100_blue_flip, "gfx/dr2300.png") {
+    tmpl_vehicle_8_views(0, 1)
+}
+
+spriteset(spriteset_dr2100_blue_purchase, "gfx/dr2300.png") {
+    template_purchase_dualheaded(0, 159)
+}
+/* --- Graphics callback  --- */
+
+
+switch(FEAT_TRAINS, SELF, switch_dr2100_blue_pos, position_in_consist) {
+    0: spriteset_dr2100_blue;
+    spriteset_dr2100_blue_flip;
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr2100_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, dr2100) {
+    property {
+        name:                         string(STR_NAME_DR2100);
+        introduction_date:            date(1957, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 55;
+        reliability_decay:            18;
+
+        cargo_capacity:               66;
+        loading_speed:                5;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        90 km/h;
+        track_type:                   NABN;
+        power:                        200 hp;
+        weight:                       28 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  0;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_DIESEL;
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_DH),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_LOC),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 52;
+        default:                switch_dr2100_blue_pos;
+            purchase:               spriteset_dr2100_blue_purchase;
+        can_attach_wagon:             switch_dr2100_attach_vehid;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      spriteset_dr2100_blue;
+        cargo_capacity:               66;
+        loading_speed:                15;
+        power: 200;
+        weight: 28;
+      }
+}
 
 spriteset(spriteset_dr2700_silver, "gfx/dr2700.png") {
     tmpl_vehicle_8_views(2, 0)
@@ -1330,6 +1854,651 @@ item(FEAT_TRAINS, dr2700) {
       }
 }
 
+spriteset(spriteset_dr2800_yellow, "gfx/dr2800.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_dr2800_yellow_rear, "gfx/dr2800.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_dr2800_yellow_flip, "gfx/dr2800.png") {
+    tmpl_vehicle_8_views(1, 1)
+}
+
+spriteset(spriteset_dr2850_yellow, "gfx/dr2800.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_dr2800_yellow_purchase, "gfx/dr2800.png") {
+    template_purchase_dualheaded(0, 159)
+}
+/* --- Graphics callback  --- */
+
+
+switch(FEAT_TRAINS, SELF, switch_dr2800_yellow_mucar_pos, position_in_vehid_chain % 3) {
+    0: spriteset_dr2850_yellow;
+    1: spriteset_dr2800_yellow_rear;
+    2: spriteset_dr2800_yellow;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_dr2800_yellow_pos, position_in_consist) {
+    0: spriteset_dr2800_yellow;
+    spriteset_dr2800_yellow_flip;
+}
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr2800_start_stop, num_vehs_in_consist) {
+    3: return CB_RESULT_NO_TEXT;
+    6: return CB_RESULT_NO_TEXT;
+    9: return CB_RESULT_NO_TEXT;
+    12: return CB_RESULT_NO_TEXT;
+    15: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr2800_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, dr2800) {
+    property {
+        name:                         string(STR_NAME_DR2800);
+        introduction_date:            date(1982, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 55;
+        reliability_decay:            18;
+
+        cargo_capacity:               38;
+        loading_speed:                10;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        111 km/h;
+        track_type:                   NABN;
+        power:                        350 hp;
+        weight:                       38 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  1;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_DIESEL;
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_DH),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_TRLENGTH_5T, 3, 6, 9, 12, 15),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 52;
+        default:                switch_dr2800_yellow_pos;
+            purchase:               spriteset_dr2800_yellow_purchase;
+        can_attach_wagon:             switch_dr2800_attach_vehid;
+        start_stop:              switch_dr2800_start_stop;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      switch_dr2800_yellow_mucar_pos;
+        cargo_capacity:               46;
+        loading_speed:                10;
+        power: 350;
+        weight: 38;
+      }
+}
+
+spriteset(spriteset_dr2900_yellow, "gfx/dr2900.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_dr2900_yellow_rear, "gfx/dr2900.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_dr2900_yellow_flip, "gfx/dr2900.png") {
+    tmpl_vehicle_8_views(1, 1)
+}
+
+spriteset(spriteset_dr2950_yellow, "gfx/dr2900.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_dr2900_yellow_purchase, "gfx/dr2900.png") {
+    template_purchase_dualheaded(0, 159)
+}
+/* --- Graphics callback  --- */
+
+
+switch(FEAT_TRAINS, SELF, switch_dr2900_yellow_mucar_pos, position_in_vehid_chain % 3) {
+    0: spriteset_dr2950_yellow;
+    1: spriteset_dr2900_yellow_rear;
+    2: spriteset_dr2900_yellow;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_dr2900_yellow_pos, position_in_consist) {
+    0: spriteset_dr2900_yellow;
+    spriteset_dr2900_yellow_flip;
+}
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr2900_start_stop, num_vehs_in_consist) {
+    3: return CB_RESULT_NO_TEXT;
+    6: return CB_RESULT_NO_TEXT;
+    9: return CB_RESULT_NO_TEXT;
+    12: return CB_RESULT_NO_TEXT;
+    15: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr2900_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, dr2900) {
+    property {
+        name:                         string(STR_NAME_DR2900);
+        introduction_date:            date(1987, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 55;
+        reliability_decay:            18;
+
+        cargo_capacity:               50;
+        loading_speed:                10;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        111 km/h;
+        track_type:                   NABN;
+        power:                        350 hp;
+        weight:                       38 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  1;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_DIESEL;
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_DH),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_TRLENGTH_5T, 3, 6, 9, 12, 15),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 52;
+        default:                switch_dr2900_yellow_pos;
+            purchase:               spriteset_dr2900_yellow_purchase;
+        can_attach_wagon:             switch_dr2900_attach_vehid;
+        start_stop:              switch_dr2900_start_stop;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      switch_dr2900_yellow_mucar_pos;
+        cargo_capacity:               52;
+        loading_speed:                10;
+        power: 350;
+        weight: 38;
+      }
+}
+
+spriteset(spriteset_dr3100_yellow, "gfx/dr3100.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_dr3100_yellow_rear, "gfx/dr3100.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_dr3100_yellow_flip, "gfx/dr3100.png") {
+    tmpl_vehicle_8_views(1, 1)
+}
+
+spriteset(spriteset_dr3150_yellow, "gfx/dr3100.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_dr3100_yellow_purchase, "gfx/dr3100.png") {
+    template_purchase_dualheaded(0, 159)
+}
+/* --- Graphics callback  --- */
+
+
+switch(FEAT_TRAINS, SELF, switch_dr3100_yellow_mucar_pos, position_in_vehid_chain % 3) {
+    0: spriteset_dr3150_yellow;
+    1: spriteset_dr3100_yellow_rear;
+    2: spriteset_dr3100_yellow;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_dr3100_yellow_pos, position_in_consist) {
+    0: spriteset_dr3100_yellow;
+    spriteset_dr3100_yellow_flip;
+}
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr3100_start_stop, num_vehs_in_consist) {
+    3: return CB_RESULT_NO_TEXT;
+    6: return CB_RESULT_NO_TEXT;
+    9: return CB_RESULT_NO_TEXT;
+    12: return CB_RESULT_NO_TEXT;
+    15: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr3100_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, dr3100) {
+    property {
+        name:                         string(STR_NAME_DR3100);
+        introduction_date:            date(1998, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 55;
+        reliability_decay:            18;
+
+        cargo_capacity:               46;
+        loading_speed:                15;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        111 km/h;
+        track_type:                   NABN;
+        power:                        350 hp;
+        weight:                       45 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  1;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_DIESEL;
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_DH),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_TRLENGTH_5T, 3, 6, 9, 12, 15),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 52;
+        default:                switch_dr3100_yellow_pos;
+            purchase:               spriteset_dr3100_yellow_purchase;
+        can_attach_wagon:             switch_dr3100_attach_vehid;
+        start_stop:              switch_dr3100_start_stop;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      switch_dr3100_yellow_mucar_pos;
+        cargo_capacity:               52;
+        loading_speed:                15;
+        power: 350;
+        weight: 45;
+      }
+}
+
+spriteset(spriteset_45dr1000_yellow, "gfx/45dr1000.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_45dr1000_yellow_rear, "gfx/45dr1000.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_45dr1000_yellow_flip, "gfx/45dr1000.png") {
+    tmpl_vehicle_8_views(0, 1)
+}
+
+spriteset(spriteset_45dr1000_yellow_purchase, "gfx/45dr1000.png") {
+    template_purchase_dualheaded(0, 159)
+}
+/* --- Graphics callback  --- */
+
+
+switch(FEAT_TRAINS, SELF, switch_45dr1000_yellow_pos, position_in_consist) {
+    0: spriteset_45dr1000_yellow;
+    spriteset_45dr1000_yellow_flip;
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_45dr1000_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, item_45dr1000) {
+    property {
+        name:                         string(STR_NAME_45DR1000);
+        introduction_date:            date(1998, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 55;
+        reliability_decay:            18;
+
+        cargo_capacity:               46;
+        loading_speed:                5;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        111 km/h;
+        track_type:                   NABN;
+        power:                        350 hp;
+        weight:                       45 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  0;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_DIESEL;
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_DH),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_LOC),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 52;
+        default:                switch_45dr1000_yellow_pos;
+            purchase:               spriteset_45dr1000_yellow_purchase;
+        can_attach_wagon:             switch_45dr1000_attach_vehid;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      spriteset_45dr1000_yellow;
+        cargo_capacity:               46;
+        loading_speed:                15;
+        power: 350;
+        weight: 45;
+      }
+}
+
+spriteset(spriteset_emu100_o_ep, "gfx/100.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_emu100_o_em, "gfx/100.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_emu100_o_ed, "gfx/100.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_emu100_o_ed_flip, "gfx/100.png") {
+    tmpl_vehicle_8_views(2, 1)
+}
+
+spriteset(spriteset_emu100_o_purchase, "gfx/100.png") {
+    template_purchase_dualheaded(3, 191)
+}
+
+spriteset(spriteset_emu100_ep, "gfx/100.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu100_em, "gfx/100.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_emu100_ed, "gfx/100.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_emu100_ed_flip, "gfx/100.png") {
+    tmpl_vehicle_8_views(5, 1)
+}
+
+spriteset(spriteset_emu100_purchase, "gfx/100.png") {
+    template_purchase_dualheaded(3, 223)
+}
+/* --- Graphics callback  --- */
+
+switch(FEAT_TRAINS, SELF, switch_emu100_mucar_o_pos, position_in_vehid_chain % 5) {
+    0: spriteset_emu100_o_em;
+    1: spriteset_emu100_o_em;
+    2: spriteset_emu100_o_em;
+    3: spriteset_emu100_o_ed;
+    4: spriteset_emu100_o_ep;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_mucar_pos, position_in_vehid_chain % 5) {
+    0: spriteset_emu100_em;
+    1: spriteset_emu100_em;
+    2: spriteset_emu100_em;
+    3: spriteset_emu100_ed;
+    4: spriteset_emu100_ep;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_o_gfx_pos, position_in_consist) {
+    0: spriteset_emu100_o_ep;
+    spriteset_emu100_o_ed_flip;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_gfx_pos, position_in_consist) {
+    0: spriteset_emu100_ep;
+    spriteset_emu100_ed_flip;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_o_mucar, num_vehs_in_vehid_chain % 5) {
+    3: switch_emu100_mucar_o_pos;
+    spriteset_trmu_car_add;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_mucar, num_vehs_in_vehid_chain % 5) {
+    3: switch_emu100_mucar_pos;
+    spriteset_trmu_car_add;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_gfx_yeardep_livery, build_year) {
+    0..1980: switch_emu100_o_gfx_pos;
+    switch_emu100_gfx_pos;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_mucar_yeardep_livery, build_year) {
+    0..1980: switch_emu100_o_mucar;
+    switch_emu100_mucar;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_livery, cargo_subtype) {
+    1: switch_emu100_o_gfx_pos;
+    2: switch_emu100_gfx_pos;   
+    switch_emu100_gfx_yeardep_livery;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu100_mucar_livery, cargo_subtype) {
+    1: switch_emu100_o_mucar;
+    2: switch_emu100_mucar;   
+    switch_emu100_mucar_yeardep_livery;
+}
+
+
+
+switch(FEAT_TRAINS, SELF, switch_emu100_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_1F, string(STR_SUFFIX_YEARDEP)
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_1F, 
+                                    string(STR_COLOUR_CREAM)
+                                    )
+                                 );
+    2: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_YELLOW), 
+                                    string(STR_COLOUR_CREAM)
+                                    )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
+
+switch (FEAT_TRAINS, SELF, switch_emu100_purchase, current_year) {
+    0..1980: spriteset_emu100_o_purchase;
+    spriteset_emu100_purchase;
+    }
+
+
+
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu100_start_stop, num_vehs_in_consist) {
+    5: return CB_RESULT_NO_TEXT;
+    10: return CB_RESULT_NO_TEXT;
+    15: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu100_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, emu100) {
+    property {
+        name:                         string(STR_NAME_EMU100);
+        introduction_date:            date(1978, 6, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 33;
+        reliability_decay:            18;
+
+        cargo_capacity:               40;
+        loading_speed:                5;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        121 km/h;
+        track_type:                   NABE;
+        power:                        255 kW;
+        weight:                       40 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  1;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S,
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_TRLENGTH_3T, 5, 10, 15),
+                        string(STR_CONCAT_1C,
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 52;
+        default:                switch_emu100_livery;
+            purchase:               switch_emu100_purchase;
+        can_attach_wagon:             switch_emu100_attach_vehid;
+        start_stop:           switch_emu100_start_stop;
+        cargo_subtype_text: switch_emu100_subtype_text;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      switch_emu100_mucar_livery;
+        cargo_capacity:               48;
+        loading_speed:                5;
+        power: 255;
+        weight: 40;
+      }
+}
 
 spriteset(spriteset_emu200_emc, "gfx/200.png") {
     tmpl_vehicle_8_views(0, 0)
@@ -1444,6 +2613,128 @@ item(FEAT_TRAINS, emu200) {
         default:                      switch_emu200_mucar;
         cargo_capacity:               48;
         loading_speed:                7;
+        power: 310;
+        weight: 49;
+      }
+}
+
+spriteset(spriteset_emu1200_emc, "gfx/1200.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_emu1200_ep, "gfx/1200.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_emu1200_em2, "gfx/1200.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_emu1200_em2_flip, "gfx/1200.png") {
+    tmpl_vehicle_8_views(2, 1)
+}
+
+spriteset(spriteset_emu1200_em, "gfx/1200.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu1200_em_flip, "gfx/1200.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu1200_purchase, "gfx/1200.png") {
+    template_purchase_dualheaded(3, 127)
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu1200_mucar_pos, position_in_vehid_chain % 3) {
+    0: spriteset_emu1200_ep;
+    1: spriteset_emu1200_em2;
+    2: spriteset_emu1200_em2_flip;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu1200_gfx_pos, position_in_consist) {
+    0: spriteset_emu1200_emc;
+    spriteset_emu1200_em;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu1200_mucar, num_vehs_in_vehid_chain % 9) {
+    7: switch_emu1200_mucar_pos;
+    spriteset_trmu_car_add;
+}
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu1200_start_stop, num_vehs_in_consist) {
+    9: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu1200_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, emu1200) {
+    property {
+        name:                         string(STR_NAME_EMU1200);
+        introduction_date:            date(1987, 6, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 33;
+        reliability_decay:            18;
+
+        cargo_capacity:               48;
+        loading_speed:                7;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        121 km/h;
+        track_type:                   NABE;
+        power:                        310 kW;
+        weight:                       49 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  1;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S,
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_TRLENGTH_1T, 9),
+                        string(STR_CONCAT_1C,
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 48;
+        default:                 switch_emu1200_gfx_pos;
+        purchase:                spriteset_emu1200_purchase;
+        can_attach_wagon:        switch_emu1200_attach_vehid;
+        start_stop:              switch_emu1200_start_stop;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      switch_emu1200_mucar;
+        cargo_capacity:               48;
+        loading_speed:                10;
         power: 310;
         weight: 49;
       }
@@ -2031,6 +3322,236 @@ item(FEAT_TRAINS, emu600) {
         power: 480;
         weight: 38;
       }
+}
+
+
+spriteset(ss_emu700_cabs1f_firstbatch,            "gfx/700.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu700_cabs1b_firstbatch,            "gfx/700.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu700_cabs2f_firstbatch,            "gfx/700.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu700_cabs2b_firstbatch,            "gfx/700.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu700_cabs1f_secbatch,            "gfx/700s.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu700_cabs1b_secbatch,            "gfx/700s.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu700_cabs2f_secbatch,            "gfx/700s.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu700_cabs2b_secbatch,            "gfx/700s.png") {template_10_standard_emu(1,1)}
+
+spriteset(spriteset_emu700_purchase, "gfx/700s.png") {
+    template_purchase_dualheaded(0, 201)
+}
+
+spriteset(spriteset_emu700_em, "gfx/700.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu700_ep, "gfx/700.png") {
+    tmpl_vehicle_8_views(5, 0)
+}
+
+spriteset(spriteset_emu700_em_flip, "gfx/700.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu700_ep_flip, "gfx/700.png") {
+    tmpl_vehicle_8_views(5, 1)
+}
+
+spriteset(spriteset_emu700_2batch_em, "gfx/700s.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu700_2batch_ep, "gfx/700s.png") {
+    tmpl_vehicle_8_views(5, 0)
+}
+
+spriteset(spriteset_emu700_2batch_em_flip, "gfx/700s.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu700_2batch_ep_flip, "gfx/700s.png") {
+    tmpl_vehicle_8_views(5, 1)
+}
+
+/* --- Graphics callback  --- */
+
+// Subtype Selection
+switch(FEAT_TRAINS, PARENT, sw_emu700_cabs1f, cargo_subtype) {
+        0: ss_emu700_cabs1f_secbatch;
+        1: ss_emu700_cabs1f_firstbatch;
+    }
+
+
+switch(FEAT_TRAINS, PARENT, sw_emu700_cabs1b, cargo_subtype) {
+        0: ss_emu700_cabs1b_secbatch;
+        1: ss_emu700_cabs1b_firstbatch;
+    }
+
+
+switch(FEAT_TRAINS, PARENT, sw_emu700_cabs2f, cargo_subtype) {
+        0: ss_emu700_cabs2f_secbatch;
+        1: ss_emu700_cabs2f_firstbatch;
+    }
+
+switch(FEAT_TRAINS, PARENT, sw_emu700_cabs2b, cargo_subtype) {
+        0: ss_emu700_cabs2b_secbatch;
+        1: ss_emu700_cabs2b_firstbatch;
+    }
+
+switch(FEAT_TRAINS, SELF, switch_emu700_mucar_pos_1batch, position_in_consist) {
+    2: spriteset_emu700_em;
+    3: spriteset_emu700_ep;
+    4: spriteset_emu700_em;
+    5: spriteset_emu700_em_flip;
+    6: spriteset_emu700_ep_flip;
+    7: spriteset_emu700_em_flip;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu700_mucar_pos_2batch, position_in_consist) {
+    2: spriteset_emu700_2batch_em;
+    3: spriteset_emu700_2batch_ep;
+    4: spriteset_emu700_2batch_em;
+    5: spriteset_emu700_2batch_em_flip;
+    6: spriteset_emu700_2batch_ep_flip;
+    7: spriteset_emu700_2batch_em_flip;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, PARENT, switch_emu700_mucar_livery, cargo_subtype) {
+        0: switch_emu700_mucar_pos_2batch;
+        1: switch_emu700_mucar_pos_1batch;
+    }
+
+switch(FEAT_TRAINS, SELF, switch_emu700_mucar, num_vehs_in_consist) {
+    8: switch_emu700_mucar_livery;
+    spriteset_trmu_car_add;
+}
+
+
+
+/* Cab selection */
+    // Rear cab
+    switch (FEAT_TRAINS, PARENT, sw_emu700_rear, vehicle_is_reversed) {				
+            1:  sw_emu700_cabs1b;                   // cab01	
+            sw_emu700_cabs2f;                       // cab02
+        }
+
+    // Lead cab
+    switch (FEAT_TRAINS, PARENT, sw_emu700_lead, vehicle_is_reversed) {				
+            1:  sw_emu700_cabs2b;                   // cab02
+            sw_emu700_cabs1f;                       // cab01	
+        }
+
+switch(FEAT_TRAINS, SELF, switch_emu700_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_ORANGE), 
+                                    string(STR_COLOUR_BLUE)
+                                    )
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_BLUE), 
+                                    string(STR_COLOUR_BLACK)
+                                    )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu700_start_stop, num_vehs_in_consist) {
+    10: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+switch (FEAT_TRAINS, SELF, sw_emu700_graphics, position_in_consist) {				
+		0:  dummy_sprites;
+        9:  dummy_sprites;
+        1:  sw_emu700_lead;
+        8:  sw_emu700_rear;
+        switch_emu700_mucar_livery;
+	}
+
+switch(FEAT_TRAINS, SELF, sw_emu700_length, position_in_consist) {
+    0:  return 1;
+    9: return 1;
+    return 8;
+}
+    
+
+switch (FEAT_TRAINS, SELF, sw_emu700_articulated_part, extra_callback_info1) {
+		1 .. 9: return emu700;									
+		return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+	}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu700_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, emu700) {
+    property {
+        name:                         string(STR_NAME_EMU700);
+        introduction_date:            date(2007, 8, 28);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 40;
+        reliability_decay:            15;
+
+        cargo_capacity:               116;
+        loading_speed:                20;
+        cost_factor:                  70;
+        running_cost_factor:          54;
+
+        speed:                        111 km/h;
+        track_type:                   NABE;
+        power:                        480 kW;
+        weight:                       40 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  0;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_LOC),
+                        string(STR_TRLENGTH_1T, 8),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 116;
+        default:                sw_emu700_graphics;
+            purchase:               spriteset_emu700_purchase;
+        can_attach_wagon:             switch_emu700_attach_vehid;
+        articulated_part:               sw_emu700_articulated_part;
+        start_stop:           switch_emu700_start_stop;
+        cargo_subtype_text: switch_emu700_subtype_text;
+        length:                       sw_emu700_length;
+    }
 }
 
 

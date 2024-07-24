@@ -8,6 +8,7 @@ STR_TWTS_NAME        :{TITLE} {PUSH_COLOUR}{WHITE}{VERSION}{POP_COLOUR}
 STR_TWTS_DESCRIPTION :Taiwan Trains Set{}{COPYRIGHT}2024 TeamTWTS{}License: GPL v3
 
 # vehicle names
+STR_NAME_E100                 :E100
 STR_NAME_E200                 :E200 / E300 / E400
 STR_NAME_E500                 :E500 Electric locomotive
 STR_NAME_E1000                :E1000 Push-Pull locomotive
@@ -28,14 +29,15 @@ STR_NAME_FPK10200             :FPK10200 Passenger Coach
 STR_NAME_FPK10400             :FPK10400 Passenger Coach
 STR_NAME_FPK10500             :FPK10500 Passenger Coach
 STR_NAME_FPK10600             :FPK10600 Passenger Coach
+STR_NAME_DHL100               :DHL100
 STR_NAME_R20                  :R20
 STR_NAME_R50                  :R50
-STR_NAME_R100                 :R100
-STR_NAME_R150                 :R150
-STR_NAME_DR1000               :DR1000
+STR_NAME_R100                 :R100/150
+STR_NAME_R180                 :R180/190
+STR_NAME_R200                 :R200
+STR_NAME_45DR1000             :DR1000
 STR_NAME_DR2000               :DR2000
-STR_NAME_DR2300               :DR2300
-STR_NAME_DR2400               :DR2400
+STR_NAME_DR2100               :DR2100~2400
 STR_NAME_DR2500               :DR2500/2600
 STR_NAME_DR2700               :DR2700
 STR_NAME_DR2800               :DR2800

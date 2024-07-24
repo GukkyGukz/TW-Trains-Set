@@ -1,97 +1,60 @@
 
-spriteset(spriteset_e200_cc, "gfx/e200.png") {
-    tmpl_vehicle_8_views(4, 0)
-}
-
-spriteset(spriteset_e200_orange, "gfx/e200.png") {
-    tmpl_vehicle_8_views(0, 0)
-}
-
-spriteset(spriteset_e200_black, "gfx/e200.png") {
-    tmpl_vehicle_8_views(2, 0)
-}
-
-spriteset(spriteset_e200_cc_mid, "gfx/e200.png") {
-    tmpl_vehicle_8_views(5, 0)
-}
-
-spriteset(spriteset_e200_orange_mid, "gfx/e200.png") {
+spriteset(spriteset_e100_orange, "gfx/e100.png") {
     tmpl_vehicle_8_views(1, 0)
 }
 
-spriteset(spriteset_e200_black_mid, "gfx/e200.png") {
-    tmpl_vehicle_8_views(3, 0)
+spriteset(spriteset_e100_white, "gfx/e100.png") {
+    tmpl_vehicle_8_views(0, 0)
 }
-spriteset(spriteset_e200_purchase, "gfx/e200.png") {
+
+spriteset(spriteset_e100_purchase, "gfx/e100.png") {
     tmpl_vehicle_single(6, 87, 16, -25, -8)
 }
 
-switch(FEAT_TRAINS, SELF, switch_e200_livery, cargo_subtype) {
-    0: spriteset_e200_orange;
-    1: spriteset_e200_black;
-    2: spriteset_e200_cc;
+switch(FEAT_TRAINS, SELF, switch_e100_livery, cargo_subtype) {
+    0: spriteset_e100_orange;
+    1: spriteset_e100_white;
 }
 
-switch(FEAT_TRAINS, SELF, switch_e200_livery_mid, cargo_subtype) {
-    0: spriteset_e200_orange_mid;
-    1: spriteset_e200_black_mid;
-    2: spriteset_e200_cc_mid;
-}
-
-switch(FEAT_TRAINS, SELF, switch_e200_lightb, position_in_consist_from_end) {
-    0: switch_e200_livery;
-    switch_e200_livery_mid;
-}
-
-switch(FEAT_TRAINS, SELF, switch_e200_lightf, position_in_consist) {
-    0: switch_e200_livery;
-    switch_e200_lightb;
-}
-
-switch(FEAT_TRAINS, SELF, switch_e200_subtype_text, cargo_subtype) {
+switch(FEAT_TRAINS, SELF, switch_e100_subtype_text, cargo_subtype) {
     0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
                                   string(STR_CONCAT_2F, 
                                     string(STR_COLOUR_ORANGE), 
                                     string(STR_COLOUR_CREAM)
                                     )
                                  );
-    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
-                                   string(STR_CONCAT_1F, 
-                                    string(STR_SUFFIX_MINGRI),
-                                    ),
-                                    string(STR_CONCAT_2F, 
-                                     string(STR_COLOUR_BLACK), 
-                                     string(STR_COLOUR_ORANGE)
-                                     )
-                                  
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_WHITE), 
+                                    string(STR_COLOUR_CREAM)
+                                    )
                                  );
-    2: return string(STR_REFIT_CC);
        return CB_RESULT_NO_TEXT;
     }
 /* Define the actual train */
-item(FEAT_TRAINS, item_e200) {
+item(FEAT_TRAINS, item_e100) {
     /* Define properties first, make sure to set all of them */
     property {
-        name:                         string(STR_NAME_E200);
+        name:                         string(STR_NAME_E100);
         climates_available:           ALL_CLIMATES;
-        introduction_date:            date(1978, 1, 1);
+        introduction_date:            date(1976, 1, 1);
         model_life:                   VEHICLE_NEVER_EXPIRES;
         vehicle_life:                 45;
         reliability_decay:            20;
         cost_factor:                  45;
         running_cost_factor:          100; // Changed by callback
         sprite_id:                    SPRITE_ID_NEW_TRAIN;
-        length:                       7;
+        length:                       6;
         speed:                        111 km/h;
         misc_flags:                   bitmask(TRAIN_FLAG_2CC);
         refit_cost:                   0; //refit costs don't apply to subcargo display
         track_type:                   NABE; // from rail type table
-        power:                        2800 kW; // Changed by CB
+        power:                        2052 kW; // Changed by CB
         running_cost_base:            RUNNING_COST_ELECTRIC;
         cargo_capacity:               1;
         cargo_allow_refit:            [PASS];
         dual_headed:                  0;
-        weight:                       96 ton; // Total, changed by callback
+        weight:                       72 ton; // Total, changed by callback
         ai_engine_rank:               0; // not intended to be used by the ai
         engine_class:                 ENGINE_CLASS_ELECTRIC;
         extra_power_per_wagon:        0 kW;
@@ -115,8 +78,8 @@ item(FEAT_TRAINS, item_e200) {
                     )
                   );
   cargo_capacity: return 0;
-  cargo_subtype_text: switch_e200_subtype_text;
-  default: switch_e200_lightf;
-  purchase: spriteset_e200_purchase;
+  cargo_subtype_text: switch_e100_subtype_text;
+  default: switch_e100_livery;
+  purchase: spriteset_e100_purchase;
   }
 }

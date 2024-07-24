@@ -1,0 +1,115 @@
+
+spriteset(spriteset_dr2800_yellow, "gfx/dr2800.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_dr2800_yellow_rear, "gfx/dr2800.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_dr2800_yellow_flip, "gfx/dr2800.png") {
+    tmpl_vehicle_8_views(1, 1)
+}
+
+spriteset(spriteset_dr2850_yellow, "gfx/dr2800.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_dr2800_yellow_purchase, "gfx/dr2800.png") {
+    template_purchase_dualheaded(0, 159)
+}
+/* --- Graphics callback  --- */
+
+
+switch(FEAT_TRAINS, SELF, switch_dr2800_yellow_mucar_pos, position_in_vehid_chain % 3) {
+    0: spriteset_dr2850_yellow;
+    1: spriteset_dr2800_yellow_rear;
+    2: spriteset_dr2800_yellow;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_dr2800_yellow_pos, position_in_consist) {
+    0: spriteset_dr2800_yellow;
+    spriteset_dr2800_yellow_flip;
+}
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr2800_start_stop, num_vehs_in_consist) {
+    3: return CB_RESULT_NO_TEXT;
+    6: return CB_RESULT_NO_TEXT;
+    9: return CB_RESULT_NO_TEXT;
+    12: return CB_RESULT_NO_TEXT;
+    15: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_dr2800_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, dr2800) {
+    property {
+        name:                         string(STR_NAME_DR2800);
+        introduction_date:            date(1982, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 55;
+        reliability_decay:            18;
+
+        cargo_capacity:               38;
+        loading_speed:                10;
+        cost_factor:                  60;
+        running_cost_factor:          54;
+
+        speed:                        111 km/h;
+        track_type:                   NABN;
+        power:                        350 hp;
+        weight:                       38 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  1;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_DIESEL;
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+        length: 8;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_DH),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_EXP),
+                        string(STR_TRLENGTH_5T, 3, 6, 9, 12, 15),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 52;
+        default:                switch_dr2800_yellow_pos;
+            purchase:               spriteset_dr2800_yellow_purchase;
+        can_attach_wagon:             switch_dr2800_attach_vehid;
+        start_stop:              switch_dr2800_start_stop;
+    }
+    /*Multiple Unit Car*/
+      livery_override(trmu_car){
+        default:                      switch_dr2800_yellow_mucar_pos;
+        cargo_capacity:               46;
+        loading_speed:                10;
+        power: 350;
+        weight: 38;
+      }
+}

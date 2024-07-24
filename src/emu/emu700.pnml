@@ -1,0 +1,230 @@
+
+
+spriteset(ss_emu700_cabs1f_firstbatch,            "gfx/700.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu700_cabs1b_firstbatch,            "gfx/700.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu700_cabs2f_firstbatch,            "gfx/700.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu700_cabs2b_firstbatch,            "gfx/700.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu700_cabs1f_secbatch,            "gfx/700s.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_emu700_cabs1b_secbatch,            "gfx/700s.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu700_cabs2f_secbatch,            "gfx/700s.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_emu700_cabs2b_secbatch,            "gfx/700s.png") {template_10_standard_emu(1,1)}
+
+spriteset(spriteset_emu700_purchase, "gfx/700s.png") {
+    template_purchase_dualheaded(0, 201)
+}
+
+spriteset(spriteset_emu700_em, "gfx/700.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu700_ep, "gfx/700.png") {
+    tmpl_vehicle_8_views(5, 0)
+}
+
+spriteset(spriteset_emu700_em_flip, "gfx/700.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu700_ep_flip, "gfx/700.png") {
+    tmpl_vehicle_8_views(5, 1)
+}
+
+spriteset(spriteset_emu700_2batch_em, "gfx/700s.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu700_2batch_ep, "gfx/700s.png") {
+    tmpl_vehicle_8_views(5, 0)
+}
+
+spriteset(spriteset_emu700_2batch_em_flip, "gfx/700s.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu700_2batch_ep_flip, "gfx/700s.png") {
+    tmpl_vehicle_8_views(5, 1)
+}
+
+/* --- Graphics callback  --- */
+
+// Subtype Selection
+switch(FEAT_TRAINS, PARENT, sw_emu700_cabs1f, cargo_subtype) {
+        0: ss_emu700_cabs1f_secbatch;
+        1: ss_emu700_cabs1f_firstbatch;
+    }
+
+
+switch(FEAT_TRAINS, PARENT, sw_emu700_cabs1b, cargo_subtype) {
+        0: ss_emu700_cabs1b_secbatch;
+        1: ss_emu700_cabs1b_firstbatch;
+    }
+
+
+switch(FEAT_TRAINS, PARENT, sw_emu700_cabs2f, cargo_subtype) {
+        0: ss_emu700_cabs2f_secbatch;
+        1: ss_emu700_cabs2f_firstbatch;
+    }
+
+switch(FEAT_TRAINS, PARENT, sw_emu700_cabs2b, cargo_subtype) {
+        0: ss_emu700_cabs2b_secbatch;
+        1: ss_emu700_cabs2b_firstbatch;
+    }
+
+switch(FEAT_TRAINS, SELF, switch_emu700_mucar_pos_1batch, position_in_consist) {
+    2: spriteset_emu700_em;
+    3: spriteset_emu700_ep;
+    4: spriteset_emu700_em;
+    5: spriteset_emu700_em_flip;
+    6: spriteset_emu700_ep_flip;
+    7: spriteset_emu700_em_flip;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu700_mucar_pos_2batch, position_in_consist) {
+    2: spriteset_emu700_2batch_em;
+    3: spriteset_emu700_2batch_ep;
+    4: spriteset_emu700_2batch_em;
+    5: spriteset_emu700_2batch_em_flip;
+    6: spriteset_emu700_2batch_ep_flip;
+    7: spriteset_emu700_2batch_em_flip;
+    return CB_RESULT_NO_TEXT;
+}
+
+switch(FEAT_TRAINS, PARENT, switch_emu700_mucar_livery, cargo_subtype) {
+        0: switch_emu700_mucar_pos_2batch;
+        1: switch_emu700_mucar_pos_1batch;
+    }
+
+switch(FEAT_TRAINS, SELF, switch_emu700_mucar, num_vehs_in_consist) {
+    8: switch_emu700_mucar_livery;
+    spriteset_trmu_car_add;
+}
+
+
+
+/* Cab selection */
+    // Rear cab
+    switch (FEAT_TRAINS, PARENT, sw_emu700_rear, vehicle_is_reversed) {				
+            1:  sw_emu700_cabs1b;                   // cab01	
+            sw_emu700_cabs2f;                       // cab02
+        }
+
+    // Lead cab
+    switch (FEAT_TRAINS, PARENT, sw_emu700_lead, vehicle_is_reversed) {				
+            1:  sw_emu700_cabs2b;                   // cab02
+            sw_emu700_cabs1f;                       // cab01	
+        }
+
+switch(FEAT_TRAINS, SELF, switch_emu700_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_ORANGE), 
+                                    string(STR_COLOUR_BLUE)
+                                    )
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA), 
+                                  string(STR_CONCAT_2F, 
+                                    string(STR_COLOUR_BLUE), 
+                                    string(STR_COLOUR_BLACK)
+                                    )
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu700_start_stop, num_vehs_in_consist) {
+    10: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+switch (FEAT_TRAINS, SELF, sw_emu700_graphics, position_in_consist) {				
+		0:  dummy_sprites;
+        9:  dummy_sprites;
+        1:  sw_emu700_lead;
+        8:  sw_emu700_rear;
+        switch_emu700_mucar_livery;
+	}
+
+switch(FEAT_TRAINS, SELF, sw_emu700_length, position_in_consist) {
+    0:  return 1;
+    9: return 1;
+    return 8;
+}
+    
+
+switch (FEAT_TRAINS, SELF, sw_emu700_articulated_part, extra_callback_info1) {
+		1 .. 9: return emu700;									
+		return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+	}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_emu700_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, emu700) {
+    property {
+        name:                         string(STR_NAME_EMU700);
+        introduction_date:            date(2007, 8, 28);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 40;
+        reliability_decay:            15;
+
+        cargo_capacity:               116;
+        loading_speed:                20;
+        cost_factor:                  70;
+        running_cost_factor:          54;
+
+        speed:                        111 km/h;
+        track_type:                   NABE;
+        power:                        480 kW;
+        weight:                       40 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  0;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_PAX_LOC),
+                        string(STR_TRLENGTH_1T, 8),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 116;
+        default:                sw_emu700_graphics;
+            purchase:               spriteset_emu700_purchase;
+        can_attach_wagon:             switch_emu700_attach_vehid;
+        articulated_part:               sw_emu700_articulated_part;
+        start_stop:           switch_emu700_start_stop;
+        cargo_subtype_text: switch_emu700_subtype_text;
+        length:                       sw_emu700_length;
+    }
+}

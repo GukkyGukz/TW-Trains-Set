@@ -1,0 +1,63 @@
+
+spriteset(spriteset_r200, "gfx/r200.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+
+//purchase
+
+spriteset(spriteset_r200_purchase, "gfx/r200.png") {
+    tmpl_vehicle_single(3, 87, 16, -25, -8)
+}
+
+
+item (FEAT_TRAINS, r200) {
+
+property {
+        name:                         string(STR_NAME_R200);
+        climates_available:           ALL_CLIMATES;
+        introduction_date:            date(2023, 1, 1);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 60;
+        reliability_decay:            20;
+        cost_factor:                  45;
+        running_cost_factor:          100; // Changed by callback
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        length:                       8;
+        speed:                        121 km/h;
+        misc_flags:                   bitmask(TRAIN_FLAG_2CC);
+        refit_cost:                   0; //refit costs don't apply to subcargo display
+        track_type:                   NABN; // from rail type table
+        power:                        2700 hp; // Changed by CB
+        running_cost_base:            RUNNING_COST_DIESEL;
+        cargo_capacity:               1;
+        cargo_allow_refit:            [PASS];
+        dual_headed:                  0;
+        weight:                       96 ton; // Total, changed by callback
+        ai_engine_rank:               0; // not intended to be used by the ai
+        engine_class:                 ENGINE_CLASS_DIESEL;
+        extra_power_per_wagon:        0 kW;
+        // 6/6 of weight on driving wheels, with a default friction coefficient of 0.3:
+        tractive_effort_coefficient:  0.3 / 1.5; // changed by callback
+        air_drag_coefficient:         0.06;
+        // Overridden by callback to disable for non-powered wagons:
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 2, DISABLE_WAGON_POWER);
+        extra_weight_per_wagon:       0 ton;
+        bitmask_vehicle_info:         0;
+    }
+
+
+  graphics { // graphics for engine
+  additional_text:  string(STR_CONCAT_4S, 
+                        string(STR_DESC_POWER_DE),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_DESC_USAGE_GP),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA)
+                    )
+                  );
+  cargo_capacity: return 0;
+  default: spriteset_r200;
+  purchase: spriteset_r200_purchase;
+  }
+}

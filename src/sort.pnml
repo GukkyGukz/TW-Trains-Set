@@ -5,20 +5,21 @@
 sort(FEAT_TRAINS, [
 
 //EL
-item_e200, e1000, item_e500,
+item_e100, item_e200, e1000, item_e500,
 
 //DH
+dhl100,
 
 //DE
-r20,
+r20, r100, r180, r200,
 
 //SL
 
 //DMU
-dr2700,
+dr2100, dr2700, dr2800, dr2900, dr3100, item_45dr1000,
 
 //EMU
-trmu_car, emu200, emu300, emu400, emu500, emu600, emu800,
+trmu_car, emu100, emu200, emu1200, emu300, emu400, emu500, emu600, emu700, emu800,
 
 //TEMU
 
