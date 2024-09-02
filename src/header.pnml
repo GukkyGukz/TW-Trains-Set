@@ -2,7 +2,7 @@ grf {
 	grfid: "UK\01\01";
 	name: string(STR_TWTS_NAME);
 	desc: string(STR_TWTS_DESCRIPTION);
-	version: 15;
+	version: 16;
 	min_compatible_version: 0;
 
 

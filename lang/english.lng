@@ -150,7 +150,9 @@ STR_SUFFIX_CHUKUANG         :{GOLD}"Chu-Kuang"{BLACK}
 STR_SUFFIX_FUHSING          :{GOLD}"Fu-Hsing"{BLACK}
 STR_SUFFIX_KUANGHWA         :{GOLD}"Kuang-Hwa"{BLACK}
 STR_SUFFIX_TZECHIANG        :{GOLD}"Tze-Chiang"{BLACK}
-STR_SUFFIX_MINGRI           :{GOLD}"Future-Mingrihao"{BLACK}
+STR_SUFFIX_MINGRI           :{GOLD}"Future-Mingrihao Tour Train"{BLACK}
+STR_SUFFIX_HAIFUNG          :{GOLD}"Future-HAIFUNG Tour Train"{BLACK}
+STR_SUFFIX_SHANLAN           :{GOLD}"Future-SHANLAN Tour Train"{BLACK}
 STR_SUFFIX_TOUR             :{GOLD}"Tour Train"{BLACK}
 
 #####################

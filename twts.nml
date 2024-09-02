@@ -2,7 +2,7 @@ grf {
 	grfid: "UK\01\01";
 	name: string(STR_TWTS_NAME);
 	desc: string(STR_TWTS_DESCRIPTION);
-	version: 15;
+	version: 16;
 	min_compatible_version: 0;
 
 
@@ -3096,27 +3096,120 @@ spriteset(spriteset_emu500_purchase, "gfx/emu500.png") {
     template_purchase_dualheaded(0, 127)
 }
 
+spriteset(spriteset_emu573_emc, "gfx/emu573.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
 
+spriteset(spriteset_emu573_ep, "gfx/emu573.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_emu573_et, "gfx/emu573.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_emu573_em, "gfx/emu573.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu573_em_flip, "gfx/emu573.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu583_emc, "gfx/emu583.png") {
+    tmpl_vehicle_8_views(0, 0)
+}
+
+spriteset(spriteset_emu583_ep, "gfx/emu583.png") {
+    tmpl_vehicle_8_views(1, 0)
+}
+
+spriteset(spriteset_emu583_et, "gfx/emu583.png") {
+    tmpl_vehicle_8_views(2, 0)
+}
+
+spriteset(spriteset_emu583_em, "gfx/emu583.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu583_em_flip, "gfx/emu583.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
 /* --- Graphics callback  --- */
 
+switch(FEAT_TRAINS, SELF, switch_emu500_emc, cargo_subtype) {
+    1: spriteset_emu583_emc;
+    2: spriteset_emu573_emc;
+    spriteset_emu500_emc;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu500_ep, cargo_subtype) {
+    1: spriteset_emu583_ep;
+    2: spriteset_emu573_ep;
+    spriteset_emu500_ep;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu500_et, cargo_subtype) {
+    1: spriteset_emu583_et;
+    2: spriteset_emu573_et;
+    spriteset_emu500_et;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu500_em, cargo_subtype) {
+    1: spriteset_emu583_em;
+    2: spriteset_emu573_em;
+    spriteset_emu500_em;
+}
+
+switch(FEAT_TRAINS, SELF, switch_emu500_em_flip, cargo_subtype) {
+    1: spriteset_emu583_em_flip;
+    2: spriteset_emu573_em_flip;
+    spriteset_emu500_em_flip;
+}
 
 switch(FEAT_TRAINS, SELF, switch_emu500_mucar_pos, position_in_vehid_chain % 4) {
-    0: spriteset_emu500_ep;
-    1: spriteset_emu500_et;
-    2: spriteset_emu500_em;
-    3: spriteset_emu500_emc;
+    0: switch_emu500_ep;
+    1: switch_emu500_et;
+    2: switch_emu500_em;
+    3: switch_emu500_emc;
     return CB_RESULT_NO_TEXT;
 }
 
 switch(FEAT_TRAINS, SELF, switch_emu500_gfx_pos, position_in_consist) {
-    0: spriteset_emu500_emc;
-    spriteset_emu500_em_flip;
+    0: switch_emu500_emc;
+    switch_emu500_em_flip;
 }
 
 switch(FEAT_TRAINS, SELF, switch_emu500_mucar, num_vehs_in_vehid_chain % 4) {
     2: switch_emu500_mucar_pos;
     spriteset_trmu_car_add;
 }
+
+switch(FEAT_TRAINS, SELF, switch_emu500_subtype_text, cargo_subtype) {
+    0: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                    string(STR_CONCAT_2F, 
+                                     string(STR_COLOUR_BLUE), 
+                                     string(STR_COLOUR_SILVER)
+                                     )
+                                  
+                                 );
+    1: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                   string(STR_CONCAT_2, 
+                                    string(STR_SUFFIX_SHANLAN),
+                                     string(STR_COLOUR_LTGREEN)
+                                     )
+                                  
+                                 );
+    2: return string(STR_CONCAT_2, string(STR_SUFFIX_TRA),
+                                   string(STR_CONCAT_2, 
+                                    string(STR_SUFFIX_HAIFUNG),
+                                     string(STR_COLOUR_LTBLUE)
+                                     )
+                                  
+                                 );
+       return CB_RESULT_NO_TEXT;
+    }
+
 
 /* --- Start/stop callback  --- */
 switch(FEAT_TRAINS, SELF, switch_emu500_start_stop, num_vehs_in_consist) {
@@ -3187,6 +3280,7 @@ item(FEAT_TRAINS, emu500) {
             purchase:               spriteset_emu500_purchase;
         can_attach_wagon:             switch_emu500_attach_vehid;
         start_stop:           switch_emu500_start_stop;
+        cargo_subtype_text: switch_emu500_subtype_text;
     }
     /*Multiple Unit Car*/
       livery_override(trmu_car){
