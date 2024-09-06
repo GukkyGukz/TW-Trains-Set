@@ -3440,34 +3440,50 @@ spriteset(spriteset_emu700_purchase, "gfx/700s.png") {
 }
 
 spriteset(spriteset_emu700_em, "gfx/700.png") {
-    tmpl_vehicle_8_views(3, 0)
+    tmpl_vehicle_8_views(4, 0)
 }
 
 spriteset(spriteset_emu700_ep, "gfx/700.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu700_et, "gfx/700.png") {
     tmpl_vehicle_8_views(5, 0)
 }
 
 spriteset(spriteset_emu700_em_flip, "gfx/700.png") {
-    tmpl_vehicle_8_views(3, 1)
+    tmpl_vehicle_8_views(4, 1)
 }
 
 spriteset(spriteset_emu700_ep_flip, "gfx/700.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu700_et_flip, "gfx/700.png") {
     tmpl_vehicle_8_views(5, 1)
 }
 
 spriteset(spriteset_emu700_2batch_em, "gfx/700s.png") {
-    tmpl_vehicle_8_views(3, 0)
+    tmpl_vehicle_8_views(4, 0)
 }
 
 spriteset(spriteset_emu700_2batch_ep, "gfx/700s.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_emu700_2batch_et, "gfx/700s.png") {
     tmpl_vehicle_8_views(5, 0)
 }
 
 spriteset(spriteset_emu700_2batch_em_flip, "gfx/700s.png") {
-    tmpl_vehicle_8_views(3, 1)
+    tmpl_vehicle_8_views(4, 1)
 }
 
 spriteset(spriteset_emu700_2batch_ep_flip, "gfx/700s.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_emu700_2batch_et_flip, "gfx/700s.png") {
     tmpl_vehicle_8_views(5, 1)
 }
 
@@ -3497,22 +3513,22 @@ switch(FEAT_TRAINS, PARENT, sw_emu700_cabs2b, cargo_subtype) {
     }
 
 switch(FEAT_TRAINS, SELF, switch_emu700_mucar_pos_1batch, position_in_consist) {
-    2: spriteset_emu700_em;
-    3: spriteset_emu700_ep;
+    2: spriteset_emu700_ep;
+    3: spriteset_emu700_et;
     4: spriteset_emu700_em;
     5: spriteset_emu700_em_flip;
-    6: spriteset_emu700_ep_flip;
-    7: spriteset_emu700_em_flip;
+    6: spriteset_emu700_et_flip;
+    7: spriteset_emu700_ep_flip;
     return CB_RESULT_NO_TEXT;
 }
 
 switch(FEAT_TRAINS, SELF, switch_emu700_mucar_pos_2batch, position_in_consist) {
-    2: spriteset_emu700_2batch_em;
-    3: spriteset_emu700_2batch_ep;
+    2: spriteset_emu700_2batch_ep;
+    3: spriteset_emu700_2batch_et;
     4: spriteset_emu700_2batch_em;
     5: spriteset_emu700_2batch_em_flip;
-    6: spriteset_emu700_2batch_ep_flip;
-    7: spriteset_emu700_2batch_em_flip;
+    6: spriteset_emu700_2batch_et_flip;
+    7: spriteset_emu700_2batch_ep_flip;
     return CB_RESULT_NO_TEXT;
 }
 
