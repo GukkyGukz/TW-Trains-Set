@@ -1,0 +1,149 @@
+
+
+spriteset(ss_temu1000_cabs1f,            "gfx/temu1000.png") {template_10_standard_emu(1,1)}
+
+spriteset(ss_temu1000_cabs1b,            "gfx/temu1000.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_temu1000_cabs2f,            "gfx/temu1000.png") {template_10_reversed_emu(1,41)}
+
+spriteset(ss_temu1000_cabs2b,            "gfx/temu1000.png") {template_10_standard_emu(1,1)}
+
+spriteset(spriteset_temu1000_purchase, "gfx/temu1000.png") {
+    template_purchase_dualheaded(0, 201)
+}
+
+spriteset(spriteset_temu1000_em, "gfx/temu1000.png") {
+    tmpl_vehicle_8_views(3, 0)
+}
+
+spriteset(spriteset_temu1000_ep, "gfx/temu1000.png") {
+    tmpl_vehicle_8_views(4, 0)
+}
+
+spriteset(spriteset_temu1000_em_flip, "gfx/temu1000.png") {
+    tmpl_vehicle_8_views(3, 1)
+}
+
+spriteset(spriteset_temu1000_ep_flip, "gfx/temu1000.png") {
+    tmpl_vehicle_8_views(4, 1)
+}
+
+/* --- Graphics callback  --- */
+
+switch(FEAT_TRAINS, SELF, switch_temu1000_mucar_pos, position_in_consist) {
+    2: spriteset_temu1000_em;
+    3: spriteset_temu1000_ep;
+    4: spriteset_temu1000_em;
+    5: spriteset_temu1000_em_flip;
+    6: spriteset_temu1000_ep_flip;
+    7: spriteset_temu1000_em_flip;
+    return CB_RESULT_NO_TEXT;
+}
+
+
+
+/* Cab selection */
+    // Rear cab
+    switch (FEAT_TRAINS, PARENT, sw_temu1000_rear, vehicle_is_reversed) {				
+            1:  ss_temu1000_cabs1b;                   // cab01	
+            ss_temu1000_cabs2f;                       // cab02
+        }
+
+    // Lead cab
+    switch (FEAT_TRAINS, PARENT, sw_temu1000_lead, vehicle_is_reversed) {				
+            1:  ss_temu1000_cabs2b;                   // cab02
+            ss_temu1000_cabs1f;                       // cab01	
+        }
+
+/* --- Start/stop callback  --- */
+switch(FEAT_TRAINS, SELF, switch_temu1000_start_stop, num_vehs_in_consist) {
+    10: return CB_RESULT_NO_TEXT;
+    return string(STR_UNIT_ERROR);
+}
+
+switch (FEAT_TRAINS, SELF, sw_temu1000_graphics, position_in_consist) {				
+		0:  dummy_sprites;
+        9:  dummy_sprites;
+        1:  sw_temu1000_lead;
+        8:  sw_temu1000_rear;
+        switch_temu1000_mucar_pos;
+	}
+
+switch(FEAT_TRAINS, SELF, sw_temu1000_length, position_in_consist) {
+    0:  return 1;
+    9: return 1;
+    return 8;
+}
+    
+
+switch (FEAT_TRAINS, SELF, sw_temu1000_articulated_part, extra_callback_info1) {
+		1 .. 9: return temu1000;									
+		return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+	}
+
+/* --- Wagon attach callback  --- */
+switch(FEAT_TRAINS, SELF, switch_temu1000_attach_vehid, vehicle_type_id) {
+    trmu_car: return CB_RESULT_ATTACH_ALLOW;
+    return string(STR_MUCAR_ERROR);
+}
+
+/* Define the actual train */
+item(FEAT_TRAINS, temu1000) {
+    property {
+        name:                         string(STR_NAME_TEMU1000);
+        introduction_date:            date(2007, 2, 16);
+        model_life:                   VEHICLE_NEVER_EXPIRES;
+        vehicle_life:                 40;
+        reliability_decay:            15;
+
+        cargo_capacity:               32;
+        loading_speed:                10;
+        cost_factor:                  70;
+        running_cost_factor:          54;
+
+        speed:                        131 km/h;
+        track_type:                   NABE;
+        power:                        380 kW;
+        weight:                       40 ton;
+
+        climates_available:           ALL_CLIMATES;
+        ai_special_flag:              AI_FLAG_PASSENGER;
+        sprite_id:                    SPRITE_ID_NEW_TRAIN;
+        misc_flags:                   bitmask(TRAIN_FLAG_MU,TRAIN_FLAG_TILT);
+        refittable_cargo_classes:     bitmask(CC_PASSENGERS);
+        non_refittable_cargo_classes: bitmask();
+        refit_cost:                   0;
+        dual_headed:                  0;
+        ai_engine_rank:               0;
+
+        running_cost_base:            RUNNING_COST_ELECTRIC;
+        engine_class:                 ENGINE_CLASS_ELECTRIC;
+        visual_effect_and_powered:    visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 4, ENABLE_WAGON_POWER);
+
+        tractive_effort_coefficient:  0.3;
+        air_drag_coefficient:         0.07;
+        bitmask_vehicle_info:         0;
+    }
+    /*Graphics and Callbacks*/
+      graphics { // graphics for engine
+         additional_text:  string(STR_CONCAT_5S, 
+                        string(STR_DESC_POWER_AC20),
+                        string(STR_DESC_NARROWGAUGE),
+                        string(STR_CONCAT_2, 
+                           string(STR_USE_LTDEXPRESS),
+                           string(STR_TILT),
+                        ),
+                        string(STR_TRLENGTH_1T, 8),
+                        string(STR_CONCAT_1C, 
+                           string(STR_SUFFIX_TRA),
+                        )
+                  );
+        cargo_capacity: return 48;
+        default:                sw_temu1000_graphics;
+            purchase:               spriteset_temu1000_purchase;
+        can_attach_wagon:             switch_temu1000_attach_vehid;
+        articulated_part:               sw_temu1000_articulated_part;
+        start_stop:           switch_temu1000_start_stop;
+        length:                       sw_temu1000_length;
+    }
+}

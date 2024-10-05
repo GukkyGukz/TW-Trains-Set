@@ -190,6 +190,8 @@ STR_DESC_POWER_DC15		:{BLACK}Engine Type: {GOLD}Electric - {BLUE} DC (1500V){}
 STR_DESC_POWER_MS20		:{BLACK}Engine Type: {GOLD}Electric Multisystem - {RED} AC (20kV) {WHITE}/ {BLUE}DC (1500V){}
 STR_DESC_POWER_MS25 	:{BLACK}Engine Type: {GOLD}Electric - {RED} AC (20kV) {WHITE}/ {PURPLE} AC (25kV){}
 
+STR_TILT                :{BLACK}Tilt: {SILVER}yes{}
+
 STR_DESC_NARROWGAUGE	:{BLACK}Gauge:{GOLD} Narrow {SILVER}(1,067mm){}
 STR_DESC_STDGAUGE	    :{BLACK}Gauge:{GOLD} Standard (1,435mm){}
 
@@ -216,6 +218,8 @@ STR_DESC_USAGE_PAX_SLP	:{BLACK}Usage: {SILVER}Express / Night Trains{}
 STR_DESC_USAGE_PAX_LEX	:{BLACK}Usage: {SILVER}Luxury Express{}
 STR_DESC_USAGE_PAX_LUX	:{BLACK}Usage: {SILVER}Luxury Sleeper{}
 STR_DESC_USAGE_PAX_JOY	:{BLACK}Usage: {SILVER}Luxury Charters / Excursions{}
+
+STR_USE_LTDEXPRESS      :{BLACK}Usage: {SILVER}Limited Express{}
 
 STR_DESC_USAGE_PAX_TOKAIDO	:{BLACK}Usage: {SILVER}Express Trains - {GREEN}Use with EF58 New Type, Tokaido Livery{}
 

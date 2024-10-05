@@ -4,17 +4,17 @@ spriteset(ss_emu800_cabs1f_firstbatch,            "gfx/800.png") {template_10_st
 
 spriteset(ss_emu800_cabs1b_firstbatch,            "gfx/800.png") {template_10_reversed_emu(1,41)}
 
-spriteset(ss_emu800_cabs2f_firstbatch,            "gfx/800.png") {template_10_cab_rev_standard_emu(1,41)}
+spriteset(ss_emu800_cabs2f_firstbatch,            "gfx/800.png") {template_10_reversed_emu(1,41)}
 
-spriteset(ss_emu800_cabs2b_firstbatch,            "gfx/800.png") {template_10_cab_rev_reversed_emu(1,1)}
+spriteset(ss_emu800_cabs2b_firstbatch,            "gfx/800.png") {template_10_standard_emu(1,1)}
 
 spriteset(ss_emu800_cabs1f_secbatch,            "gfx/800s.png") {template_10_standard_emu(1,1)}
 
 spriteset(ss_emu800_cabs1b_secbatch,            "gfx/800s.png") {template_10_reversed_emu(1,41)}
 
-spriteset(ss_emu800_cabs2f_secbatch,            "gfx/800s.png") {template_10_cab_rev_standard_emu(1,41)}
+spriteset(ss_emu800_cabs2f_secbatch,            "gfx/800s.png") {template_10_reversed_emu(1,41)}
 
-spriteset(ss_emu800_cabs2b_secbatch,            "gfx/800s.png") {template_10_cab_rev_reversed_emu(1,1)}
+spriteset(ss_emu800_cabs2b_secbatch,            "gfx/800s.png") {template_10_standard_emu(1,1)}
 
 spriteset(spriteset_emu800_purchase, "gfx/800.png") {
     template_purchase_dualheaded(0, 201)
