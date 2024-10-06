@@ -22,7 +22,7 @@ dr2100, dr2700, dr2800, dr2900, dr3100, item_45dr1000,
 trmu_car, emu100, emu200, emu1200, emu300, emu400, emu500, emu600, emu700, emu800,
 
 //TEMU
-temu1000,
+temu1000, temu2000,
 
 //PAXold
 item_sp32400, item_sp32550, item_tp32200, item_tp32800,

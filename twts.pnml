@@ -37,6 +37,7 @@
 #include "src/emu/emu700.pnml"
 #include "src/emu/emu800.pnml"
 #include "src/emu/temu1000.pnml"
+#include "src/emu/temu2000.pnml"
 
 #include "src/pax/sp32400.pnml"
 #include "src/pax/sp32550.pnml"
