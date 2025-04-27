@@ -1,0 +1,63 @@
+//legacy ID trains
+item(FEAT_TRAINS, item_e100, 116) {} //E100
+item(FEAT_TRAINS, item_e100, 116) {} //E200~400
+item(FEAT_TRAINS, item_e100, 116) {} //E1000
+item(FEAT_TRAINS, item_e100, 116) {} //E500
+item(FEAT_TRAINS, item_dhl100, 116) {} //DHL100
+item(FEAT_TRAINS, item_e100, 116) {} //R20
+item(FEAT_TRAINS, item_e100, 116) {} //R100/150
+item(FEAT_TRAINS, item_e100, 116) {} //R180/190
+item(FEAT_TRAINS, item_e100, 116) {} //R200
+item(FEAT_TRAINS, item_e100, 116) {} //DR2100~2400
+item(FEAT_TRAINS, item_e100, 116) {} //DR2700
+item(FEAT_TRAINS, item_e100, 116) {} //DR2800
+item(FEAT_TRAINS, item_e100, 116) {} //DR2900/3000
+item(FEAT_TRAINS, item_e100, 116) {} //DR3100
+item(FEAT_TRAINS, item_e100, 116) {} //DR1000
+item(FEAT_TRAINS, item_emu100, 116) {} //EMU100
+item(FEAT_TRAINS, item_emu200, 116) {} //EMU200
+item(FEAT_TRAINS, item_emu1200, 116) {} //EMU1200
+item(FEAT_TRAINS, item_emu300, 116) {} //EMU300
+item(FEAT_TRAINS, item_emu200, 116) {} //EMU400
+item(FEAT_TRAINS, item_emu200, 116) {} //EMU500
+item(FEAT_TRAINS, item_emu200, 116) {} //EMU600
+item(FEAT_TRAINS, item_emu200, 116) {} //EMU700
+item(FEAT_TRAINS, item_emu200, 116) {} //EMU800
+item(FEAT_TRAINS, item_emu200, 116) {} //TEMU1000
+item(FEAT_TRAINS, item_emu200, 116) {} //TEMU2000
+item(FEAT_TRAINS, item_emu200, 116) {} //TR MU-car
+
+//EL
+item_e100, item_e200, e1000, item_e500,
+
+//DH
+dhl100,
+
+//DE
+r20, r100, r180, r200,
+
+//SL
+
+//DMU
+dr2100, dr2700, dr2800, dr2900, dr3100, item_45dr1000,
+
+//EMU
+trmu_car, emu100, emu200, emu1200, emu300, emu400, emu500, emu600, emu700, emu800,
+
+//TEMU
+temu1000, temu2000,
+
+//PAXold
+item_sp32400, item_sp32550, item_tp32200, item_tp32800,
+
+//PAXnew
+item_sp2300, item_sp32800, item_sp32850, item_fpk10000, item_fpk10100, item_fpk10200, item_ppcar,
+
+//MAIL
+item_pbk32800, item_pbk32850, item_pbk10400, item_pbk10500
+
+//FREIGHT
+
+//extended ID trains
+
+////
