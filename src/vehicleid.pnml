@@ -8,67 +8,39 @@ item(FEAT_TRAINS, r20, 121) {} //R20.................DE
 item(FEAT_TRAINS, r100, 122) {} //R100/150
 item(FEAT_TRAINS, r180, 123) {} //R180/190
 item(FEAT_TRAINS, r200, 124) {} //R200
+item(FEAT_TRAINS, trmu_car, 125) {} //TR MU-car.......MU
 item(FEAT_TRAINS, dr2100, 126) {} //DR2100~2400......DMU
 item(FEAT_TRAINS, dr2700, 127) {} //DR2700
 item(FEAT_TRAINS, dr2800, 128) {} //DR2800
 item(FEAT_TRAINS, dr2900, 129) {} //DR2900/3000
 item(FEAT_TRAINS, dr3100, 130) {} //DR3100
 item(FEAT_TRAINS, item_45dr1000, 131) {} //DR1000
-item(FEAT_TRAINS, emu100, 116) {} //EMU100...........EMU
-item(FEAT_TRAINS, emu200, 116) {} //EMU200
-item(FEAT_TRAINS, emu1200, 116) {} //EMU1200
-item(FEAT_TRAINS, emu300, 116) {} //EMU300
-item(FEAT_TRAINS, emu400, 116) {} //EMU400
-item(FEAT_TRAINS, emu500, 116) {} //EMU500
-item(FEAT_TRAINS, emu600, 116) {} //EMU600
-item(FEAT_TRAINS, emu700, 116) {} //EMU700
-item(FEAT_TRAINS, emu800, 116) {} //EMU800
-item(FEAT_TRAINS, temu1000, 116) {} //TEMU1000
-item(FEAT_TRAINS, temu2000, 116) {} //TEMU2000
-item(FEAT_TRAINS, trmu_car, 116) {} //TR MU-car
-item(FEAT_TRAINS, item_sp32400, 131) {} //SP32400......PAXold
-item(FEAT_TRAINS, item_sp32550, 131) {} //SP32550
-item(FEAT_TRAINS, item_tp32200, 131) {} //TP32200
-item(FEAT_TRAINS, item_tp32800, 131) {} //TP32800
-item(FEAT_TRAINS, item_sp2300, 131) {} //SP2300........PAXnew
-item(FEAT_TRAINS, item_sp32800, 131) {} //SP32800
-item(FEAT_TRAINS, item_sp32850, 131) {} //SP32850
-item(FEAT_TRAINS, item_fpk10000, 131) {} //FPK10000
-item(FEAT_TRAINS, item_fpk10100, 131) {} //FPK10100
-item(FEAT_TRAINS, item_fpk10200, 131) {} //FPK10200
-item(FEAT_TRAINS, item_ppcar, 131) {} //Push-Pull Coach
-item(FEAT_TRAINS, item_pbk32800, 131) {} //PBK32800....MAIL
-
-//EL
-item_e100, item_e200, e1000, item_e500,
-
-//DH
-dhl100,
-
-//DE
-r20, r100, r180, r200,
-
-//SL
-
-//DMU
-dr2100, dr2700, dr2800, dr2900, dr3100, item_45dr1000,
-
-//EMU
-trmu_car, emu100, emu200, emu1200, emu300, emu400, emu500, emu600, emu700, emu800,
-
-//TEMU
-temu1000, temu2000,
-
-//PAXold
-item_sp32400, item_sp32550, item_tp32200, item_tp32800,
-
-//PAXnew
-item_sp2300, item_sp32800, item_sp32850, item_fpk10000, item_fpk10100, item_fpk10200, item_ppcar,
-
-//MAIL
-item_pbk32800, item_pbk32850, item_pbk10400, item_pbk10500
-
-//FREIGHT
+item(FEAT_TRAINS, emu100, 132) {} //EMU100...........EMU
+item(FEAT_TRAINS, emu200, 133) {} //EMU200
+item(FEAT_TRAINS, emu1200, 134) {} //EMU1200
+item(FEAT_TRAINS, emu300, 135) {} //EMU300
+item(FEAT_TRAINS, emu400, 136) {} //EMU400
+item(FEAT_TRAINS, emu500, 137) {} //EMU500
+item(FEAT_TRAINS, emu600, 138) {} //EMU600
+item(FEAT_TRAINS, emu700, 139) {} //EMU700
+item(FEAT_TRAINS, emu800, 140) {} //EMU800
+item(FEAT_TRAINS, temu1000, 141) {} //TEMU1000
+item(FEAT_TRAINS, temu2000, 142) {} //TEMU2000
+item(FEAT_TRAINS, item_sp32400, 143) {} //SP32400......PAXold
+item(FEAT_TRAINS, item_sp32550, 144) {} //SP32550
+item(FEAT_TRAINS, item_tp32200, 145) {} //TP32200
+item(FEAT_TRAINS, item_tp32800, 146) {} //TP32800
+item(FEAT_TRAINS, item_sp2300, 147) {} //SP2300........PAXnew
+item(FEAT_TRAINS, item_sp32800, 148) {} //SP32800
+item(FEAT_TRAINS, item_sp32850, 149) {} //SP32850
+item(FEAT_TRAINS, item_fpk10000, 150) {} //FPK10000
+item(FEAT_TRAINS, item_fpk10100, 151) {} //FPK10100
+item(FEAT_TRAINS, item_fpk10200, 152) {} //FPK10200
+item(FEAT_TRAINS, item_ppcar, 153) {} //Push-Pull Coach
+item(FEAT_TRAINS, item_pbk32800, 154) {} //PBK32800....MAIL
+item(FEAT_TRAINS, item_pbk32850, 155) {} //PBK32850
+item(FEAT_TRAINS, item_pbk10400, 156) {} //PBK10400
+item(FEAT_TRAINS, item_pbk10500, 157) {} //PBK10500
 
 //extended ID trains
 
