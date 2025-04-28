@@ -14,18 +14,22 @@ item(FEAT_TRAINS, dr2800, 128) {} //DR2800
 item(FEAT_TRAINS, dr2900, 129) {} //DR2900/3000
 item(FEAT_TRAINS, dr3100, 130) {} //DR3100
 item(FEAT_TRAINS, item_45dr1000, 131) {} //DR1000
-item(FEAT_TRAINS, item_emu100, 116) {} //EMU100
-item(FEAT_TRAINS, item_emu200, 116) {} //EMU200
-item(FEAT_TRAINS, item_emu1200, 116) {} //EMU1200
-item(FEAT_TRAINS, item_emu300, 116) {} //EMU300
-item(FEAT_TRAINS, item_emu200, 116) {} //EMU400
-item(FEAT_TRAINS, item_emu200, 116) {} //EMU500
-item(FEAT_TRAINS, item_emu200, 116) {} //EMU600
-item(FEAT_TRAINS, item_emu200, 116) {} //EMU700
-item(FEAT_TRAINS, item_emu200, 116) {} //EMU800
-item(FEAT_TRAINS, item_emu200, 116) {} //TEMU1000
-item(FEAT_TRAINS, item_emu200, 116) {} //TEMU2000
-item(FEAT_TRAINS, item_emu200, 116) {} //TR MU-car
+item(FEAT_TRAINS, emu100, 116) {} //EMU100
+item(FEAT_TRAINS, emu200, 116) {} //EMU200
+item(FEAT_TRAINS, emu1200, 116) {} //EMU1200
+item(FEAT_TRAINS, emu300, 116) {} //EMU300
+item(FEAT_TRAINS, emu400, 116) {} //EMU400
+item(FEAT_TRAINS, emu500, 116) {} //EMU500
+item(FEAT_TRAINS, emu600, 116) {} //EMU600
+item(FEAT_TRAINS, emu700, 116) {} //EMU700
+item(FEAT_TRAINS, emu800, 116) {} //EMU800
+item(FEAT_TRAINS, temu1000, 116) {} //TEMU1000
+item(FEAT_TRAINS, temu2000, 116) {} //TEMU2000
+item(FEAT_TRAINS, trmu_car, 116) {} //TR MU-car
+item(FEAT_TRAINS, item_sp32400, 131) {} //SP32400
+item(FEAT_TRAINS, item_sp32550, 131) {} //SP32550
+item(FEAT_TRAINS, item_tp32200, 131) {} //TP32200
+item(FEAT_TRAINS, item_tp32800, 131) {} //TP32800
 
 //EL
 item_e100, item_e200, e1000, item_e500,
