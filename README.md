@@ -2,7 +2,7 @@
 
 Taiwan Trains Set
 
-COPYRIGHT 2024 Team TWTS
+COPYRIGHT 2025 Team TWTS
 
 License: GPL v3
 

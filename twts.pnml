@@ -1,6 +1,7 @@
 #include "src/header.pnml"
 #include "src/cargotable.pnml"
 #include "src/railtypetable.pnml"
+#include "src/vehicleid.pnml"
 #include "src/sort.pnml"
 #include "src/template.pnml"
 #include "src/functions.pnml"

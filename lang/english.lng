@@ -5,7 +5,7 @@
 
 # GRF name and description definitions
 STR_TWTS_NAME        :{TITLE} {PUSH_COLOUR}{WHITE}{VERSION}{POP_COLOUR}
-STR_TWTS_DESCRIPTION :Taiwan Trains Set{}{COPYRIGHT}2024 TeamTWTS{}License: GPL v3
+STR_TWTS_DESCRIPTION :Taiwan Trains Set{}{COPYRIGHT}2025 TeamTWTS{}License: GPL v3
 
 # vehicle names
 STR_NAME_E100                 :E100
